@@ -69,7 +69,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
     <Box display='flex' flexDirection='column'>
       {items.map((item, index) => {
         if (item.options !== undefined) p = item.options;
-        //item.require = false;
+        item.require = false;
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -233,6 +233,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
               )}
             </Box>
             {item.error ? (
+              //алерты
               <Alert variant='filled' severity='error' sx={{ marginBottom: '10px' }}>
                 {item.pattern === '^[0-9]{4}$' ? 'Некорректный год' : ''}
                 {item.pattern === '^.{0,50}$' ? 'Не больше 50 символов' : ''}

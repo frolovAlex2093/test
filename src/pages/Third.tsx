@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import React, { useEffect } from 'react';
-import { Blocks, Loader } from '../components';
+import { Blocks } from '../components';
 import { blocks } from '../fields/fields1';
 import {
   brakingType,
@@ -41,11 +41,6 @@ interface IThird {
 
 export const Third: React.FC<IThird> = ({ id }) => {
   const [blockss, setBlockss] = React.useState(blocks);
-  const [loader, setLoader] = React.useState<boolean>(true)
-
-  useEffect(() =>{
-    setLoader(false)
-  })
 
   const alertValidation = (pattern: string, value: string): boolean => {
     if (pattern === '^[0-9]{4}$' && /^[0-9]{4}$/.test(value) === false) return true;
@@ -2687,7 +2682,7 @@ export const Third: React.FC<IThird> = ({ id }) => {
                     <urn1:SenderProvidedRequestData>
                         <urn1:ApplicationInfoContainers>
                             <urn1:ApplicationInfoContainer>
-                                <urn1:ApplicationID>000</urn1:ApplicationID>
+                                <urn1:ApplicationID>150</urn1:ApplicationID>
                                 <urn1:ApplicationName>Создание электронного паспорта изготовителями и уполномоченными органами</urn1:ApplicationName>
                             </urn1:ApplicationInfoContainer>
                         </urn1:ApplicationInfoContainers>
@@ -2751,7 +2746,6 @@ export const Third: React.FC<IThird> = ({ id }) => {
         uploadImage
       }}
     >
-      {loader && <Loader />}
       <Box display='flex' marginTop={5} height='100%' justifyContent='center' alignItems='center'>
         <Blocks
           blocks={blockss}
