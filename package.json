@@ -27,7 +27,6 @@
     "dayjs": "^1.11.7",
     "imask": "^6.4.3",
     "mui-calendar-picker": "^1.0.10",
-    "mui-masked-input": "^0.1.2",
     "react-number-format": "^5.1.2"
   },
   "scripts": {
