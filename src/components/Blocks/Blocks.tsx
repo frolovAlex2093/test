@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { Block } from './Block/Block';
 
@@ -51,7 +51,6 @@ interface IBlock {
 }
 
 export const Blocks: React.FC<IBlock> = ({ blocks, onChangeBlock, onclickSubmit }) => {
-  const [blockss, setBlocks] = React.useState(blocks);
   return (
     <Box
       component='form'
@@ -60,7 +59,7 @@ export const Blocks: React.FC<IBlock> = ({ blocks, onChangeBlock, onclickSubmit 
         onclickSubmit();
       }}
     >
-      {blockss.map((item, index) => {
+      {blocks.map((item, index) => {
         return (
           <Box key={index}>
             <Typography variant='h5' component='h5' gutterBottom color='black'>

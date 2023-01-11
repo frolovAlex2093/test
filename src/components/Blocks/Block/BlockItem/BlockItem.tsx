@@ -62,13 +62,10 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
     uploadImage
   } = React.useContext(Context);
 
-  const [items, setItem] = React.useState(blockItem);
-  let p: string[] = [];
   return (
     <Box display='flex' flexDirection='column'>
-      {items.map((item, index) => {
-        if (item.options !== undefined) p = item.options;
-        //item.require = false;
+      {blockItem.map((item, index) => {
+        item.require = false;
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (

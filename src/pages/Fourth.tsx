@@ -1283,11 +1283,10 @@ export const Fourth: React.FC = () => {
         if (i.id === 18 && 'check' in i && i.check === false) {
           for (let z = 0; z < i.blockItem.length; z++) {
             if (i.blockItem[z].name === 'Топливо' && i.blockItem[z].value[0] !== '') {
-              i.blockItem[z].value.map((el) => {
-                str += `<trsdo:VehicleFuelKindCode>${fuelType[el]}</trsdo:VehicleFuelKindCode>
-                                <trsdo:VehicleFuelKindName>${el}</trsdo:VehicleFuelKindName>`;
-                return el;
-              });
+              for(let j = 0; j < i.blockItem[z].value.length; j++){
+                str += `<trsdo:VehicleFuelKindCode>${fuelType[i.blockItem[z].value[j]]}</trsdo:VehicleFuelKindCode>
+                                 <trsdo:VehicleFuelKindName>${i.blockItem[z].value[j]}</trsdo:VehicleFuelKindName>`;
+              }
             }
           }
         }
@@ -1690,10 +1689,9 @@ export const Fourth: React.FC = () => {
               i.blockItem[z].name === 'Положение и размещение приводного двигателя (двигателей)' &&
               i.blockItem[z].value[0] !== ''
             ) {
-              i.blockItem[z].value.map((el) => {
-                str += `<trsdo:VehicleComponentLocationText>${el}</trsdo:VehicleComponentLocationText>`;
-                return el;
-              });
+              for(let j = 0; j < i.blockItem[z].value.length; j++){
+                str += `<trsdo:VehicleComponentLocationText>${i.blockItem[z].value[j]}</trsdo:VehicleComponentLocationText>`;
+              }
             }
           }
         }
@@ -2068,10 +2066,9 @@ export const Fourth: React.FC = () => {
               i.blockItem[z].name === 'Цвет кузова (кабины, прицепа)' &&
               i.blockItem[z].value[0] !== ''
             ) {
-              i.blockItem[z].value.map((el) => {
-                str += `<trsdo:VehicleBodyColourCode>${color[el]}</trsdo:VehicleBodyColourCode>`;
-                return el;
-              });
+              for(let j = 0; j < i.blockItem[z].value.length; j++){
+                str += `<trsdo:VehicleBodyColourCode>${color[i.blockItem[z].value[j]]}</trsdo:VehicleBodyColourCode>`;
+              }
             }
             if (
               i.blockItem[z].name === 'Признак комбинированного цвета кузова (кабины, прицепа)' &&
@@ -2272,13 +2269,11 @@ export const Fourth: React.FC = () => {
 
   const getLabeling = (): string => {
     let str = '';
-    let check = false;
 
     blockss.map((item) => {
       item.blocksItem.map((i) => {
         if (i.id === 2 && 'check' in i && i.check === false) {
           str += `<trcdo:VehicleLabelingDetails>`;
-          check = true;
           for (let z = 0; z < i.blockItem.length; z++) {
             if (
               i.blockItem[z].name === 'Место расположения таблички изготовителя' &&

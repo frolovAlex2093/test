@@ -46,10 +46,9 @@ interface IBlock {
 }
 
 export const Block: React.FC<IBlock> = ({ blocksItem, onChangeBlock }) => {
-  const [blocksItemm, setBlockItem] = React.useState(blocksItem);
   return (
     <Box>
-      {blocksItemm.map((item, index) => {
+      {blocksItem.map((item, index) => {
         return (
           <Box key={index}>
             <Paper
