@@ -2310,7 +2310,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            files: []
+            files: [],
           }
         ]
       }

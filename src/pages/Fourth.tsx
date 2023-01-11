@@ -59,8 +59,8 @@ export const Fourth: React.FC = () => {
       );
 
       let maxCount = 0;
+      let newGroupBlock: number[] = [];
       let newGroup: number[] = [];
-      let newGroupp: number[] = [];
 
       setBlockss(
         blockss.map((item) => {
@@ -74,7 +74,7 @@ export const Fourth: React.FC = () => {
                   value: ['']
                 });
 
-                newGroup.push(max + 1);
+                newGroupBlock.push(max + 1);
                 max++;
               }
               i.blockItem.map((ii) => {
@@ -99,15 +99,15 @@ export const Fourth: React.FC = () => {
                 if ('groupBlock' in ii) {
                   for (let z = groupBlock.length - 1; z >= 0; z--) {
                     if (ii.groupBlock !== undefined) {
-                      ii.groupBlock = newGroup;
+                      ii.groupBlock = newGroupBlock;
                     }
                   }
                 }
                 if ('group' in ii && ii.group !== undefined) {
                   for (let z = ii.group.length - 1; z >= 0; z--) {
-                    newGroupp[z] = max - z;
+                    newGroup[z] = max - z;
                   }
-                  ii.group = newGroupp.reverse();
+                  ii.group = newGroup.reverse();
                 }
               }
 
@@ -121,10 +121,10 @@ export const Fourth: React.FC = () => {
     }
   };
 
-  const handleChange = (id: number, checked: boolean) => {
-    let check: boolean;
-    let check2: boolean;
-    let check3: boolean;
+  const handleChangeCheck = (id: number, checked: boolean) => {
+    let checkTires: boolean;
+    let checkTrailer: boolean;
+    let checkGear: boolean;
 
     setBlockss(
       blockss.map((item) => {
@@ -140,35 +140,35 @@ export const Fourth: React.FC = () => {
               } else if ('disabled' in ii) ii.disabled = !ii.disabled;
             }
             if (ii.name === 'Разные шины') {
-              check = ii.value[0] === 'true';
+              checkTires = ii.value[0] === 'true';
             }
             if (ii.name === 'Бесступенчатая коробка передач') {
-              check3 = ii.value[0] === 'true';
+              checkGear = ii.value[0] === 'true';
             }
             if (ii.name === 'Буксировка прицепа') {
-              check2 = ii.value[0] === 'true';
+              checkTrailer = ii.value[0] === 'true';
             }
             if (
               ii.name ===
               'Технически допустимая статическая вертикальная нагрузка в точке сцепки тягово-сцепного устройства'
             ) {
-              ii.disabled = !check2;
+              ii.disabled = !checkTrailer;
             }
             if (ii.name === 'Техническая допустимая буксируемая масса') {
-              ii.disabled = !check2;
+              ii.disabled = !checkTrailer;
             }
             if (ii.name === 'Масса прицепа с тормозной системой') {
-              ii.disabled = !check2;
+              ii.disabled = !checkTrailer;
             }
             if (ii.name === 'Масса прицепа без тормозной системы') {
-              ii.disabled = !check2;
+              ii.disabled = !checkTrailer;
             }
             return ii;
           });
           if (i.id === 27) {
             i.blockItem.map((ii) => {
               if (ii.name === 'Расположение') {
-                ii.disabled = check;
+                ii.disabled = checkTires;
               }
               for (let z = 0; z < i.blockItem.length; z++) {
                 if (i.blockItem[z].name === 'Двускатная шина' && i.blockItem[z].id === 96) {
@@ -185,13 +185,13 @@ export const Fourth: React.FC = () => {
           if (i.id === 30) {
             i.blockItem.map((ii) => {
               if (ii.name === 'Передаточное число') {
-                ii.disabled = check3;
+                ii.disabled = checkGear;
               }
               if (ii.name === 'Максимально') {
-                ii.disabled = !check3;
+                ii.disabled = !checkGear;
               }
               if (ii.name === 'Минимально') {
-                ii.disabled = !check3;
+                ii.disabled = !checkGear;
               }
               return ii;
             });
@@ -204,10 +204,9 @@ export const Fourth: React.FC = () => {
   };
 
   const handleChangeValue = async (id: number, value: string | string[] | null) => {
-    let check = true;
+    let checkPropulsion:boolean = true;
     let options: string[] = [];
-    let os = 0;
-    let checkOs: boolean;
+    let axes: number = 0;
     let ownerStr: string = '';
     setBlockss(
       blockss.map((item) => {
@@ -226,18 +225,17 @@ export const Fourth: React.FC = () => {
               }
             }
             if (ii.id === 166) {
-              os = parseInt(ii.value[0]);
-              for (let z = 0; z < os; z++) {
+              axes = parseInt(ii.value[0]);
+              for (let z = 0; z < axes; z++) {
                 options.push(`${z + 1}-ая ось`);
               }
             }
             if (ii.id === 13 && ii.value[0] === 'колесный движитель') {
-              check = false;
+              checkPropulsion = false;
             }
-            if (ii.id === 13 && ii.value[0] !== 'колесный движитель') check = true;
+            if (ii.id === 13 && ii.value[0] !== 'колесный движитель') checkPropulsion = true;
             if (ii.name === 'Разные шины') {
-              checkOs = ii.value[0] === 'true';
-              ii.disabled = check;
+              ii.disabled = checkPropulsion;
             }
             if (ii.name === 'Расположение' && 'options' in ii && ii.options !== undefined) {
               ii.options = options;
@@ -284,21 +282,6 @@ export const Fourth: React.FC = () => {
     );
   };
 
-  const handleMultiple = (id: number) => {
-    setBlockss(
-      blockss.map((item) => {
-        item.blocksItem.map((i) => {
-          i.blockItem.map((ii) => {
-            if (ii.id === id) if ('multiple' in ii) ii.multiple = !ii.multiple;
-            return ii;
-          });
-          return { ...i };
-        });
-        return { ...item };
-      })
-    );
-  };
-
   const onClickAdd = (id: number, group: number[] | undefined) => {
     if (group !== undefined) {
       let max = 0;
@@ -314,7 +297,6 @@ export const Fourth: React.FC = () => {
 
       let maxCount: number = 0;
       let indexStart = null;
-      let indexEnd = null;
       let newGroup: number[] = [];
       let newGroupp: number[] = [];
       let counter = 0;
@@ -324,14 +306,7 @@ export const Fourth: React.FC = () => {
         blockss.map((item) => {
           item.blocksItem.map((i) => {
             indexStart = i.blockItem.map((el) => el.id).indexOf(group[0]);
-            indexEnd = i.blockItem.map((el) => el.id).indexOf(group[group.length - 1]);
             if (indexStart >= 0) {
-              i.blockItem.map((ii) => {
-                if ('count' in ii && ii.count !== undefined) {
-                  if (ii.count > maxCount) maxCount = ii.count;
-                }
-                return ii;
-              });
               for (let z = 0; z < group.length; z++) {
                 if (i.blockItem[z].name === 'Двускатная шина') {
                   i.blockItem.splice(indexStart + z + group.length, 0, {
@@ -465,12 +440,10 @@ export const Fourth: React.FC = () => {
   };
 
   const onClickDelete = (id: number, group: number[] | undefined) => {
-    let index = null;
-    let indexII = 0;
-    let but: boolean[];
-    let idd: number;
-    let counter = 0;
-    let counterBlock = 0;
+    let index: number | null = null;
+    let buttons: boolean[];
+    let counter: number = 0;
+    let counterBlock: number = 0;
 
     if (group !== undefined) {
       setBlockss(
@@ -503,39 +476,23 @@ export const Fourth: React.FC = () => {
         })
       );
 
-      let max = 0;
       blockss.map((item) =>
         item.blocksItem.map((i) => {
           index = i.blockItem.map((el) => el.id).indexOf(group[0]);
           if (index > 0) {
-            for (let z = 0; z > i.blockItem.length; z++) {
-              if (i.blockItem[z].id === id) {
-                idd = i.blockItem[z - group.length].id;
-              }
-            }
-
             i.blockItem.map((ii) => {
               if (id === ii.id) {
-                if ('buttons' in ii && ii.buttons !== undefined) {
-                  but = ii.buttons;
-                }
-              }
-              if (
-                'count' in ii &&
-                ii.count !== undefined &&
-                'countBlock' in ii &&
-                ii.countBlock !== undefined &&
-                'buttons' in ii &&
-                ii.buttons !== undefined
-              ) {
-                counter = ii.count;
-                counterBlock = ii.countBlock;
-                but = ii.buttons;
-              }
-
-              if ('count' in ii && ii.count !== undefined) {
-                if (ii.count > max) {
-                  max = ii.count;
+                if (
+                  'count' in ii &&
+                  ii.count !== undefined &&
+                  'countBlock' in ii &&
+                  ii.countBlock !== undefined &&
+                  'buttons' in ii &&
+                  ii.buttons !== undefined
+                ) {
+                  counter = ii.count;
+                  counterBlock = ii.countBlock;
+                  buttons = ii.buttons;
                 }
               }
               return ii;
@@ -550,9 +507,7 @@ export const Fourth: React.FC = () => {
           item.blocksItem.map((i) => {
             index = i.blockItem.map((el) => el.id).indexOf(group[0]);
             if (index > 0) {
-              indexII = i.blockItem[i.blockItem.length - group.length].id;
               i.blockItem.splice(index, group.length);
-
               i.blockItem.map((ii) => {
                 if (
                   'count' in ii &&
@@ -561,26 +516,18 @@ export const Fourth: React.FC = () => {
                   ii.countBlock !== undefined &&
                   'buttons' in ii &&
                   ii.buttons !== undefined &&
-                  but !== undefined
+                  buttons !== undefined
                 ) {
-                  if (but[0] !== false) {
+                  if (buttons[0] !== false) {
                     if (counter - 1 === ii.count && counterBlock === ii.countBlock) {
-                      ii.buttons = but;
+                      ii.buttons = buttons;
                     }
                   }
                 }
                 return ii;
               });
             }
-            i.blockItem.map((ii) => {
-              if (ii.id === idd) {
-                if ('buttons' in ii && ii.buttons !== undefined) {
-                  ii.buttons = but;
-                }
-              }
 
-              return ii;
-            });
             return { ...i };
           });
           return { ...item };
@@ -660,7 +607,6 @@ export const Fourth: React.FC = () => {
 
   const uploadImage = async (event: any, id: number) => {
     const files = event.target.files;
-    alerts(files, event);
     if (alerts(files, event)) {
       let base64: any = [];
       let str: string[] = [];
@@ -1226,8 +1172,8 @@ export const Fourth: React.FC = () => {
                 i.blockItem[z].name !== ''
               ) {
                 str += `<trsdo:IsSupplementVehicleTyre>${i.blockItem[z].value[0] === '' || i.blockItem[z].value[0] === 'false'
-                    ? 'false'
-                    : 'true'
+                  ? 'false'
+                  : 'true'
                   }</trsdo:IsSupplementVehicleTyre>`;
               }
               if (
@@ -2795,9 +2741,8 @@ export const Fourth: React.FC = () => {
   return (
     <Context.Provider
       value={{
-        handleMultiple,
         handleRadio,
-        handleChange,
+        handleChangeCheck,
         handleChangeValue,
         onClickDelete,
         onClickAdd,

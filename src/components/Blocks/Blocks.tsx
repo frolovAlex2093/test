@@ -36,7 +36,7 @@ interface IBlock {
         buttons?: boolean[];
         groupBlock?: number[];
         count?: number;
-        files?: any[];
+        files?: string[];
         groupblockAdd?: number[];
         countBlock?: number;
         numeric?: boolean;

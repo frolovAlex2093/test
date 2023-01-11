@@ -40,7 +40,7 @@ interface IBlockItem {
     buttons?: boolean[];
     groupBlock?: number[];
     count?: number;
-    files?: any[];
+    files?: string[];
     groupblockAdd?: number[];
     countBlock?: number;
     buttonText?: string;
@@ -53,10 +53,9 @@ interface IBlockItem {
 
 export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   const {
-    handleChange,
+    handleChangeCheck,
     handleChangeValue,
     handleRadio,
-    handleMultiple,
     onClickDelete,
     onClickAdd,
     onCkickAddDopBlock,
@@ -69,7 +68,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
     <Box display='flex' flexDirection='column'>
       {items.map((item, index) => {
         if (item.options !== undefined) p = item.options;
-        //item.require = false;
+        item.require = false;
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -104,7 +103,9 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             ) : item.checkboxText ? (
               <Box display='flex' marginBottom='-10px' alignItems='center'>
                 <FormControlLabel
-                  control={<Checkbox onChange={() => handleMultiple?.(item.id)}></Checkbox>}
+                  control={<Checkbox onChange={() => { }
+                    // handleMultiple?.(item.id)
+                  }></Checkbox>}
                   label={item.checkboxText}
                 />
               </Box>
@@ -154,9 +155,9 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                         onBlur={
                           item.freeSolo
                             ? (value) => {
-                                handleChangeValue?.(item.id, value.target.value);
-                              }
-                            : () => {}
+                              handleChangeValue?.(item.id, value.target.value);
+                            }
+                            : () => { }
                         }
                       />
                     )}
@@ -170,7 +171,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     disabled={item.disabled}
                     control={
                       <Checkbox
-                        onChange={(event) => handleChange?.(item.id, event.target.checked)}
+                        onChange={(event) => handleChangeCheck?.(item.id, event.target.checked)}
                       ></Checkbox>
                     }
                     label={item.name}
@@ -222,7 +223,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     sx={{ marginLeft: '8px' }}
                     control={
                       <Checkbox
-                        onChange={(event) => handleChange?.(item.id, event.target.checked)}
+                        onChange={(event) => handleChangeCheck?.(item.id, event.target.checked)}
                       ></Checkbox>
                     }
                     label='Отсутствует'
@@ -254,7 +255,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             ) : (
               ''
             )}
-
+            {/* //buttons */}
             {item.button ? (
               item.buttonDelete && item.buttonAdd ? (
                 <Box display='flex' alignItems='center'>
@@ -383,6 +384,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             )}
             {item.type === 'files' ? (
               <TextField
+                error={item.error}
                 required={item.require}
                 variant='outlined'
                 type='file'
