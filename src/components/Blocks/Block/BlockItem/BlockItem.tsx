@@ -12,44 +12,10 @@ import {
   Typography
 } from '@mui/material';
 import React from 'react';
+import { IBlockItem } from '../../../../interfaces/interfaces';
 import { Context } from '../../../../pages/Third';
 
 const pp = [''];
-
-interface IBlockItem {
-  blockItem: {
-    name: string;
-    id: number;
-    type: string;
-    require?: boolean;
-    checkbox?: boolean;
-    disabled: boolean;
-    multiple?: boolean;
-    value: string | string[] | null;
-    radio?: string[];
-    checkboxText?: string;
-    button?: boolean;
-    buttonDelete?: boolean;
-    buttonAdd?: boolean;
-    group?: number[];
-    buttonGroup?: boolean;
-    checkboxGroup?: string[];
-    options?: string[];
-    endAdornment?: string;
-    label?: string;
-    buttons?: boolean[];
-    groupBlock?: number[];
-    count?: number;
-    files?: string[];
-    groupblockAdd?: number[];
-    countBlock?: number;
-    buttonText?: string;
-    pattern?: string;
-    numeric?: boolean;
-    freeSolo?: boolean;
-    error?: boolean;
-  }[];
-}
 
 export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   const {
@@ -65,7 +31,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-        //item.require = false;
+        item.require = false;
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -100,9 +66,14 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             ) : item.checkboxText ? (
               <Box display='flex' marginBottom='-10px' alignItems='center'>
                 <FormControlLabel
-                  control={<Checkbox onChange={() => { }
-                    // handleMultiple?.(item.id)
-                  }></Checkbox>}
+                  control={
+                    <Checkbox
+                      onChange={
+                        () => { }
+                        // handleMultiple?.(item.id)
+                      }
+                    ></Checkbox>
+                  }
                   label={item.checkboxText}
                 />
               </Box>
@@ -380,16 +351,33 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
               ''
             )}
             {item.type === 'files' ? (
-              <TextField
-                error={item.error}
-                required={item.require}
-                variant='outlined'
-                type='file'
-                inputProps={{ multiple: true, accept: 'image/png, image/jpeg' }}
-                onChange={(event) => {
-                  uploadImage?.(event, item.id);
-                }}
-              ></TextField>
+              <>
+                <TextField
+                  sx={{ marginTop: '-25px' }}
+                  error={item.pattern !== 'false'}
+                  required={item.require}
+                  variant='outlined'
+                  type='file'
+                  inputProps={{ multiple: true, accept: 'image/png, image/jpeg' }}
+                  onChange={(event) => {
+                    uploadImage?.(event, item.id);
+                  }}
+                ></TextField>
+                {item.pattern === 'false' ? (
+                  ''
+                ) : item.pattern === 'Приложите от 4 до 6 файлов' ||
+                  item.pattern === 'Присутствуют файлы больше 512кб' ? (
+                  <Alert
+                    variant='filled'
+                    severity='error'
+                    sx={{ marginBottom: '10px', marginTop: '10px' }}
+                  >
+                    {item.pattern}
+                  </Alert>
+                ) : (
+                  ''
+                )}
+              </>
             ) : (
               ''
             )}

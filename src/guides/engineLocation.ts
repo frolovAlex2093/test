@@ -1,4 +1,4 @@
-import { IDict } from '../pages/Third';
+import { IDict } from '../interfaces/interfaces';
 
 export const engineLocation: IDict = {
   'переднее продольное': '1',

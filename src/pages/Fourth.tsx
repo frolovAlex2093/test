@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import React from 'react';
 import { Blocks } from '../components';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 import { blocks2 } from '../fields/fields2';
 import {
   brakingType,
@@ -19,7 +20,7 @@ import {
 import { Context } from './Third';
 
 export const Fourth: React.FC = () => {
-  const [blockss, setBlockss] = React.useState(blocks2);
+  const [blocks, setBlocks] = React.useState(blocks2);
 
   const alertValidation = (pattern: string, value: string): boolean => {
     if (pattern === '^[0-9]{4}$' && /^[0-9]{4}$/.test(value) === false) return true;
@@ -48,13 +49,13 @@ export const Fourth: React.FC = () => {
     if (groupBlock !== undefined) {
       let max = 0;
       let indexStart = null;
-      blockss.map((item) =>
-        item.blocksItem.map((i) => {
-          i.blockItem.map((ii) => {
-            if (ii.id > max) max = ii.id;
-            return ii;
+      blocks.map((items) =>
+        items.blocksItem.map((item) => {
+          item.blockItem.map((i) => {
+            if (i.id > max) max = i.id;
+            return i;
           });
-          return i;
+          return item;
         })
       );
 
@@ -62,14 +63,14 @@ export const Fourth: React.FC = () => {
       let newGroupBlock: number[] = [];
       let newGroup: number[] = [];
 
-      setBlockss(
-        blockss.map((item) => {
-          item.blocksItem.map((i) => {
-            indexStart = i.blockItem.map((el) => el.id).indexOf(groupBlock[0]);
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            indexStart = item.blockItem.map((el) => el.id).indexOf(groupBlock[0]);
             if (indexStart >= 0) {
               for (let z = 0; z < groupBlock.length; z++) {
-                i.blockItem.splice(i.blockItem.length - z + groupBlock.length, 0, {
-                  ...i.blockItem[z + indexStart],
+                item.blockItem.splice(item.blockItem.length - z + groupBlock.length, 0, {
+                  ...item.blockItem[z + indexStart],
                   id: max + 1,
                   value: ['']
                 });
@@ -77,45 +78,45 @@ export const Fourth: React.FC = () => {
                 newGroupBlock.push(max + 1);
                 max++;
               }
-              i.blockItem.map((ii) => {
-                if ('count' in ii && ii.count !== undefined) {
-                  if (ii.count > maxCount) maxCount = ii.count;
+              item.blockItem.map((i) => {
+                if ('count' in i && i.count !== undefined) {
+                  if (i.count > maxCount) maxCount = i.count;
                 }
-                return ii;
+                return i;
               });
             }
-            i.blockItem.map((ii) => {
-              if (ii.id === max) {
-                if ('count' in ii && ii.count !== undefined) {
-                  ii.count = maxCount++;
+            item.blockItem.map((i) => {
+              if (i.id === max) {
+                if ('count' in i && i.count !== undefined) {
+                  i.count = maxCount++;
                 }
-                if ('countBlock' in ii && ii.countBlock !== undefined) {
-                  ii.countBlock++;
+                if ('countBlock' in i && i.countBlock !== undefined) {
+                  i.countBlock++;
                 }
-                if ('buttons' in ii && ii.buttons !== undefined) {
-                  ii.buttons = [true, true];
+                if ('buttons' in i && i.buttons !== undefined) {
+                  i.buttons = [true, true];
                 }
-                ii.checkbox = false;
-                if ('groupBlock' in ii) {
+                i.checkbox = false;
+                if ('groupBlock' in i) {
                   for (let z = groupBlock.length - 1; z >= 0; z--) {
-                    if (ii.groupBlock !== undefined) {
-                      ii.groupBlock = newGroupBlock;
+                    if (i.groupBlock !== undefined) {
+                      i.groupBlock = newGroupBlock;
                     }
                   }
                 }
-                if ('group' in ii && ii.group !== undefined) {
-                  for (let z = ii.group.length - 1; z >= 0; z--) {
+                if ('group' in i && i.group !== undefined) {
+                  for (let z = i.group.length - 1; z >= 0; z--) {
                     newGroup[z] = max - z;
                   }
-                  ii.group = newGroup.reverse();
+                  i.group = newGroup.reverse();
                 }
               }
 
-              return ii;
+              return i;
             });
-            return { ...i };
+            return { ...item };
           });
-          return { ...item };
+          return { ...items };
         })
       );
     }
@@ -126,158 +127,158 @@ export const Fourth: React.FC = () => {
     let checkTrailer: boolean;
     let checkGear: boolean;
 
-    setBlockss(
-      blockss.map((item) => {
-        item.blocksItem.map((i) => {
-          i.blockItem.map((ii) => {
-            if (ii.id === id) {
-              if (ii.type === 'checkbox') {
-                if (ii.value.includes('false') === true) {
-                  ii.value[0] = 'true';
+    setBlocks(
+      blocks.map((items) => {
+        items.blocksItem.map((item) => {
+          item.blockItem.map((i) => {
+            if (i.id === id) {
+              if (i.type === 'checkbox') {
+                if (i.value.includes('false') === true) {
+                  i.value[0] = 'true';
                 } else {
-                  ii.value[0] = 'false';
+                  i.value[0] = 'false';
                 }
-              } else if ('disabled' in ii) ii.disabled = !ii.disabled;
+              } else if ('disabled' in i) i.disabled = !i.disabled;
             }
-            if (ii.name === 'Разные шины') {
-              checkTires = ii.value[0] === 'true';
+            if (i.name === 'Разные шины') {
+              checkTires = i.value[0] === 'true';
             }
-            if (ii.name === 'Бесступенчатая коробка передач') {
-              checkGear = ii.value[0] === 'true';
+            if (i.name === 'Бесступенчатая коробка передач') {
+              checkGear = i.value[0] === 'true';
             }
-            if (ii.name === 'Буксировка прицепа') {
-              checkTrailer = ii.value[0] === 'true';
+            if (i.name === 'Буксировка прицепа') {
+              checkTrailer = i.value[0] === 'true';
             }
             if (
-              ii.name ===
+              i.name ===
               'Технически допустимая статическая вертикальная нагрузка в точке сцепки тягово-сцепного устройства'
             ) {
-              ii.disabled = !checkTrailer;
+              i.disabled = !checkTrailer;
             }
-            if (ii.name === 'Техническая допустимая буксируемая масса') {
-              ii.disabled = !checkTrailer;
+            if (i.name === 'Техническая допустимая буксируемая масса') {
+              i.disabled = !checkTrailer;
             }
-            if (ii.name === 'Масса прицепа с тормозной системой') {
-              ii.disabled = !checkTrailer;
+            if (i.name === 'Масса прицепа с тормозной системой') {
+              i.disabled = !checkTrailer;
             }
-            if (ii.name === 'Масса прицепа без тормозной системы') {
-              ii.disabled = !checkTrailer;
+            if (i.name === 'Масса прицепа без тормозной системы') {
+              i.disabled = !checkTrailer;
             }
-            return ii;
+            return i;
           });
-          if (i.id === 27) {
-            i.blockItem.map((ii) => {
-              if (ii.name === 'Расположение') {
-                ii.disabled = checkTires;
+          if (item.id === 27) {
+            item.blockItem.map((i) => {
+              if (i.name === 'Расположение') {
+                i.disabled = checkTires;
               }
-              for (let z = 0; z < i.blockItem.length; z++) {
-                if (i.blockItem[z].name === 'Двускатная шина' && i.blockItem[z].id === 96) {
-                  i.blockItem[z + 3].disabled = !(i.blockItem[z].value[0] === 'true');
-                  i.blockItem[z + 4].disabled = i.blockItem[z + 3].disabled;
-                } else if (i.blockItem[z].name === 'Двускатная шина') {
-                  i.blockItem[z + 3].disabled = i.blockItem[z].value[0] === 'true';
-                  i.blockItem[z + 4].disabled = i.blockItem[z + 3].disabled;
+              for (let z = 0; z < item.blockItem.length; z++) {
+                if (item.blockItem[z].name === 'Двускатная шина' && item.blockItem[z].id === 96) {
+                  item.blockItem[z + 3].disabled = !(item.blockItem[z].value[0] === 'true');
+                  item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
+                } else if (item.blockItem[z].name === 'Двускатная шина') {
+                  item.blockItem[z + 3].disabled = item.blockItem[z].value[0] === 'true';
+                  item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
                 }
               }
-              return ii;
+              return i;
             });
           }
-          if (i.id === 30) {
-            i.blockItem.map((ii) => {
-              if (ii.name === 'Передаточное число') {
-                ii.disabled = checkGear;
+          if (item.id === 30) {
+            item.blockItem.map((i) => {
+              if (i.name === 'Передаточное число') {
+                i.disabled = checkGear;
               }
-              if (ii.name === 'Максимально') {
-                ii.disabled = !checkGear;
+              if (i.name === 'Максимально') {
+                i.disabled = !checkGear;
               }
-              if (ii.name === 'Минимально') {
-                ii.disabled = !checkGear;
+              if (i.name === 'Минимально') {
+                i.disabled = !checkGear;
               }
-              return ii;
+              return i;
             });
           }
-          return { ...i };
+          return { ...item };
         });
-        return { ...item };
+        return { ...items };
       })
     );
   };
 
   const handleChangeValue = async (id: number, value: string | string[] | null) => {
-    let checkPropulsion:boolean = true;
+    let checkPropulsion: boolean = true;
     let options: string[] = [];
     let axes: number = 0;
     let ownerStr: string = '';
-    setBlockss(
-      blockss.map((item) => {
-        item.blocksItem.map((i) => {
-          i.blockItem.map((ii) => {
-            if (ii.id === id) {
+    setBlocks(
+      blocks.map((items) => {
+        items.blocksItem.map((item) => {
+          item.blockItem.map((i) => {
+            if (i.id === id) {
               if (Array.isArray(value)) {
-                ii.value = value;
+                i.value = value;
               } else if (value === null) {
-                ii.value[0] = '';
+                i.value[0] = '';
               } else {
-                ii.value[0] = value;
+                i.value[0] = value;
               }
-              if ('pattern' in ii && ii.pattern !== undefined && 'error' in ii) {
-                ii.error = alertValidation(ii.pattern, ii.value[0]);
+              if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
+                i.error = alertValidation(i.pattern, i.value[0]);
               }
             }
-            if (ii.id === 166) {
-              axes = parseInt(ii.value[0]);
+            if (i.id === 166) {
+              axes = parseInt(i.value[0]);
               for (let z = 0; z < axes; z++) {
                 options.push(`${z + 1}-ая ось`);
               }
             }
-            if (ii.id === 13 && ii.value[0] === 'колесный движитель') {
+            if (i.id === 13 && i.value[0] === 'колесный движитель') {
               checkPropulsion = false;
             }
-            if (ii.id === 13 && ii.value[0] !== 'колесный движитель') checkPropulsion = true;
-            if (ii.name === 'Разные шины') {
-              ii.disabled = checkPropulsion;
+            if (i.id === 13 && i.value[0] !== 'колесный движитель') checkPropulsion = true;
+            if (i.name === 'Разные шины') {
+              i.disabled = checkPropulsion;
             }
-            if (ii.name === 'Расположение' && 'options' in ii && ii.options !== undefined) {
-              ii.options = options;
+            if (i.name === 'Расположение' && 'options' in i && i.options !== undefined) {
+              i.options = options;
             }
-            if (ii.name === 'Порядковый номер оси' && 'options' in ii && ii.options !== undefined) {
-              ii.options = options;
+            if (i.name === 'Порядковый номер оси' && 'options' in i && i.options !== undefined) {
+              i.options = options;
             }
-            if (ii.name === 'Тип владельца') {
-              if (ii.value[0] === 'Юридическое лицо') {
+            if (i.name === 'Тип владельца') {
+              if (i.value[0] === 'Юридическое лицо') {
                 ownerStr = 'Идентификатор (ОГРН)';
-              } else if (ii.value[0] === 'Физическое лицо') {
+              } else if (i.value[0] === 'Физическое лицо') {
                 ownerStr = 'Идентификатор (СНИЛС)';
-              } else if (ii.value[0] === '') {
+              } else if (i.value[0] === '') {
                 ownerStr = 'Идентификатор (ОГРН для ЮЛ/СНИЛС для ФЛ)';
               }
             }
 
-            return ii;
+            return i;
           });
-          if (i.id === 44) {
-            i.blockItem[1].name = ownerStr;
+          if (item.id === 44) {
+            item.blockItem[1].name = ownerStr;
           }
-          return i;
+          return item;
         });
-        return item;
+        return items;
       })
     );
   };
 
   const handleRadio = (id: number, value: string) => {
-    setBlockss(
-      blockss.map((item) => {
-        item.blocksItem.map((i) => {
-          i.blockItem.map((ii) => {
-            if (ii.id === id) {
-              ii.name = value;
+    setBlocks(
+      blocks.map((items) => {
+        items.blocksItem.map((item) => {
+          item.blockItem.map((i) => {
+            if (i.id === id) {
+              i.name = value;
             }
-            return ii;
+            return i;
           });
-          return { ...i };
+          return { ...item };
         });
-        return { ...item };
+        return { ...items };
       })
     );
   };
@@ -285,13 +286,13 @@ export const Fourth: React.FC = () => {
   const onClickAdd = (id: number, group: number[] | undefined) => {
     if (group !== undefined) {
       let max = 0;
-      blockss.map((item) =>
-        item.blocksItem.map((i) => {
-          i.blockItem.map((ii) => {
-            if (ii.id > max) max = ii.id;
-            return ii;
+      blocks.map((items) =>
+        items.blocksItem.map((item) => {
+          item.blockItem.map((i) => {
+            if (i.id > max) max = i.id;
+            return i;
           });
-          return i;
+          return item;
         })
       );
 
@@ -302,21 +303,21 @@ export const Fourth: React.FC = () => {
       let counter = 0;
       let counterBlock = 0;
 
-      setBlockss(
-        blockss.map((item) => {
-          item.blocksItem.map((i) => {
-            indexStart = i.blockItem.map((el) => el.id).indexOf(group[0]);
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            indexStart = item.blockItem.map((el) => el.id).indexOf(group[0]);
             if (indexStart >= 0) {
               for (let z = 0; z < group.length; z++) {
-                if (i.blockItem[z].name === 'Двускатная шина') {
-                  i.blockItem.splice(indexStart + z + group.length, 0, {
-                    ...i.blockItem[z + indexStart],
+                if (item.blockItem[z].name === 'Двускатная шина') {
+                  item.blockItem.splice(indexStart + z + group.length, 0, {
+                    ...item.blockItem[z + indexStart],
                     id: max + 1,
                     value: ['false']
                   });
                 } else {
-                  i.blockItem.splice(indexStart + z + group.length, 0, {
-                    ...i.blockItem[z + indexStart],
+                  item.blockItem.splice(indexStart + z + group.length, 0, {
+                    ...item.blockItem[z + indexStart],
                     id: max + 1,
                     value: ['']
                   });
@@ -325,115 +326,119 @@ export const Fourth: React.FC = () => {
                 newGroup.push(max + 1);
                 max++;
               }
-              i.blockItem.map((ii) => {
-                if ('count' in ii && ii.count !== undefined) {
+              item.blockItem.map((i) => {
+                if ('count' in i && i.count !== undefined) {
                   if (
-                    'countBlock' in ii &&
-                    ii.countBlock !== undefined &&
-                    counterBlock === ii.countBlock
+                    'countBlock' in i &&
+                    i.countBlock !== undefined &&
+                    counterBlock === i.countBlock
                   ) {
-                    ii.count = counter;
+                    i.count = counter;
                     counter++;
                   } else {
                     counterBlock++;
                     counter = 0;
-                    ii.count = 0;
+                    i.count = 0;
                     counter++;
                   }
                 }
-                return ii;
+                return i;
               });
-              if (i.id === 27) {
-                for (let z = 0; z < i.blockItem.length; z++) {
-                  if (i.blockItem[z].name === 'Двускатная шина' && i.blockItem[z].id === 96) {
-                    i.blockItem[z + 3].disabled = !(i.blockItem[z].value[0] === 'true');
-                    i.blockItem[z + 4].disabled = i.blockItem[z + 3].disabled;
+              if (item.id === 27) {
+                for (let z = 0; z < item.blockItem.length; z++) {
+                  if (item.blockItem[z].name === 'Двускатная шина' && item.blockItem[z].id === 96) {
+                    item.blockItem[z + 3].disabled = !(item.blockItem[z].value[0] === 'true');
+                    item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
                   } else if (
-                    i.blockItem[z].name === 'Двускатная шина' &&
-                    i.blockItem[z].value[0] === 'false'
+                    item.blockItem[z].name === 'Двускатная шина' &&
+                    item.blockItem[z].value[0] === 'false'
                   ) {
-                    i.blockItem[z + 3].disabled = false;
-                    i.blockItem[z + 4].disabled = i.blockItem[z + 3].disabled;
+                    item.blockItem[z + 3].disabled = false;
+                    item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
                   } else if (
-                    i.blockItem[z].name === 'Двускатная шина' &&
-                    i.blockItem[z].value[0] === 'true'
+                    item.blockItem[z].name === 'Двускатная шина' &&
+                    item.blockItem[z].value[0] === 'true'
                   ) {
-                    i.blockItem[z + 3].disabled = true;
-                    i.blockItem[z + 4].disabled = i.blockItem[z + 3].disabled;
+                    item.blockItem[z + 3].disabled = true;
+                    item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
                   }
                 }
               }
             }
-            i.blockItem.map((ii) => {
-              if (ii.id === id) {
-                if ('buttons' in ii && ii.buttons !== undefined) {
-                  ii.buttons = [false, false];
+            item.blockItem.map((i) => {
+              if (i.id === id) {
+                if ('buttons' in i && i.buttons !== undefined) {
+                  i.buttons = [false, false];
                 }
               }
-              if (ii.id === max) {
-                if ('count' in ii && ii.count !== undefined) {
-                  ii.count = maxCount + 1;
+              if (i.id === max) {
+                if ('count' in i && i.count !== undefined) {
+                  i.count = maxCount + 1;
                 }
-                if ('buttonAdd' in ii) {
-                  ii.buttonAdd = true;
+                if ('buttonAdd' in i) {
+                  i.buttonAdd = true;
                 }
-                if ('buttonDelete' in ii) {
-                  ii.buttonDelete = true;
+                if ('buttonDelete' in i) {
+                  i.buttonDelete = true;
                 }
-                ii.checkbox = false;
-                if ('group' in ii && ii.group !== undefined) {
+                i.checkbox = false;
+                if ('group' in i && i.group !== undefined) {
                   for (let z = group.length - 1; z >= 0; z--) {
                     newGroupp[z] = max - z;
                   }
-                  ii.group = newGroupp.reverse();
+                  i.group = newGroupp.reverse();
                 }
-                if ('groupBlock' in ii && ii.group !== undefined && ii.groupBlock !== undefined) {
+                if ('groupBlock' in i && i.group !== undefined && i.groupBlock !== undefined) {
                   for (let z = 0; z < newGroupp.length; z++) {
-                    ii.groupBlock.push(newGroupp[z]);
+                    i.groupBlock.push(newGroupp[z]);
                   }
                 }
               }
-              return ii;
+              return i;
             });
-            return { ...i };
+            return { ...item };
           });
-          return { ...item };
+          return { ...items };
         })
       );
     } else {
       let max = 0;
-      blockss.map((item) =>
-        item.blocksItem.map((i) => {
-          i.blockItem.map((ii) => {
-            if (ii.id > max) max = ii.id;
-            return ii;
+      blocks.map((items) =>
+        items.blocksItem.map((item) => {
+          item.blockItem.map((i) => {
+            if (i.id > max) max = i.id;
+            return i;
           });
-          return i;
+          return item;
         })
       );
       let index = null;
-      setBlockss(
-        blockss.map((item) => {
-          item.blocksItem.map((i) => {
-            index = i.blockItem.map((el) => el.id).indexOf(id);
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            index = item.blockItem.map((el) => el.id).indexOf(id);
             if (index >= 0) {
-              i.blockItem.splice(index + 1, 0, { ...i.blockItem[index], id: max + 1, value: [''] });
+              item.blockItem.splice(index + 1, 0, {
+                ...item.blockItem[index],
+                id: max + 1,
+                value: ['']
+              });
             }
-            i.blockItem.map((ii) => {
-              if (ii.id === max + 1) {
-                if ('buttonAdd' in ii) {
-                  ii.buttonAdd = true;
+            item.blockItem.map((i) => {
+              if (i.id === max + 1) {
+                if ('buttonAdd' in i) {
+                  i.buttonAdd = true;
                 }
-                if ('buttonDelete' in ii) {
-                  ii.buttonDelete = true;
+                if ('buttonDelete' in i) {
+                  i.buttonDelete = true;
                 }
-                ii.checkbox = false;
+                i.checkbox = false;
               }
-              return ii;
+              return i;
             });
-            return { ...i };
+            return { ...item };
           });
-          return { ...item };
+          return { ...items };
         })
       );
     }
@@ -446,128 +451,128 @@ export const Fourth: React.FC = () => {
     let counterBlock: number = 0;
 
     if (group !== undefined) {
-      setBlockss(
-        blockss.map((item) => {
-          item.blocksItem.map((i) => {
-            index = i.blockItem.map((el) => el.id).indexOf(group[0]);
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            index = item.blockItem.map((el) => el.id).indexOf(group[0]);
             if (index > 0) {
-              i.blockItem.map((ii) => {
-                if ('count' in ii && ii.count !== undefined) {
+              item.blockItem.map((i) => {
+                if ('count' in i && i.count !== undefined) {
                   if (
-                    'countBlock' in ii &&
-                    ii.countBlock !== undefined &&
-                    counterBlock === ii.countBlock
+                    'countBlock' in i &&
+                    i.countBlock !== undefined &&
+                    counterBlock === i.countBlock
                   ) {
-                    ii.count = counter;
+                    i.count = counter;
                     counter++;
                   } else {
                     counterBlock++;
                     counter = 0;
-                    ii.count = 0;
+                    i.count = 0;
                     counter++;
                   }
                 }
-                return ii;
+                return i;
               });
             }
-            return i;
+            return item;
           });
+          return items;
+        })
+      );
+
+      blocks.map((items) =>
+        items.blocksItem.map((item) => {
+          index = item.blockItem.map((el) => el.id).indexOf(group[0]);
+          if (index > 0) {
+            item.blockItem.map((i) => {
+              if (id === i.id) {
+                if (
+                  'count' in i &&
+                  i.count !== undefined &&
+                  'countBlock' in i &&
+                  i.countBlock !== undefined &&
+                  'buttons' in i &&
+                  i.buttons !== undefined
+                ) {
+                  counter = i.count;
+                  counterBlock = i.countBlock;
+                  buttons = i.buttons;
+                }
+              }
+              return i;
+            });
+          }
           return item;
         })
       );
 
-      blockss.map((item) =>
-        item.blocksItem.map((i) => {
-          index = i.blockItem.map((el) => el.id).indexOf(group[0]);
-          if (index > 0) {
-            i.blockItem.map((ii) => {
-              if (id === ii.id) {
-                if (
-                  'count' in ii &&
-                  ii.count !== undefined &&
-                  'countBlock' in ii &&
-                  ii.countBlock !== undefined &&
-                  'buttons' in ii &&
-                  ii.buttons !== undefined
-                ) {
-                  counter = ii.count;
-                  counterBlock = ii.countBlock;
-                  buttons = ii.buttons;
-                }
-              }
-              return ii;
-            });
-          }
-          return i;
-        })
-      );
-
-      setBlockss(
-        blockss.map((item) => {
-          item.blocksItem.map((i) => {
-            index = i.blockItem.map((el) => el.id).indexOf(group[0]);
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            index = item.blockItem.map((el) => el.id).indexOf(group[0]);
             if (index > 0) {
-              i.blockItem.splice(index, group.length);
-              i.blockItem.map((ii) => {
+              item.blockItem.splice(index, group.length);
+              item.blockItem.map((i) => {
                 if (
-                  'count' in ii &&
-                  ii.count !== undefined &&
-                  'countBlock' in ii &&
-                  ii.countBlock !== undefined &&
-                  'buttons' in ii &&
-                  ii.buttons !== undefined &&
+                  'count' in i &&
+                  i.count !== undefined &&
+                  'countBlock' in i &&
+                  i.countBlock !== undefined &&
+                  'buttons' in i &&
+                  i.buttons !== undefined &&
                   buttons !== undefined
                 ) {
                   if (buttons[0] !== false) {
-                    if (counter - 1 === ii.count && counterBlock === ii.countBlock) {
-                      ii.buttons = buttons;
+                    if (counter - 1 === i.count && counterBlock === i.countBlock) {
+                      i.buttons = buttons;
                     }
                   }
                 }
-                return ii;
+                return i;
               });
             }
 
-            return { ...i };
+            return { ...item };
           });
-          return { ...item };
+          return { ...items };
         })
       );
     } else {
-      setBlockss(
-        blockss.map((item) => {
-          item.blocksItem.map((i) => {
-            index = i.blockItem.map((el) => el.id).indexOf(id);
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            index = item.blockItem.map((el) => el.id).indexOf(id);
             if (index > 0) {
-              i.blockItem.splice(index, 1);
+              item.blockItem.splice(index, 1);
             }
-            i.blockItem.map((ii) => {
-              return ii;
+            item.blockItem.map((i) => {
+              return i;
             });
-            return { ...i };
+            return { ...item };
           });
-          return { ...item };
+          return { ...items };
         })
       );
     }
   };
 
   const onChangeBlock = (id: number) => {
-    setBlockss(
-      blockss.map((item) => {
-        item.blocksItem.map((i) => {
-          if (i.id === id) {
-            if ('check' in i) {
-              i.check = !i.check;
+    setBlocks(
+      blocks.map((items) => {
+        items.blocksItem.map((item) => {
+          if (item.id === id) {
+            if ('check' in item) {
+              item.check = !item.check;
             }
-            i.blockItem.map((ii) => {
-              ii.value = [''];
-              return ii;
+            item.blockItem.map((i) => {
+              i.value = [''];
+              return i;
             });
           }
-          return i;
+          return item;
         });
-        return item;
+        return items;
       })
     );
   };
@@ -589,13 +594,45 @@ export const Fourth: React.FC = () => {
 
   const alerts = (files: any, event: any) => {
     if (files.length < 4 || files.length > 6) {
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            if (item.id === 49) {
+              item.blockItem.map((i) => {
+                if ('pattern' in i && i.pattern !== undefined) {
+                  i.pattern = 'Приложите от 4 до 6 файлов';
+                }
+                return i;
+              });
+            }
+            return item;
+          });
+          return items;
+        })
+      );
       alert('Приложите от 4 до 6 файлов');
       event.preventDefault();
       return false;
     } else {
-      for (let i = 0; i < files.length; i++) {
-        if (files[i].size > 512 * 1024 * 8) {
-          alert(`Файл ${files[i].name} больше 512кб`);
+      for (let j = 0; j < files.length; j++) {
+        if (files[j].size > 512 * 1024 * 8) {
+          setBlocks(
+            blocks.map((items) => {
+              items.blocksItem.map((item) => {
+                if (item.id === 49) {
+                  item.blockItem.map((i) => {
+                    if ('pattern' in i && i.pattern !== undefined) {
+                      i.pattern = `Присутствуют файлы больше 512кб`;
+                    }
+                    return i;
+                  });
+                }
+                return item;
+              });
+              return items;
+            })
+          );
+          alert(`Файл ${files[j].name} больше 512кб`);
           event.preventDefault();
           return false;
         } else {
@@ -611,29 +648,32 @@ export const Fourth: React.FC = () => {
       let base64: any = [];
       let str: string[] = [];
       let filess: any = [];
-      for (let i = 0; i < files.length; i++) {
-        base64[i] = await convertBase64(event.target.files[i]);
-        if (typeof base64[i] === 'string') {
-          str[i] = base64[i] as string;
-          filess[i] = files[i].name;
+      for (let item = 0; item < files.length; item++) {
+        base64[item] = await convertBase64(event.target.files[item]);
+        if (typeof base64[item] === 'string') {
+          str[item] = base64[item] as string;
+          filess[item] = files[item].name;
         }
-        str[i] = str[i].split(',')[1];
+        str[item] = str[item].split(',')[1];
       }
-      setBlockss(
-        blockss.map((item) => {
-          item.blocksItem.map((i) => {
-            i.blockItem.map((ii) => {
-              if (ii.id === id) {
-                ii.value = str;
-                if ('files' in ii) {
-                  ii.files = filess;
+      setBlocks(
+        blocks.map((items) => {
+          items.blocksItem.map((item) => {
+            item.blockItem.map((i) => {
+              if (i.id === id) {
+                i.value = str;
+                if ('files' in i) {
+                  i.files = filess;
+                }
+                if ('pattern' in i && i.pattern !== undefined) {
+                  i.pattern = 'false';
                 }
               }
-              return ii;
+              return i;
             });
-            return i;
+            return item;
           });
-          return item;
+          return items;
         })
       );
     } else {
@@ -646,45 +686,45 @@ export const Fourth: React.FC = () => {
   const getAxes = (num: string, check: boolean): string => {
     let str = '';
     let str2 = '';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 55) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 55) {
           str += `<trcdo:VehicleAxleDetails>`;
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].value[0].includes('ось') && i.blockItem[z].value[0] === num) {
-              if (i.blockItem[z + 2].value.includes('Колеса со сдвоенными шинами')) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].value[0].includes('ось') && item.blockItem[z].value[0] === num) {
+              if (item.blockItem[z + 2].value.includes('Колеса со сдвоенными шинами')) {
                 str2 += `<trsdo:DualTireAxleIndicator>true</trsdo:DualTireAxleIndicator>`;
               } else {
                 str2 += `<trsdo:DualTireAxleIndicator>false</trsdo:DualTireAxleIndicator>`;
               }
-              if (i.blockItem[z + 2].value.includes('Управляемая ось')) {
+              if (item.blockItem[z + 2].value.includes('Управляемая ось')) {
                 str2 += `<trsdo:SteeringAxleIndicator>true</trsdo:SteeringAxleIndicator>`;
               } else {
                 str2 += `<trsdo:SteeringAxleIndicator>false</trsdo:SteeringAxleIndicator>`;
               }
-              if (i.blockItem[z + 2].value.includes('Ведущая ось')) {
+              if (item.blockItem[z + 2].value.includes('Ведущая ось')) {
                 str2 += `<trsdo:DrivingAxleIndicator>true</trsdo:DrivingAxleIndicator>`;
               } else {
                 str2 += `<trsdo:DrivingAxleIndicator>false</trsdo:DrivingAxleIndicator>`;
               }
-              if (i.blockItem[z + 2].value.includes('Тормозная ось')) {
+              if (item.blockItem[z + 2].value.includes('Тормозная ось')) {
                 str2 += `<trsdo:BrakingAxleIndicator>true</trsdo:BrakingAxleIndicator>`;
               } else {
                 str2 += `<trsdo:BrakingAxleIndicator>false</trsdo:BrakingAxleIndicator>`;
               }
 
               str += `
-                            <trsdo:VehicleAxleOrdinal>${i.blockItem[z].value[0].split('-')[0]
+                            <trsdo:VehicleAxleOrdinal>${item.blockItem[z].value[0].split('-')[0]
                 }</trsdo:VehicleAxleOrdinal>
-                                ${i.blockItem[z + 1].value[0] === ''
+                                ${item.blockItem[z + 1].value[0] === ''
                   ? ''
-                  : `<trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure measurementUnitCode="KGM">${i.blockItem[z + 1].value[0]
+                  : `<trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure measurementUnitCode="KGM">${item.blockItem[z + 1].value[0]
                   }</trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure>`
                 }
                             ${str2}
-                            ${i.blockItem[z + 3].value[0] === ''
+                            ${item.blockItem[z + 3].value[0] === ''
                   ? ''
-                  : `<trsdo:VehicleAxleSweptPathMeasure measurementUnitCode="MMT">${i.blockItem[z + 3].value[0]
+                  : `<trsdo:VehicleAxleSweptPathMeasure measurementUnitCode="MMT">${item.blockItem[z + 3].value[0]
                   }</trsdo:VehicleAxleSweptPathMeasure>`
                 }
                            `;
@@ -692,53 +732,56 @@ export const Fourth: React.FC = () => {
           }
         }
         str2 = '';
-        if (i.id === 27) {
+        if (item.id === 27) {
           if (check) {
-            for (let z = 0; z < i.blockItem.length; z++) {
-              if (i.blockItem[z].value[0].includes('ось') && i.blockItem[z].value[0] === num) {
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (
+                item.blockItem[z].value[0].includes('ось') &&
+                item.blockItem[z].value[0] === num
+              ) {
                 if (
-                  i.blockItem[z + 3].value[0] !== '' &&
-                  i.blockItem[z + 4].value[0] !== '' &&
-                  i.blockItem[z + 5].value[0] !== '' &&
-                  i.blockItem[z + 6].value[0] !== ''
+                  item.blockItem[z + 3].value[0] !== '' &&
+                  item.blockItem[z + 4].value[0] !== '' &&
+                  item.blockItem[z + 5].value[0] !== '' &&
+                  item.blockItem[z + 6].value[0] !== ''
                 ) {
-                  str2 = `${i.blockItem[z + 3].value[0]}-${i.blockItem[z + 4].value[0]}/${i.blockItem[z + 5].value[0]
-                    }-${i.blockItem[z + 6].value[0]}`;
+                  str2 = `${item.blockItem[z + 3].value[0]}-${item.blockItem[z + 4].value[0]}/${item.blockItem[z + 5].value[0]
+                    }-${item.blockItem[z + 6].value[0]}`;
                 } else if (
-                  i.blockItem[z + 3].value[0] !== '' &&
-                  i.blockItem[z + 4].value[0] === '' &&
-                  i.blockItem[z + 5].value[0] !== '' &&
-                  i.blockItem[z + 6].value[0] === ''
+                  item.blockItem[z + 3].value[0] !== '' &&
+                  item.blockItem[z + 4].value[0] === '' &&
+                  item.blockItem[z + 5].value[0] !== '' &&
+                  item.blockItem[z + 6].value[0] === ''
                 ) {
-                  str2 = `${i.blockItem[z + 3].value[0]}/${i.blockItem[z + 5].value[0]}`;
+                  str2 = `${item.blockItem[z + 3].value[0]}/${item.blockItem[z + 5].value[0]}`;
                 } else if (
-                  i.blockItem[z + 3].value[0] !== '' &&
-                  i.blockItem[z + 4].value[0] !== '' &&
-                  i.blockItem[z + 5].value[0] === '' &&
-                  i.blockItem[z + 6].value[0] === ''
+                  item.blockItem[z + 3].value[0] !== '' &&
+                  item.blockItem[z + 4].value[0] !== '' &&
+                  item.blockItem[z + 5].value[0] === '' &&
+                  item.blockItem[z + 6].value[0] === ''
                 ) {
-                  str2 = `${i.blockItem[z + 3].value[0]}-${i.blockItem[z + 4].value[0]}/-`;
+                  str2 = `${item.blockItem[z + 3].value[0]}-${item.blockItem[z + 4].value[0]}/-`;
                 } else if (
-                  i.blockItem[z + 3].value[0] !== '' &&
-                  i.blockItem[z + 4].value[0] === '' &&
-                  i.blockItem[z + 5].value[0] === '' &&
-                  i.blockItem[z + 6].value[0] === ''
+                  item.blockItem[z + 3].value[0] !== '' &&
+                  item.blockItem[z + 4].value[0] === '' &&
+                  item.blockItem[z + 5].value[0] === '' &&
+                  item.blockItem[z + 6].value[0] === ''
                 ) {
-                  str2 = `${i.blockItem[z + 3].value[0]}/-`;
+                  str2 = `${item.blockItem[z + 3].value[0]}/-`;
                 } else if (
-                  i.blockItem[z + 3].value[0] === '' &&
-                  i.blockItem[z + 4].value[0] === '' &&
-                  i.blockItem[z + 5].value[0] !== '' &&
-                  i.blockItem[z + 6].value[0] === ''
+                  item.blockItem[z + 3].value[0] === '' &&
+                  item.blockItem[z + 4].value[0] === '' &&
+                  item.blockItem[z + 5].value[0] !== '' &&
+                  item.blockItem[z + 6].value[0] === ''
                 ) {
-                  str2 = `-/${i.blockItem[z + 5].value[0]}`;
+                  str2 = `-/${item.blockItem[z + 5].value[0]}`;
                 }
 
                 str += `<trcdo:VehicleTyre>
-                            <trsdo:VehicleTyreKindSize>${i.blockItem[z + 1].value[0]
+                            <trsdo:VehicleTyreKindSize>${item.blockItem[z + 1].value[0]
                   }</trsdo:VehicleTyreKindSize>
                             <trsdo:VehicleTyreKindIndex>${str2}</trsdo:VehicleTyreKindIndex>
-                            <trsdo:VehicleTyreKindSpeed>${i.blockItem[z + 7].value[0]
+                            <trsdo:VehicleTyreKindSpeed>${item.blockItem[z + 7].value[0]
                   }</trsdo:VehicleTyreKindSpeed>
                             </trcdo:VehicleTyre>`;
               }
@@ -746,9 +789,9 @@ export const Fourth: React.FC = () => {
           }
           str += `</trcdo:VehicleAxleDetails>`;
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     return str;
   };
@@ -756,70 +799,86 @@ export const Fourth: React.FC = () => {
   const getTransmissions = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
         //трансмиссия
-        if (i.id === 29 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleTransmissionText>${i.blockItem[z].value[0]}</trsdo:VehicleTransmissionText>`;
+        if (item.id === 29 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleTransmissionText>${item.blockItem[z].value[0]}</trsdo:VehicleTransmissionText>`;
             }
-            if (i.blockItem[z].name === 'Схема трансмиссии' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:MachineTransmissionText>${i.blockItem[z].value[0]}</trsdo:MachineTransmissionText>`;
+            if (
+              item.blockItem[z].name === 'Схема трансмиссии' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:MachineTransmissionText>${item.blockItem[z].value[0]}</trsdo:MachineTransmissionText>`;
             }
           }
         }
         //Коробка передач
-        if (i.id === 30 && 'check' in i && i.check === false) {
+        if (item.id === 30 && 'check' in item && item.check === false) {
           str +=
             '<trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>05</trsdo:VehicleUnitKindCode>';
 
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z === 0) {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z === 0
+            ) {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Маркировка' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentModelCode>${i.blockItem[z].value[0]}</trsdo:VehicleComponentModelCode>`;
+            if (item.blockItem[z].name === 'Маркировка' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentModelCode>${item.blockItem[z].value[0]}</trsdo:VehicleComponentModelCode>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
-            }
-            if (i.blockItem[z].name === 'Число передач вперед' && i.blockItem[z].value[0] !== '') {
-              if (
-                !isNaN(parseInt(i.blockItem[z].value[0])) &&
-                !isNaN(parseInt(i.blockItem[z + 1].value[0]))
-              )
-                str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(i.blockItem[z].value[0]) + parseInt(i.blockItem[z + 1].value[0])
-                  }</trsdo:TransmissionUnitGearQuantity>`;
-              else if (!isNaN(parseInt(i.blockItem[z].value[0])))
-                str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(
-                  i.blockItem[z].value[0]
-                )}</trsdo:TransmissionUnitGearQuantity>`;
-              else if (!isNaN(parseInt(i.blockItem[z + 1].value[0])))
-                str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(
-                  i.blockItem[z + 1].value[0]
-                )}</trsdo:TransmissionUnitGearQuantity>`;
-            }
-            if (i.blockItem[z].name === 'Наименование передачи' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
             if (
-              i.blockItem[z].name === 'Вид передаточного числа' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Число передач вперед' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:TransmissionUnitGearType>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
+              if (
+                !isNaN(parseInt(item.blockItem[z].value[0])) &&
+                !isNaN(parseInt(item.blockItem[z + 1].value[0]))
+              )
+                str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(item.blockItem[z].value[0]) + parseInt(item.blockItem[z + 1].value[0])
+                  }</trsdo:TransmissionUnitGearQuantity>`;
+              else if (!isNaN(parseInt(item.blockItem[z].value[0])))
+                str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(
+                  item.blockItem[z].value[0]
+                )}</trsdo:TransmissionUnitGearQuantity>`;
+              else if (!isNaN(parseInt(item.blockItem[z + 1].value[0])))
+                str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(
+                  item.blockItem[z + 1].value[0]
+                )}</trsdo:TransmissionUnitGearQuantity>`;
             }
-            if (i.blockItem[z].name === 'Передаточное число' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:TransmissionUnitGearRate>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+            if (
+              item.blockItem[z].name === 'Наименование передачи' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
             }
-            if (i.blockItem[z].name === 'Минимально' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:TransmissionUnitGearRate>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+            if (
+              item.blockItem[z].name === 'Вид передаточного числа' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:TransmissionUnitGearType>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
             }
-            if (i.blockItem[z].name === 'Максимально') {
-              if (i.blockItem[z].value[0] !== '') {
-                str += `<trsdo:TransmissionUnitGearRateMax>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRateMax>`;
+            if (
+              item.blockItem[z].name === 'Передаточное число' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+            }
+            if (item.blockItem[z].name === 'Минимально' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+            }
+            if (item.blockItem[z].name === 'Максимально') {
+              if (item.blockItem[z].value[0] !== '') {
+                str += `<trsdo:TransmissionUnitGearRateMax>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRateMax>`;
               }
-              if (i.blockItem[z - 4].value[0].includes('З.Х.')) {
+              if (item.blockItem[z - 4].value[0].includes('З.Х.')) {
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>true</trsdo:TransmissionUnitReverseGearIndicator>`;
               } else
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>false</trsdo:TransmissionUnitReverseGearIndicator>`;
@@ -827,11 +886,15 @@ export const Fourth: React.FC = () => {
               str += `</trcdo:TransmissionUnitGearDetails>`;
             }
 
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z !== 0) {
-              str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>05</trsdo:VehicleUnitKindCode><trcdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trcdo:VehicleComponentMakeName>`;
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z !== 0
+            ) {
+              str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>05</trsdo:VehicleUnitKindCode><trcdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trcdo:VehicleComponentMakeName>`;
             } else if (
-              i.blockItem[z].name === 'Марка' &&
-              i.blockItem[z].value[0] === '' &&
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] === '' &&
               z !== 0
             ) {
               str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails>`;
@@ -840,44 +903,54 @@ export const Fourth: React.FC = () => {
           str += '</trcdo:TransmissionUnitDetails>';
         }
         //Раздаточная коробка
-        if (i.id === 31 && 'check' in i && i.check === false) {
+        if (item.id === 31 && 'check' in item && item.check === false) {
           str +=
             '<trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>10</trsdo:VehicleUnitKindCode>';
 
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z === 0) {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z === 0
+            ) {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Маркировка' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentModelCode>${i.blockItem[z].value[0]}</trsdo:VehicleComponentModelCode>`;
+            if (item.blockItem[z].name === 'Маркировка' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentModelCode>${item.blockItem[z].value[0]}</trsdo:VehicleComponentModelCode>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
-            if (i.blockItem[z].name === 'Число передач' && i.blockItem[z].value[0] !== '') {
-              if (!isNaN(parseInt(i.blockItem[z].value[0])))
+            if (item.blockItem[z].name === 'Число передач' && item.blockItem[z].value[0] !== '') {
+              if (!isNaN(parseInt(item.blockItem[z].value[0])))
                 str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(
-                  i.blockItem[z].value[0]
+                  item.blockItem[z].value[0]
                 )}</trsdo:TransmissionUnitGearQuantity>`;
             }
-            if (i.blockItem[z].name === 'Наименование передачи' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
+            if (
+              item.blockItem[z].name === 'Наименование передачи' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
             }
-            if (i.blockItem[z].name === 'Наименование передачи' && i.blockItem[z].value[0] === '') {
+            if (
+              item.blockItem[z].name === 'Наименование передачи' &&
+              item.blockItem[z].value[0] === ''
+            ) {
               str += `<trcdo:TransmissionUnitGearDetails>`;
             }
             if (
-              i.blockItem[z].name === 'Вид передаточного числа' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Вид передаточного числа' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:TransmissionUnitGearType>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
+              str += `<trsdo:TransmissionUnitGearType>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
             }
 
-            if (i.blockItem[z].name === 'Передаточное число') {
-              if (i.blockItem[z].value[0] !== '') {
-                str += `<trsdo:TransmissionUnitGearRate>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+            if (item.blockItem[z].name === 'Передаточное число') {
+              if (item.blockItem[z].value[0] !== '') {
+                str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
               }
-              if (i.blockItem[z - 2].value[0].includes('З.Х.')) {
+              if (item.blockItem[z - 2].value[0].includes('З.Х.')) {
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>true</trsdo:TransmissionUnitReverseGearIndicator>`;
               } else
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>false</trsdo:TransmissionUnitReverseGearIndicator>`;
@@ -885,11 +958,15 @@ export const Fourth: React.FC = () => {
               str += `</trcdo:TransmissionUnitGearDetails>`;
             }
 
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z !== 0) {
-              str += `</trsdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z !== 0
+            ) {
+              str += `</trsdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             } else if (
-              i.blockItem[z].name === 'Марка' &&
-              i.blockItem[z].value[0] === '' &&
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] === '' &&
               z !== 0
             ) {
               str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails>`;
@@ -898,51 +975,57 @@ export const Fourth: React.FC = () => {
           str += '</trcdo:TransmissionUnitDetails>';
         }
         //Главная передача
-        if (i.id === 32 && 'check' in i && i.check === false) {
+        if (item.id === 32 && 'check' in item && item.check === false) {
           str +=
             '<trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>15</trsdo:VehicleUnitKindCode>';
 
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Распределение по осям' &&
-              i.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].name === 'Распределение по осям' &&
+              item.blockItem[z].value[0] !== '' &&
               z === 0
             ) {
-              str += `<trsdo:AxisDistribution>${i.blockItem[z].value[0]}</trsdo:AxisDistribution>`;
+              str += `<trsdo:AxisDistribution>${item.blockItem[z].value[0]}</trsdo:AxisDistribution>`;
             }
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+            if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Маркировка' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentModelCode>${i.blockItem[z].value[0]}</trsdo:VehicleComponentModelCode>`;
+            if (item.blockItem[z].name === 'Маркировка' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentModelCode>${item.blockItem[z].value[0]}</trsdo:VehicleComponentModelCode>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
-            if (i.blockItem[z].name === 'Число передач' && i.blockItem[z].value[0] !== '') {
-              if (!isNaN(parseInt(i.blockItem[z].value[0])))
+            if (item.blockItem[z].name === 'Число передач' && item.blockItem[z].value[0] !== '') {
+              if (!isNaN(parseInt(item.blockItem[z].value[0])))
                 str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(
-                  i.blockItem[z].value[0]
+                  item.blockItem[z].value[0]
                 )}</trsdo:TransmissionUnitGearQuantity>`;
             }
-            if (i.blockItem[z].name === 'Наименование передачи' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
+            if (
+              item.blockItem[z].name === 'Наименование передачи' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
             }
-            if (i.blockItem[z].name === 'Наименование передачи' && i.blockItem[z].value[0] === '') {
+            if (
+              item.blockItem[z].name === 'Наименование передачи' &&
+              item.blockItem[z].value[0] === ''
+            ) {
               str += `<trcdo:TransmissionUnitGearDetails>`;
             }
             if (
-              i.blockItem[z].name === 'Вид передаточного числа' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Вид передаточного числа' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:TransmissionUnitGearType>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
+              str += `<trsdo:TransmissionUnitGearType>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
             }
 
-            if (i.blockItem[z].name === 'Передаточное число') {
-              if (i.blockItem[z].value[0] !== '') {
-                str += `<trsdo:TransmissionUnitGearRate>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+            if (item.blockItem[z].name === 'Передаточное число') {
+              if (item.blockItem[z].value[0] !== '') {
+                str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
               }
-              if (i.blockItem[z - 2].value[0].includes('З.Х.')) {
+              if (item.blockItem[z - 2].value[0].includes('З.Х.')) {
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>true</trsdo:TransmissionUnitReverseGearIndicator>`;
               } else
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>false</trsdo:TransmissionUnitReverseGearIndicator>`;
@@ -951,14 +1034,14 @@ export const Fourth: React.FC = () => {
             }
 
             if (
-              i.blockItem[z].name === 'Распределение по осям' &&
-              i.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].name === 'Распределение по осям' &&
+              item.blockItem[z].value[0] !== '' &&
               z !== 0
             ) {
-              str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>15</trsdo:VehicleUnitKindCode><trcdo:AxisDistribution>${i.blockItem[z].value[0]}</trcdo:AxisDistribution>`;
+              str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>15</trsdo:VehicleUnitKindCode><trcdo:AxisDistribution>${item.blockItem[z].value[0]}</trcdo:AxisDistribution>`;
             } else if (
-              i.blockItem[z].name === 'Распределение по осям' &&
-              i.blockItem[z].value[0] === '' &&
+              item.blockItem[z].name === 'Распределение по осям' &&
+              item.blockItem[z].value[0] === '' &&
               z !== 0
             ) {
               str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails>`;
@@ -967,42 +1050,53 @@ export const Fourth: React.FC = () => {
           str += '</trcdo:TransmissionUnitDetails>';
         }
         //Вал отбора мощности
-        if (i.id === 33 && 'check' in i && i.check === false) {
+        if (item.id === 33 && 'check' in item && item.check === false) {
           if (
-            i.blockItem[0].value[0] !== '' ||
-            i.blockItem[1].value[0] !== '' ||
-            i.blockItem[2].value[0] !== '' ||
-            i.blockItem[3].value[0] !== ''
+            item.blockItem[0].value[0] !== '' ||
+            item.blockItem[1].value[0] !== '' ||
+            item.blockItem[2].value[0] !== '' ||
+            item.blockItem[3].value[0] !== ''
           ) {
             str +=
               '<trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>20</trsdo:VehicleUnitKindCode><trcdo:VehiclePowerTakeOffDetails>';
-            for (let z = 0; z < i.blockItem.length; z++) {
-              if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '' && z === 0) {
-                str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (
+                item.blockItem[z].name === 'Тип' &&
+                item.blockItem[z].value[0] !== '' &&
+                z === 0
+              ) {
+                str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
               }
-              if (i.blockItem[z].name === 'Расположение' && i.blockItem[z].value[0] !== '') {
-                str += `<trsdo:VehicleComponentLocationText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>`;
-              }
-              if (i.blockItem[z].name === 'Частота вращения' && i.blockItem[z].value[0] !== '') {
-                str += `<trsdo:VehicleShaftRotationFrequencyMeasure measurementUnitCode="RPM">${i.blockItem[z].value[0]}</trsdo:VehicleShaftRotationFrequencyMeasure>`;
+              if (item.blockItem[z].name === 'Расположение' && item.blockItem[z].value[0] !== '') {
+                str += `<trsdo:VehicleComponentLocationText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>`;
               }
               if (
-                i.blockItem[z].name ===
-                'Отношение к частоте вращения двигателя вала отбора мощности' &&
-                i.blockItem[z].value[0] !== ''
+                item.blockItem[z].name === 'Частота вращения' &&
+                item.blockItem[z].value[0] !== ''
               ) {
-                str += `<trsdo:TransmissionUnitGearRate>${i.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+                str += `<trsdo:VehicleShaftRotationFrequencyMeasure measurementUnitCode="RPM">${item.blockItem[z].value[0]}</trsdo:VehicleShaftRotationFrequencyMeasure>`;
               }
-              if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '' && z !== 0) {
-                str += `</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>20</trsdo:VehicleUnitKindCode><trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+              if (
+                item.blockItem[z].name ===
+                'Отношение к частоте вращения двигателя вала отбора мощности' &&
+                item.blockItem[z].value[0] !== ''
+              ) {
+                str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
+              }
+              if (
+                item.blockItem[z].name === 'Тип' &&
+                item.blockItem[z].value[0] !== '' &&
+                z !== 0
+              ) {
+                str += `</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>20</trsdo:VehicleUnitKindCode><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
               }
             }
             str += '</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails>';
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1010,29 +1104,29 @@ export const Fourth: React.FC = () => {
 
   const getSuspension = (): string => {
     let str = '';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 35 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 35 && 'check' in item && item.check === false) {
           str += '<trcdo:VehicleSuspensionDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Вид подвески' && z === 0) {
-              str += `<trsdo:VehicleSuspensionKindCode>${suspension[i.blockItem[z].value[0]]
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Вид подвески' && z === 0) {
+              str += `<trsdo:VehicleSuspensionKindCode>${suspension[item.blockItem[z].value[0]]
                 }</trsdo:VehicleSuspensionKindCode>`;
             }
-            if (i.blockItem[z].name === 'Описание' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:VehicleSuspensionDetails>`;
-            } else if (i.blockItem[z].name === 'Описание' && i.blockItem[z].value[0] === '') {
+            if (item.blockItem[z].name === 'Описание' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:VehicleSuspensionDetails>`;
+            } else if (item.blockItem[z].name === 'Описание' && item.blockItem[z].value[0] === '') {
               str += `</trcdo:VehicleSuspensionDetails>`;
             }
-            if (i.blockItem[z].name === 'Вид подвески' && z !== 0) {
-              str += `<trcdo:VehicleSuspensionDetails><trsdo:VehicleSuspensionKindCode>${suspension[i.blockItem[z].value[0]]
+            if (item.blockItem[z].name === 'Вид подвески' && z !== 0) {
+              str += `<trcdo:VehicleSuspensionDetails><trsdo:VehicleSuspensionKindCode>${suspension[item.blockItem[z].value[0]]
                 }</trsdo:VehicleSuspensionKindCode>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1041,28 +1135,28 @@ export const Fourth: React.FC = () => {
   const getSteering = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 36 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 36 && 'check' in item && item.check === false) {
           str += '<trcdo:VehicleSteeringDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Положение рулевого колеса' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Положение рулевого колеса' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z + 1].value[0]
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z + 1].value[0]
                 }</trsdo:VehicleComponentText>
-                            <trsdo:SteeringWheelPositionCode>${steeringType[i.blockItem[z].value[0]]
+                            <trsdo:SteeringWheelPositionCode>${steeringType[item.blockItem[z].value[0]]
                 }</trsdo:SteeringWheelPositionCode>
-                            <trsdo:VehicleComponentLocationText>${i.blockItem[z].value[0]
+                            <trsdo:VehicleComponentLocationText>${item.blockItem[z].value[0]
                 }</trsdo:VehicleComponentLocationText>`;
             }
           }
           str += '</trcdo:VehicleSteeringDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     if (str === '<trcdo:VehicleSteeringDetails></trcdo:VehicleSteeringDetails>') str = '';
     return str;
@@ -1070,69 +1164,69 @@ export const Fourth: React.FC = () => {
 
   const getTyreKindIndex = (): string[] => {
     let str: string[] = [];
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 27) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Размерность') {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 27) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Размерность') {
               if (
-                i.blockItem[z + 2].value[0] !== '' &&
-                i.blockItem[z + 3].value[0] !== '' &&
-                i.blockItem[z + 4].value[0] !== '' &&
-                i.blockItem[z + 5].value[0] !== ''
+                item.blockItem[z + 2].value[0] !== '' &&
+                item.blockItem[z + 3].value[0] !== '' &&
+                item.blockItem[z + 4].value[0] !== '' &&
+                item.blockItem[z + 5].value[0] !== ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${i.blockItem[z + 2].value[0]}-${i.blockItem[z + 3].value[0]
-                  }/${i.blockItem[z + 4].value[0]}-${i.blockItem[z + 5].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}-${item.blockItem[z + 3].value[0]
+                  }/${item.blockItem[z + 4].value[0]}-${item.blockItem[z + 5].value[0]
                   }</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
-                i.blockItem[z + 2].value[0] !== '' &&
-                i.blockItem[z + 3].value[0] === '' &&
-                i.blockItem[z + 4].value[0] !== '' &&
-                i.blockItem[z + 5].value[0] === ''
+                item.blockItem[z + 2].value[0] !== '' &&
+                item.blockItem[z + 3].value[0] === '' &&
+                item.blockItem[z + 4].value[0] !== '' &&
+                item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${i.blockItem[z + 2].value[0]}/${i.blockItem[z + 4].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}/${item.blockItem[z + 4].value[0]
                   }</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
-                i.blockItem[z + 2].value[0] !== '' &&
-                i.blockItem[z + 3].value[0] !== '' &&
-                i.blockItem[z + 4].value[0] === '' &&
-                i.blockItem[z + 5].value[0] === ''
+                item.blockItem[z + 2].value[0] !== '' &&
+                item.blockItem[z + 3].value[0] !== '' &&
+                item.blockItem[z + 4].value[0] === '' &&
+                item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${i.blockItem[z + 2].value[0]}-${i.blockItem[z + 3].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}-${item.blockItem[z + 3].value[0]
                   }/-</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
-                i.blockItem[z + 2].value[0] !== '' &&
-                i.blockItem[z + 3].value[0] === '' &&
-                i.blockItem[z + 4].value[0] === '' &&
-                i.blockItem[z + 5].value[0] === ''
+                item.blockItem[z + 2].value[0] !== '' &&
+                item.blockItem[z + 3].value[0] === '' &&
+                item.blockItem[z + 4].value[0] === '' &&
+                item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${i.blockItem[z + 2].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]
                   }/-</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
-                i.blockItem[z + 2].value[0] === '' &&
-                i.blockItem[z + 3].value[0] === '' &&
-                i.blockItem[z + 4].value[0] !== '' &&
-                i.blockItem[z + 5].value[0] === ''
+                item.blockItem[z + 2].value[0] === '' &&
+                item.blockItem[z + 3].value[0] === '' &&
+                item.blockItem[z + 4].value[0] !== '' &&
+                item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>-/${i.blockItem[z + 4].value[0]
+                  `<trsdo:VehicleTyreKindIndex>-/${item.blockItem[z + 4].value[0]
                   }</trsdo:VehicleTyreKindIndex>`
                 );
               } else str.push('');
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     return str;
   };
@@ -1141,51 +1235,51 @@ export const Fourth: React.FC = () => {
     let str = '';
     let str2 = [];
     if (check === false)
-      blockss.map((item) => {
-        item.blocksItem.map((i) => {
-          if (i.id === 27 && 'check' in i && i.check === false) {
+      blocks.map((items) => {
+        items.blocksItem.map((item) => {
+          if (item.id === 27 && 'check' in item && item.check === false) {
             str += `<trcdo:VehicleTyreKindInfo>`;
             str2 = getTyreKindIndex();
-            for (let z = 0; z < i.blockItem.length; z++) {
+            for (let z = 0; z < item.blockItem.length; z++) {
               if (
-                i.blockItem[z].name === 'Размерность' &&
-                i.blockItem[z].value[0] !== '' &&
+                item.blockItem[z].name === 'Размерность' &&
+                item.blockItem[z].value[0] !== '' &&
                 z === 2
               ) {
-                str += `<trsdo:VehicleTyreKindSize>${i.blockItem[z].value[0]}</trsdo:VehicleTyreKindSize>`;
+                str += `<trsdo:VehicleTyreKindSize>${item.blockItem[z].value[0]}</trsdo:VehicleTyreKindSize>`;
                 str += `${str2.shift()}`;
               } else if (
-                i.blockItem[z].name === 'Размерность' &&
-                i.blockItem[z].value[0] === '' &&
+                item.blockItem[z].name === 'Размерность' &&
+                item.blockItem[z].value[0] === '' &&
                 z === 2
               ) {
                 str += `${str2.shift()}`;
               }
               if (
-                i.blockItem[z].name === 'Скоростная категория' &&
-                i.blockItem[z].value[0] !== ''
+                item.blockItem[z].name === 'Скоростная категория' &&
+                item.blockItem[z].value[0] !== ''
               ) {
-                str += `<trsdo:VehicleTyreKindSpeed>${i.blockItem[z].value}</trsdo:VehicleTyreKindSpeed>`;
+                str += `<trsdo:VehicleTyreKindSpeed>${item.blockItem[z].value}</trsdo:VehicleTyreKindSpeed>`;
               }
               if (
-                i.blockItem[z].name === 'Шина временного использования' &&
-                i.blockItem[z].name !== ''
+                item.blockItem[z].name === 'Шина временного использования' &&
+                item.blockItem[z].name !== ''
               ) {
-                str += `<trsdo:IsSupplementVehicleTyre>${i.blockItem[z].value[0] === '' || i.blockItem[z].value[0] === 'false'
+                str += `<trsdo:IsSupplementVehicleTyre>${item.blockItem[z].value[0] === '' || item.blockItem[z].value[0] === 'false'
                   ? 'false'
                   : 'true'
                   }</trsdo:IsSupplementVehicleTyre>`;
               }
               if (
-                i.blockItem[z].name === 'Размерность' &&
-                i.blockItem[z].value[0] !== '' &&
+                item.blockItem[z].name === 'Размерность' &&
+                item.blockItem[z].value[0] !== '' &&
                 z !== 2
               ) {
-                str += `</trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindSize>${i.blockItem[z].value[0]}</trcdo:VehicleTyreKindSize>`;
+                str += `</trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindSize>${item.blockItem[z].value[0]}</trcdo:VehicleTyreKindSize>`;
                 str += `${str2.shift()}`;
               } else if (
-                i.blockItem[z].name === 'Размерность' &&
-                i.blockItem[z].value[0] === '' &&
+                item.blockItem[z].name === 'Размерность' &&
+                item.blockItem[z].value[0] === '' &&
                 z !== 2
               ) {
                 str += '</trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindInfo>';
@@ -1194,9 +1288,9 @@ export const Fourth: React.FC = () => {
             }
             str += `</trcdo:VehicleTyreKindInfo>`;
           }
-          return i;
+          return item;
         });
-        return item;
+        return items;
       });
 
     return str;
@@ -1205,26 +1299,26 @@ export const Fourth: React.FC = () => {
   const getOverallDimension = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 9) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 9) {
           str += '<trcdo:VehicleOverallDimensionDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Длина' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:LengthMeasure measurementUnitCode="MMT">${i.blockItem[z].value[0]}</csdo:LengthMeasure>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Длина' && item.blockItem[z].value[0] !== '') {
+              str += `<csdo:LengthMeasure measurementUnitCode="MMT">${item.blockItem[z].value[0]}</csdo:LengthMeasure>`;
             }
-            if (i.blockItem[z].name === 'Ширина' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:WidthMeasure measurementUnitCode="MMT">${i.blockItem[z].value[0]}</csdo:WidthMeasure>`;
+            if (item.blockItem[z].name === 'Ширина' && item.blockItem[z].value[0] !== '') {
+              str += `<csdo:WidthMeasure measurementUnitCode="MMT">${item.blockItem[z].value[0]}</csdo:WidthMeasure>`;
             }
-            if (i.blockItem[z].name === 'Высота' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:HeightMeasure measurementUnitCode="MMT">${i.blockItem[z].value[0]}</csdo:HeightMeasure>`;
+            if (item.blockItem[z].name === 'Высота' && item.blockItem[z].value[0] !== '') {
+              str += `<csdo:HeightMeasure measurementUnitCode="MMT">${item.blockItem[z].value[0]}</csdo:HeightMeasure>`;
             }
           }
           str += '</trcdo:VehicleOverallDimensionDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     if (str === '<trcdo:VehicleOverallDimensionDetails></trcdo:VehicleOverallDimensionDetails>')
       str = '';
@@ -1234,43 +1328,43 @@ export const Fourth: React.FC = () => {
   const getTrailer = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 14) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Буксировка прицепа') {
-              str += `<trsdo:NotVehicleTrailerIndicator>${i.blockItem[z].value[0]}</trsdo:NotVehicleTrailerIndicator>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 14) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Буксировка прицепа') {
+              str += `<trsdo:NotVehicleTrailerIndicator>${item.blockItem[z].value[0]}</trsdo:NotVehicleTrailerIndicator>`;
             }
             if (
-              i.blockItem[z].name === 'Масса прицепа без тормозной системы' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Масса прицепа без тормозной системы' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleMaxUnbrakedTrailerWeightMeasure measurementUnitCode="KGM">${i.blockItem[z].value[0]}</trsdo:VehicleMaxUnbrakedTrailerWeightMeasure>`;
+              str += `<trsdo:VehicleMaxUnbrakedTrailerWeightMeasure measurementUnitCode="KGM">${item.blockItem[z].value[0]}</trsdo:VehicleMaxUnbrakedTrailerWeightMeasure>`;
             }
             if (
-              i.blockItem[z].name === 'Масса прицепа с тормозной системой' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Масса прицепа с тормозной системой' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleMaxBrakedTrailerWeightMeasure measurementUnitCode="KGM">${i.blockItem[z].value[0]}</trsdo:VehicleMaxBrakedTrailerWeightMeasure>`;
+              str += `<trsdo:VehicleMaxBrakedTrailerWeightMeasure measurementUnitCode="KGM">${item.blockItem[z].value[0]}</trsdo:VehicleMaxBrakedTrailerWeightMeasure>`;
             }
             if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Технически допустимая статическая вертикальная нагрузка в точке сцепки тягово-сцепного устройства' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleHitchLoadMeasure measurementUnitCode="KGM">${i.blockItem[z].value[0]}</trsdo:VehicleHitchLoadMeasure>`;
+              str += `<trsdo:VehicleHitchLoadMeasure measurementUnitCode="KGM">${item.blockItem[z].value[0]}</trsdo:VehicleHitchLoadMeasure>`;
             }
             if (
-              i.blockItem[z].name === 'Техническая допустимая буксируемая масса' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Техническая допустимая буксируемая масса' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:PermissibleTowableWeightMeasure measurementUnitCode="KGM">${i.blockItem[z].value[0]}</trsdo:PermissibleTowableWeightMeasure>`;
+              str += `<trsdo:PermissibleTowableWeightMeasure measurementUnitCode="KGM">${item.blockItem[z].value[0]}</trsdo:PermissibleTowableWeightMeasure>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     return str;
   };
@@ -1278,21 +1372,23 @@ export const Fourth: React.FC = () => {
   const getFuel = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 18 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Топливо' && i.blockItem[z].value[0] !== '') {
-              for(let j = 0; j < i.blockItem[z].value.length; j++){
-                str += `<trsdo:VehicleFuelKindCode>${fuelType[i.blockItem[z].value[j]]}</trsdo:VehicleFuelKindCode>
-                                 <trsdo:VehicleFuelKindName>${i.blockItem[z].value[j]}</trsdo:VehicleFuelKindName>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 18 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Топливо' && item.blockItem[z].value[0] !== '') {
+              for (let j = 0; j < item.blockItem[z].value.length; j++) {
+                str += `<trsdo:VehicleFuelKindCode>${fuelType[item.blockItem[z].value[j]]
+                  }</trsdo:VehicleFuelKindCode>
+                                 <trsdo:VehicleFuelKindName>${item.blockItem[z].value[j]
+                  }</trsdo:VehicleFuelKindName>`;
               }
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1301,18 +1397,21 @@ export const Fourth: React.FC = () => {
   const getFuelFeed = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 19 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Тип системы питания' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:FuelFeedDetails><trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:FuelFeedDetails>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 19 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Тип системы питания' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trcdo:FuelFeedDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:FuelFeedDetails>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1321,18 +1420,21 @@ export const Fourth: React.FC = () => {
   const getIgnition = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 21 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Тип cистемы зажигания' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:VehicleIgnitionDetails><trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:VehicleIgnitionDetails>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 21 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Тип cистемы зажигания' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trcdo:VehicleIgnitionDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:VehicleIgnitionDetails>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1341,18 +1443,18 @@ export const Fourth: React.FC = () => {
   const getExhaust = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 22 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:ExhaustDetails><trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:ExhaustDetails>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 22 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trcdo:ExhaustDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:ExhaustDetails>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1360,71 +1462,74 @@ export const Fourth: React.FC = () => {
 
   const getVoltage = (): string => {
     let str = '';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 26 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 26 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Номинальное напряжение' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Номинальное напряжение' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleVoltageMeasure measurementUnitCode="VLT">${i.blockItem[z].value[0]}</trsdo:VehicleVoltageMeasure>`;
+              str += `<trsdo:VehicleVoltageMeasure measurementUnitCode="VLT">${item.blockItem[z].value[0]}</trsdo:VehicleVoltageMeasure>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     return str;
   };
 
   const getMaxSpeed = (): string => {
     let str = '';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 38) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Максимальная скорость' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleMaxSpeedMeasure measurementUnitCode="KMH">${i.blockItem[z].value[0]}</trsdo:VehicleMaxSpeedMeasure>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 38) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Максимальная скорость' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:VehicleMaxSpeedMeasure measurementUnitCode="KMH">${item.blockItem[z].value[0]}</trsdo:VehicleMaxSpeedMeasure>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     return str;
   };
 
   const getBrakingSystem = (): string => {
     let str = '';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 37 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 37 && 'check' in item && item.check === false) {
           str += '<trcdo:VehicleBrakingSystemDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Наименование элемента тормозной системы' &&
-              i.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].name === 'Наименование элемента тормозной системы' &&
+              item.blockItem[z].value[0] !== '' &&
               z === 0
             ) {
-              str += `<trsdo:VehicleBrakingSystemKindCode>${brakingType[i.blockItem[z].value[0]]
+              str += `<trsdo:VehicleBrakingSystemKindCode>${brakingType[item.blockItem[z].value[0]]
                 }</trsdo:VehicleBrakingSystemKindCode>`;
             }
-            if (i.blockItem[z].name === 'Описание' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            if (item.blockItem[z].name === 'Описание' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
             if (
-              i.blockItem[z].name === 'Наименование элемента тормозной системы' &&
-              i.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].name === 'Наименование элемента тормозной системы' &&
+              item.blockItem[z].value[0] !== '' &&
               z !== 0
             ) {
-              str += `</trcdo:VehicleBrakingSystemDetails><trcdo:VehicleBrakingSystemDetails><trsdo:VehicleBrakingSystemKindCode>${brakingType[i.blockItem[z].value[0]]
+              str += `</trcdo:VehicleBrakingSystemDetails><trcdo:VehicleBrakingSystemDetails><trsdo:VehicleBrakingSystemKindCode>${brakingType[item.blockItem[z].value[0]]
                 }</trsdo:VehicleBrakingSystemKindCode>`;
             } else if (
-              i.blockItem[z].name === 'Наименование элемента тормозной системы' &&
-              i.blockItem[z].value[0] === '' &&
+              item.blockItem[z].name === 'Наименование элемента тормозной системы' &&
+              item.blockItem[z].value[0] === '' &&
               z !== 0
             ) {
               str += `</trcdo:VehicleBrakingSystemDetails><trcdo:VehicleBrakingSystemDetails>`;
@@ -1432,9 +1537,9 @@ export const Fourth: React.FC = () => {
           }
           str += '</trcdo:VehicleBrakingSystemDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     if (str === '<trcdo:VehicleBrakingSystemDetails></trcdo:VehicleBrakingSystemDetails>') str = '';
@@ -1444,18 +1549,18 @@ export const Fourth: React.FC = () => {
   const getEngineQuantity = (): string => {
     let str = '';
     let count = 0;
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 16 || i.id === 17 || i.id === 23 || i.id === 24) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '') {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 16 || item.id === 17 || item.id === 23 || item.id === 24) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] !== '') {
               count++;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     str += `<trsdo:EngineQuantity>${count}</trsdo:EngineQuantity>`;
     return str;
@@ -1464,103 +1569,117 @@ export const Fourth: React.FC = () => {
   const getEngine = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 16 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 16 && 'check' in item && item.check === false) {
           str += '<trcdo:EngineDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z === 0) {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z === 0
+            ) {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
-            }
-            if (i.blockItem[z].name === 'Количество цилиндров' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:EngineCylinderQuantity>${i.blockItem[z].value[0]}</trsdo:EngineCylinderQuantity>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
             if (
-              i.blockItem[z].name === 'Расположение цилиндров' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Количество цилиндров' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:EngineCylinderArrangementText>${i.blockItem[z].value[0]}</trsdo:EngineCylinderArrangementText>`;
+              str += `<trsdo:EngineCylinderQuantity>${item.blockItem[z].value[0]}</trsdo:EngineCylinderQuantity>`;
             }
             if (
-              i.blockItem[z].name === 'Рабочий объем цилиндров' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Расположение цилиндров' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:EngineCapacityMeasure measurementUnitCode="CMQ">${i.blockItem[z].value[0]}</trsdo:EngineCapacityMeasure>`;
+              str += `<trsdo:EngineCylinderArrangementText>${item.blockItem[z].value[0]}</trsdo:EngineCylinderArrangementText>`;
             }
-            if (i.blockItem[z].name === 'Степень сжатия' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:EngineCompressionRate>${i.blockItem[z].value[0]}</trcdo:EngineCompressionRate>`;
+            if (
+              item.blockItem[z].name === 'Рабочий объем цилиндров' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:EngineCapacityMeasure measurementUnitCode="CMQ">${item.blockItem[z].value[0]}</trsdo:EngineCapacityMeasure>`;
             }
-            if (i.blockItem[z].name === 'Максимальная мощность' && i.blockItem[z].value[0] !== '') {
+            if (item.blockItem[z].name === 'Степень сжатия' && item.blockItem[z].value[0] !== '') {
+              str += `<trcdo:EngineCompressionRate>${item.blockItem[z].value[0]}</trcdo:EngineCompressionRate>`;
+            }
+            if (
+              item.blockItem[z].name === 'Максимальная мощность' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
               str += `<trcdo:EngineMaxPowerDetails>
-                            <csdo:EngineMaxPowerMeasure measurementUnitCode="KWT" measurementUnitCodeListId="NSI_033">${i.blockItem[z].value[0]}</csdo:EngineMaxPowerMeasure>`;
+                            <csdo:EngineMaxPowerMeasure measurementUnitCode="KWT" measurementUnitCodeListId="NSI_033">${item.blockItem[z].value[0]}</csdo:EngineMaxPowerMeasure>`;
             }
             if (
-              i.blockItem[z].name === 'Максимальная мощность' &&
-              (i.blockItem[z + 1].value[0] !== '' || i.blockItem[z + 2].value[0] !== '')
+              item.blockItem[z].name === 'Максимальная мощность' &&
+              (item.blockItem[z + 1].value[0] !== '' || item.blockItem[z + 2].value[0] !== '')
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
-              if (i.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${i.blockItem[z + 1].value[0]
+              if (item.blockItem[z + 1].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
-              if (i.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${i.blockItem[z + 2].value[0]
+              if (item.blockItem[z + 2].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxPowerDetails>`;
             } else if (
-              i.blockItem[z].name === 'Максимальная мощность' &&
-              i.blockItem[z + 1].value[0] === '' &&
-              i.blockItem[z + 2].value[0] === ''
+              item.blockItem[z].name === 'Максимальная мощность' &&
+              item.blockItem[z + 1].value[0] === '' &&
+              item.blockItem[z + 2].value[0] === ''
             ) {
               str += `</trcdo:EngineMaxPowerDetails>`;
             }
 
             if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:EngineMaxTorqueDetails>
-                            <trsdo:EngineMaxTorqueMeasure measurementUnitCode="NMT">${i.blockItem[z].value[0]}</trsdo:EngineMaxTorqueMeasure>`;
+                            <trsdo:EngineMaxTorqueMeasure measurementUnitCode="NMT">${item.blockItem[z].value[0]}</trsdo:EngineMaxTorqueMeasure>`;
             }
             if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              (i.blockItem[z + 1].value[0] !== '' || i.blockItem[z + 2].value[0] !== '')
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              (item.blockItem[z + 1].value[0] !== '' || item.blockItem[z + 2].value[0] !== '')
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
-              if (i.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${i.blockItem[z + 1].value[0]
+              if (item.blockItem[z + 1].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
-              if (i.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${i.blockItem[z + 2].value[0]
+              if (item.blockItem[z + 2].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxTorqueDetails>`;
             } else if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              i.blockItem[z + 1].value[0] === '' &&
-              i.blockItem[z + 2].value[0] === '' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              item.blockItem[z + 1].value[0] === '' &&
+              item.blockItem[z + 2].value[0] === '' &&
+              item.blockItem[z].value[0] === ''
             ) {
               str += ``;
             } else if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              i.blockItem[z + 1].value[0] === '' &&
-              i.blockItem[z + 2].value[0] === '' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              item.blockItem[z + 1].value[0] === '' &&
+              item.blockItem[z + 2].value[0] === '' &&
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `</trcdo:EngineMaxTorqueDetails>`;
             }
 
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z !== 0) {
-              str += `</trcdo:EngineDetails><trcdo:EngineDetails><trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z !== 0
+            ) {
+              str += `</trcdo:EngineDetails><trcdo:EngineDetails><trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             } else if (
-              i.blockItem[z].name === 'Марка' &&
-              i.blockItem[z].value[0] === '' &&
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] === '' &&
               z !== 0
             ) {
               str += `</trcdo:EngineDetails><trcdo:EngineDetails>`;
@@ -1568,101 +1687,115 @@ export const Fourth: React.FC = () => {
           }
           str += '</trcdo:EngineDetails>';
         }
-        if (i.id === 23 && 'check' in i && i.check === false) {
+        if (item.id === 23 && 'check' in item && item.check === false) {
           str += '<trcdo:EngineDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z === 0) {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z === 0
+            ) {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
-            }
-            if (i.blockItem[z].name === 'Количество цилиндров' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:EngineCylinderQuantity>${i.blockItem[z].value[0]}</trsdo:EngineCylinderQuantity>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
             if (
-              i.blockItem[z].name === 'Расположение цилиндров' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Количество цилиндров' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:EngineCylinderArrangementText>${i.blockItem[z].value[0]}</trsdo:EngineCylinderArrangementText>`;
+              str += `<trsdo:EngineCylinderQuantity>${item.blockItem[z].value[0]}</trsdo:EngineCylinderQuantity>`;
             }
             if (
-              i.blockItem[z].name === 'Рабочий объем цилиндров' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Расположение цилиндров' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:EngineCapacityMeasure measurementUnitCode="CMQ">${i.blockItem[z].value[0]}</trsdo:EngineCapacityMeasure>`;
+              str += `<trsdo:EngineCylinderArrangementText>${item.blockItem[z].value[0]}</trsdo:EngineCylinderArrangementText>`;
             }
-            if (i.blockItem[z].name === 'Степень сжатия' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:EngineCompressionRate>${i.blockItem[z].value[0]}</trcdo:EngineCompressionRate>`;
+            if (
+              item.blockItem[z].name === 'Рабочий объем цилиндров' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:EngineCapacityMeasure measurementUnitCode="CMQ">${item.blockItem[z].value[0]}</trsdo:EngineCapacityMeasure>`;
             }
-            if (i.blockItem[z].name === 'Максимальная мощность' && i.blockItem[z].value[0] !== '') {
+            if (item.blockItem[z].name === 'Степень сжатия' && item.blockItem[z].value[0] !== '') {
+              str += `<trcdo:EngineCompressionRate>${item.blockItem[z].value[0]}</trcdo:EngineCompressionRate>`;
+            }
+            if (
+              item.blockItem[z].name === 'Максимальная мощность' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
               str += `<trcdo:EngineMaxPowerDetails>
-                            <csdo:EngineMaxPowerMeasure measurementUnitCode="KWT" measurementUnitCodeListId="NSI_033">${i.blockItem[z].value[0]}</csdo:EngineMaxPowerMeasure>`;
+                            <csdo:EngineMaxPowerMeasure measurementUnitCode="KWT" measurementUnitCodeListId="NSI_033">${item.blockItem[z].value[0]}</csdo:EngineMaxPowerMeasure>`;
             }
             if (
-              i.blockItem[z].name === 'Максимальная мощность' &&
-              (i.blockItem[z + 1].value[0] !== '' || i.blockItem[z + 2].value[0] !== '')
+              item.blockItem[z].name === 'Максимальная мощность' &&
+              (item.blockItem[z + 1].value[0] !== '' || item.blockItem[z + 2].value[0] !== '')
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
-              if (i.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${i.blockItem[z + 1].value[0]
+              if (item.blockItem[z + 1].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
-              if (i.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${i.blockItem[z + 2].value[0]
+              if (item.blockItem[z + 2].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxPowerDetails>`;
             } else if (
-              i.blockItem[z].name === 'Максимальная мощность' &&
-              i.blockItem[z + 1].value[0] === '' &&
-              i.blockItem[z + 2].value[0] === ''
+              item.blockItem[z].name === 'Максимальная мощность' &&
+              item.blockItem[z + 1].value[0] === '' &&
+              item.blockItem[z + 2].value[0] === ''
             ) {
               str += `</trcdo:EngineMaxPowerDetails>`;
             }
 
             if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:EngineMaxTorqueDetails>
-                            <trsdo:EngineMaxTorqueMeasure measurementUnitCode="NMT">${i.blockItem[z].value[0]}</trsdo:EngineMaxTorqueMeasure>`;
+                            <trsdo:EngineMaxTorqueMeasure measurementUnitCode="NMT">${item.blockItem[z].value[0]}</trsdo:EngineMaxTorqueMeasure>`;
             }
             if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              (i.blockItem[z + 1].value[0] !== '' || i.blockItem[z + 2].value[0] !== '')
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              (item.blockItem[z + 1].value[0] !== '' || item.blockItem[z + 2].value[0] !== '')
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
-              if (i.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${i.blockItem[z + 1].value[0]
+              if (item.blockItem[z + 1].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
-              if (i.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${i.blockItem[z + 2].value[0]
+              if (item.blockItem[z + 2].value[0] !== '') {
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
                   }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxTorqueDetails>`;
             } else if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              i.blockItem[z + 1].value[0] === '' &&
-              i.blockItem[z + 2].value[0] === '' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              item.blockItem[z + 1].value[0] === '' &&
+              item.blockItem[z + 2].value[0] === '' &&
+              item.blockItem[z].value[0] === ''
             ) {
               str += ``;
             } else if (
-              i.blockItem[z].name === 'Максимальный крутящий момент' &&
-              i.blockItem[z + 1].value[0] === '' &&
-              i.blockItem[z + 2].value[0] === '' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Максимальный крутящий момент' &&
+              item.blockItem[z + 1].value[0] === '' &&
+              item.blockItem[z + 2].value[0] === '' &&
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `</trcdo:EngineMaxTorqueDetails>`;
             }
 
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z !== 0) {
-              str += `</trcdo:EngineDetails><trcdo:EngineDetails><trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z !== 0
+            ) {
+              str += `</trcdo:EngineDetails><trcdo:EngineDetails><trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             } else if (
-              i.blockItem[z].name === 'Марка' &&
-              i.blockItem[z].value[0] === '' &&
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] === '' &&
               z !== 0
             ) {
               str += `</trcdo:EngineDetails><trcdo:EngineDetails>`;
@@ -1670,9 +1803,9 @@ export const Fourth: React.FC = () => {
           }
           str += '</trcdo:EngineDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1681,23 +1814,24 @@ export const Fourth: React.FC = () => {
   const getEngineLocation = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 7) {
-          for (let z = 0; z < i.blockItem.length; z++) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 7) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Положение и размещение приводного двигателя (двигателей)' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name ===
+              'Положение и размещение приводного двигателя (двигателей)' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              for(let j = 0; j < i.blockItem[z].value.length; j++){
-                str += `<trsdo:VehicleComponentLocationText>${i.blockItem[z].value[j]}</trsdo:VehicleComponentLocationText>`;
+              for (let j = 0; j < item.blockItem[z].value.length; j++) {
+                str += `<trsdo:VehicleComponentLocationText>${item.blockItem[z].value[j]}</trsdo:VehicleComponentLocationText>`;
               }
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1706,63 +1840,85 @@ export const Fourth: React.FC = () => {
   const getElectricalEngine = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 24 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 24 && 'check' in item && item.check === false) {
           str +=
             '<trcdo:VehicleElectricalMachineDetails><trsdo:ElectricalMachineKindCode>01</trsdo:ElectricalMachineKindCode>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z === 0) {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z === 0
+            ) {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
             if (
-              i.blockItem[z].name === 'Максимальная 30-минутная мощность' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Максимальная 30-минутная мощность' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:ElectricMotorPowerMeasure measurementUnitCode="KWT">${i.blockItem[z].value[0]}</trsdo:ElectricMotorPowerMeasure>`;
+              str += `<trsdo:ElectricMotorPowerMeasure measurementUnitCode="KWT">${item.blockItem[z].value[0]}</trsdo:ElectricMotorPowerMeasure>`;
             }
-            if (i.blockItem[z].name === 'Рабочее напряжение' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:ElectricalMachineVoltageMeasure measurementUnitCode="VLT">${i.blockItem[z].value[0]}</trsdo:ElectricalMachineVoltageMeasure>`;
+            if (
+              item.blockItem[z].name === 'Рабочее напряжение' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:ElectricalMachineVoltageMeasure measurementUnitCode="VLT">${item.blockItem[z].value[0]}</trsdo:ElectricalMachineVoltageMeasure>`;
             }
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z !== 0) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z !== 0
+            ) {
               str += `</trcdo:VehicleElectricalMachineDetails><trcdo:VehicleElectricalMachineDetails>
-                            <trsdo:ElectricalMachineKindCode>01</trsdo:ElectricalMachineKindCode><trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+                            <trsdo:ElectricalMachineKindCode>01</trsdo:ElectricalMachineKindCode><trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
           }
           str += '</trcdo:VehicleElectricalMachineDetails>';
         }
-        if (i.id === 17 && 'check' in i && i.check === false) {
+        if (item.id === 17 && 'check' in item && item.check === false) {
           str +=
             '<trcdo:VehicleElectricalMachineDetails><trsdo:ElectricalMachineKindCode>01</trsdo:ElectricalMachineKindCode>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z === 0) {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z === 0
+            ) {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
             if (
-              i.blockItem[z].name === 'Максимальная 30-минутная мощность' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Максимальная 30-минутная мощность' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:ElectricMotorPowerMeasure measurementUnitCode="KWT">${i.blockItem[z].value[0]}</trsdo:ElectricMotorPowerMeasure>`;
+              str += `<trsdo:ElectricMotorPowerMeasure measurementUnitCode="KWT">${item.blockItem[z].value[0]}</trsdo:ElectricMotorPowerMeasure>`;
             }
-            if (i.blockItem[z].name === 'Рабочее напряжение' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:ElectricalMachineVoltageMeasure measurementUnitCode="VLT">${i.blockItem[z].value[0]}</trsdo:ElectricalMachineVoltageMeasure>`;
+            if (
+              item.blockItem[z].name === 'Рабочее напряжение' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:ElectricalMachineVoltageMeasure measurementUnitCode="VLT">${item.blockItem[z].value[0]}</trsdo:ElectricalMachineVoltageMeasure>`;
             }
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '' && z !== 0) {
+            if (
+              item.blockItem[z].name === 'Марка' &&
+              item.blockItem[z].value[0] !== '' &&
+              z !== 0
+            ) {
               str += `</trcdo:VehicleElectricalMachineDetails><trcdo:VehicleElectricalMachineDetails>
-                            <trsdo:ElectricalMachineKindCode>01</trsdo:ElectricalMachineKindCode><trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+                            <trsdo:ElectricalMachineKindCode>01</trsdo:ElectricalMachineKindCode><trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
           }
           str += '</trcdo:VehicleElectricalMachineDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1771,44 +1927,47 @@ export const Fourth: React.FC = () => {
   const getElectricalMachine = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 34 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 34 && 'check' in item && item.check === false) {
           str += '<trcdo:VehicleElectricalMachineDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Вид электромашины' &&
-              i.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].name === 'Вид электромашины' &&
+              item.blockItem[z].value[0] !== '' &&
               z === 0
             ) {
-              str += `<trsdo:ElectricalMachineKindCode>${electricalMachineType[i.blockItem[z].value[0]]
+              str += `<trsdo:ElectricalMachineKindCode>${electricalMachineType[item.blockItem[z].value[0]]
                 }</trsdo:ElectricalMachineKindCode>`;
             }
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentMakeName>${i.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
+            if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
             if (
-              i.blockItem[z].name === 'Максимальная 30-минутная мощность' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Максимальная 30-минутная мощность' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:ElectricMotorPowerMeasure measurementUnitCode="KWT">${i.blockItem[z].value[0]}</trsdo:ElectricMotorPowerMeasure>`;
-            }
-            if (i.blockItem[z].name === 'Рабочее напряжение' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:ElectricalMachineVoltageMeasure measurementUnitCode="VLT">${i.blockItem[z].value[0]}</trsdo:ElectricalMachineVoltageMeasure>`;
+              str += `<trsdo:ElectricMotorPowerMeasure measurementUnitCode="KWT">${item.blockItem[z].value[0]}</trsdo:ElectricMotorPowerMeasure>`;
             }
             if (
-              i.blockItem[z].name === 'Вид электромашины' &&
-              i.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].name === 'Рабочее напряжение' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:ElectricalMachineVoltageMeasure measurementUnitCode="VLT">${item.blockItem[z].value[0]}</trsdo:ElectricalMachineVoltageMeasure>`;
+            }
+            if (
+              item.blockItem[z].name === 'Вид электромашины' &&
+              item.blockItem[z].value[0] !== '' &&
               z !== 0
             ) {
-              str += `</trcdo:VehicleElectricalMachineDetails><trcdo:VehicleElectricalMachineDetails><trsdo:ElectricalMachineKindCode>${electricalMachineType[i.blockItem[z].value[0]]
+              str += `</trcdo:VehicleElectricalMachineDetails><trcdo:VehicleElectricalMachineDetails><trsdo:ElectricalMachineKindCode>${electricalMachineType[item.blockItem[z].value[0]]
                 }</trsdo:ElectricalMachineKindCode>`;
             } else if (
-              i.blockItem[z].name === 'Вид электромашины' &&
-              i.blockItem[z].value[0] === '' &&
+              item.blockItem[z].name === 'Вид электромашины' &&
+              item.blockItem[z].value[0] === '' &&
               z !== 0
             ) {
               str += `</trcdo:VehicleElectricalMachineDetails><trcdo:VehicleElectricalMachineDetails>`;
@@ -1816,9 +1975,9 @@ export const Fourth: React.FC = () => {
           }
           str += '</trcdo:VehicleElectricalMachineDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     if (str === '<trcdo:VehicleElectricalMachineDetails></trcdo:VehicleElectricalMachineDetails>')
       str = '';
@@ -1828,19 +1987,19 @@ export const Fourth: React.FC = () => {
   const getMass = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 12) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Вид массы' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleMassMeasure measurementUnitCode="KGM" vehicleMassCode="${massType[i.blockItem[z].value[0]]
-                }">${i.blockItem[z + 1].value[0]}</trsdo:VehicleMassMeasure>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 12) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Вид массы' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleMassMeasure measurementUnitCode="KGM" vehicleMassCode="${massType[item.blockItem[z].value[0]]
+                }">${item.blockItem[z + 1].value[0]}</trsdo:VehicleMassMeasure>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1849,16 +2008,16 @@ export const Fourth: React.FC = () => {
   const getECUModel = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 20 && 'check' in i && i.check === false) {
-          if (i.blockItem[0].value[0] !== '') {
-            str += `<trsdo:ECUModelCode>${i.blockItem[0].value[0]}</trsdo:ECUModelCode>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 20 && 'check' in item && item.check === false) {
+          if (item.blockItem[0].value[0] !== '') {
+            str += `<trsdo:ECUModelCode>${item.blockItem[0].value[0]}</trsdo:ECUModelCode>`;
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -1867,25 +2026,25 @@ export const Fourth: React.FC = () => {
   const getIdInfo = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 1) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 1) {
           str += '<trcdo:VehicleIdInfoDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              (i.blockItem[z].name === 'Идентификационный номер' ||
-                i.blockItem[z].name === 'Заводской номер') &&
-              i.blockItem[z].value[0] !== '' &&
+              (item.blockItem[z].name === 'Идентификационный номер' ||
+                item.blockItem[z].name === 'Заводской номер') &&
+              item.blockItem[z].value[0] !== '' &&
               z === 0
             ) {
               str += `<trcdo:VehicleIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${i.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                             </trcdo:VehicleIdDetails>`;
             } else if (
-              (i.blockItem[z].name === 'Идентификационный номер' ||
-                i.blockItem[z].name === 'Заводской номер') &&
-              i.blockItem[z].value[0] === '' &&
+              (item.blockItem[z].name === 'Идентификационный номер' ||
+                item.blockItem[z].name === 'Заводской номер') &&
+              item.blockItem[z].value[0] === '' &&
               z === 0
             ) {
               str += `<trcdo:VehicleIdDetails>
@@ -1893,30 +2052,30 @@ export const Fourth: React.FC = () => {
                             </trcdo:VehicleIdDetails>`;
             }
             if (
-              i.blockItem[z].name === 'Номер двигателя' &&
-              i.blockItem[z].value[0] !== '' &&
-              i.blockItem[z].id === 9
+              item.blockItem[z].name === 'Номер двигателя' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].id === 9
             ) {
               str += `<trcdo:VehicleEngineIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${i.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:VehicleEngineIdDetails>`;
             } else if (
-              i.blockItem[z].name === 'Номер двигателя' &&
-              i.blockItem[z].value[0] === '' &&
-              i.blockItem[z].id === 9
+              item.blockItem[z].name === 'Номер двигателя' &&
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z].id === 9
             ) {
               str += `<trcdo:VehicleEngineIdDetails>
                             <trsdo:NotVehicleIdentityNumberIndicator>true</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:VehicleEngineIdDetails>`;
             } else if (
-              i.blockItem[z].name === 'Номер двигателя' &&
-              i.blockItem[z].value[0] !== '' &&
-              i.blockItem[z].id !== 9
+              item.blockItem[z].name === 'Номер двигателя' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].id !== 9
             ) {
               str = insert(
                 str,
-                `<trsdo:VehicleIdentityNumberId>${i.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>`,
+                `<trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>`,
                 str.lastIndexOf(
                   `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator></trcdo:VehicleEngineIdDetails>`
                 ) -
@@ -1925,59 +2084,62 @@ export const Fourth: React.FC = () => {
               );
             }
             if (
-              i.blockItem[z].name === 'Номер кузова (кабины, прицепа, рамы)' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Номер кузова (кабины, прицепа, рамы)' &&
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:MachineBodyIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${i.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:MachineBodyIdDetails>`;
             } else if (
-              i.blockItem[z].name === 'Номер кузова (кабины, прицепа, рамы)' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].name === 'Номер кузова (кабины, прицепа, рамы)' &&
+              item.blockItem[z].value[0] === ''
             ) {
               str += `<trcdo:MachineBodyIdDetails>
                             <trsdo:NotVehicleIdentityNumberIndicator>true</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:MachineBodyIdDetails>`;
             }
-            if (i.blockItem[z].name === 'Номер коробки передач' && i.blockItem[z].value[0] !== '') {
+            if (
+              item.blockItem[z].name === 'Номер коробки передач' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
               str += `<trcdo:GearboxIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${i.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:GearboxIdDetails>`;
             } else if (
-              i.blockItem[z].name === 'Номер коробки передач' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].name === 'Номер коробки передач' &&
+              item.blockItem[z].value[0] === ''
             ) {
               str += `<trcdo:GearboxIdDetails>
                             <trsdo:NotVehicleIdentityNumberIndicator>true</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:GearboxIdDetails>`;
             }
             if (
-              i.blockItem[z].name === 'Номер основного ведущего моста' &&
-              i.blockItem[z].value[0] !== '' &&
-              i.blockItem[z].id === 12
+              item.blockItem[z].name === 'Номер основного ведущего моста' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].id === 12
             ) {
               str += `<trcdo:MainPoweredAxleIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${i.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:MainPoweredAxleIdDetails>`;
             } else if (
-              i.blockItem[z].name === 'Номер основного ведущего моста' &&
-              i.blockItem[z].value[0] === '' &&
-              i.blockItem[z].id === 12
+              item.blockItem[z].name === 'Номер основного ведущего моста' &&
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z].id === 12
             ) {
               str += `<trcdo:MainPoweredAxleIdDetails>
                             <trsdo:NotVehicleIdentityNumberIndicator>true</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:MainPoweredAxleIdDetails>`;
             } else if (
-              i.blockItem[z].name === 'Номер основного ведущего моста' &&
-              i.blockItem[z].value[0] !== '' &&
-              i.blockItem[z].id !== 12
+              item.blockItem[z].name === 'Номер основного ведущего моста' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].id !== 12
             ) {
               str = insert(
                 str,
-                `<trsdo:VehicleIdentityNumberId>${i.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>`,
+                `<trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>`,
                 str.indexOf(
                   `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator></trcdo:MainPoweredAxleIdDetails>`
                 ) -
@@ -1987,39 +2149,39 @@ export const Fourth: React.FC = () => {
             }
           }
         }
-        if (i.id === 41) {
-          for (let z = 0; z < i.blockItem.length; z++) {
+        if (item.id === 41) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Сведения об идентификационном номере устройства вызова экстренных оперативных служб' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleEmergencyCallDeviceIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${i.blockItem[1].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[1].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:VehicleEmergencyCallDeviceIdDetails>`;
             } else if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Сведения об идентификационном номере устройства вызова экстренных оперативных служб' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].value[0] === ''
             ) {
               str += `<trcdo:VehicleEmergencyCallDeviceIdDetails>
                             <trsdo:NotVehicleIdentityNumberIndicator>true</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:VehicleEmergencyCallDeviceIdDetails>`;
             }
             if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Сведения об идентификационном номере аппаратуры спутниковой навигации' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleSatelliteNavigationIdDetails>
-                        <trsdo:VehicleIdentityNumberId>${i.blockItem[0].value[0]}</trsdo:VehicleIdentityNumberId>
+                        <trsdo:VehicleIdentityNumberId>${item.blockItem[0].value[0]}</trsdo:VehicleIdentityNumberId>
                         <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                     </trcdo:VehicleSatelliteNavigationIdDetails>`;
             } else if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Сведения об идентификационном номере аппаратуры спутниковой навигации' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].value[0] === ''
             ) {
               str += `<trcdo:VehicleSatelliteNavigationIdDetails>
                         <trsdo:NotVehicleIdentityNumberIndicator>true</trsdo:NotVehicleIdentityNumberIndicator>
@@ -2028,9 +2190,9 @@ export const Fourth: React.FC = () => {
           }
           str += '</trcdo:VehicleIdInfoDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -2040,68 +2202,76 @@ export const Fourth: React.FC = () => {
     let str = '';
     str += '<trcdo:VehicleDetails>';
     str += getIdInfo();
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 0) {
-          for (let z = 0; z < i.blockItem.length; z++) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 0) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Категория в соответствии с Правилами оформления' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Категория в соответствии с Правилами оформления' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:MachineCategoryCode>${categoryId[i.blockItem[z].value[0]]
+              str += `<trsdo:MachineCategoryCode>${categoryId[item.blockItem[z].value[0]]
                 }</trsdo:MachineCategoryCode>`;
             }
           }
         }
-        if (i.id === 1) {
-          for (let z = 0; z < i.blockItem.length; z++) {
+        if (item.id === 1) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Наименование, определяемое назначением самоходной машины (другого вида техники) ' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleCharacteristicsName>${i.blockItem[z].value[0]}</trsdo:VehicleCharacteristicsName>`;
+              str += `<trsdo:VehicleCharacteristicsName>${item.blockItem[z].value[0]}</trsdo:VehicleCharacteristicsName>`;
             }
             if (
-              i.blockItem[z].name === 'Цвет кузова (кабины, прицепа)' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Цвет кузова (кабины, прицепа)' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              for(let j = 0; j < i.blockItem[z].value.length; j++){
-                str += `<trsdo:VehicleBodyColourCode>${color[i.blockItem[z].value[j]]}</trsdo:VehicleBodyColourCode>`;
+              for (let j = 0; j < item.blockItem[z].value.length; j++) {
+                str += `<trsdo:VehicleBodyColourCode>${color[item.blockItem[z].value[j]]
+                  }</trsdo:VehicleBodyColourCode>`;
               }
             }
             if (
-              i.blockItem[z].name === 'Признак комбинированного цвета кузова (кабины, прицепа)' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name ===
+              'Признак комбинированного цвета кузова (кабины, прицепа)' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:BodyMultiColourIndicator>${i.blockItem[z].value[0]}</trsdo:BodyMultiColourIndicator>`;
+              str += `<trsdo:BodyMultiColourIndicator>${item.blockItem[z].value[0]}</trsdo:BodyMultiColourIndicator>`;
             }
             if (
-              i.blockItem[z].name === 'Наименование оттенка цвета кузова (кабины, прицепа)' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Наименование оттенка цвета кузова (кабины, прицепа)' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleBodyColourName>${i.blockItem[z].value[0]}</trsdo:VehicleBodyColourName>`;
+              str += `<trsdo:VehicleBodyColourName>${item.blockItem[z].value[0]}</trsdo:VehicleBodyColourName>`;
             }
-            if (i.blockItem[z].name === 'Год изготовления' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:ManufactureYear>${i.blockItem[z].value[0]}</csdo:ManufactureYear>`;
+            if (
+              item.blockItem[z].name === 'Год изготовления' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<csdo:ManufactureYear>${item.blockItem[z].value[0]}</csdo:ManufactureYear>`;
             }
-            if (i.blockItem[z].name === 'Месяц изготовления' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:ManufactureMonth>--${month[i.blockItem[z].value[0]]
+            if (
+              item.blockItem[z].name === 'Месяц изготовления' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<csdo:ManufactureMonth>--${month[item.blockItem[z].value[0]]
                 }</csdo:ManufactureMonth>`;
             }
           }
         }
-        if (i.id === 39) {
+        if (item.id === 39) {
           if (
-            i.blockItem[0].name === 'Дополнительные характеристики' &&
-            i.blockItem[0].value[0] !== ''
+            item.blockItem[0].name === 'Дополнительные характеристики' &&
+            item.blockItem[0].value[0] !== ''
           ) {
-            str += `<csdo:NoteText>${i.blockItem[0].value[0]}</csdo:NoteText>`;
+            str += `<csdo:NoteText>${item.blockItem[0].value[0]}</csdo:NoteText>`;
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     str += '</trcdo:VehicleDetails>';
@@ -2111,31 +2281,38 @@ export const Fourth: React.FC = () => {
   const getPowerStorage = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 60 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 60 && 'check' in item && item.check === false) {
           str += '<trcdo:PowerStorageDeviceDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '' && z === 0) {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '' && z === 0) {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
-            if (i.blockItem[z].name === 'Место расположения' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentLocationText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>`;
+            if (
+              item.blockItem[z].name === 'Место расположения' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:VehicleComponentLocationText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>`;
             }
-            if (i.blockItem[z].name === 'Запас хода' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleRangeMeasure measurementUnitCode="KM">${i.blockItem[z].value[0]}</trsdo:VehicleRangeMeasure>`;
+            if (item.blockItem[z].name === 'Запас хода' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleRangeMeasure measurementUnitCode="KM">${item.blockItem[z].value[0]}</trsdo:VehicleRangeMeasure>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '' && z !== 0) {
-              str += `</trcdo:PowerStorageDeviceDetails><trcdo:PowerStorageDeviceDetails><trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
-            } else if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] === '' && z !== 0) {
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '' && z !== 0) {
+              str += `</trcdo:PowerStorageDeviceDetails><trcdo:PowerStorageDeviceDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            } else if (
+              item.blockItem[z].name === 'Тип' &&
+              item.blockItem[z].value[0] === '' &&
+              z !== 0
+            ) {
               str += `</trcdo:PowerStorageDeviceDetails><trcdo:PowerStorageDeviceDetails>`;
             }
           }
           str += `</trcdo:PowerStorageDeviceDetails>`;
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     if (str === '<trcdo:PowerStorageDeviceDetails></trcdo:PowerStorageDeviceDetails>') str = '';
     return str;
@@ -2144,33 +2321,33 @@ export const Fourth: React.FC = () => {
   const getDocumentDetails = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 43) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 43) {
           str +=
             '<trsdo:VehicleEPassportRegistrationReasonCode>01</trsdo:VehicleEPassportRegistrationReasonCode><trcdo:OwnerDocDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Наименование документа' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Наименование документа' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<csdo:DocKindCode codeListId="NSI_113">2</csdo:DocKindCode><csdo:DocKindName>${i.blockItem[z].value[0]}</csdo:DocKindName>`;
+              str += `<csdo:DocKindCode codeListId="NSI_113">2</csdo:DocKindCode><csdo:DocKindName>${item.blockItem[z].value[0]}</csdo:DocKindName>`;
             }
-            if (i.blockItem[z].name === 'Номер документа' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:DocId>${i.blockItem[z].value[0]}</csdo:DocId>`;
+            if (item.blockItem[z].name === 'Номер документа' && item.blockItem[z].value[0] !== '') {
+              str += `<csdo:DocId>${item.blockItem[z].value[0]}</csdo:DocId>`;
             }
-            if (i.blockItem[z].name === 'Дата документа' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:DocCreationDate>${i.blockItem[z].value[0]}+03:00</csdo:DocCreationDate>`;
+            if (item.blockItem[z].name === 'Дата документа' && item.blockItem[z].value[0] !== '') {
+              str += `<csdo:DocCreationDate>${item.blockItem[z].value[0]}+03:00</csdo:DocCreationDate>`;
             }
-            if (i.blockItem[z].name === 'Кем выдано' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:AuthorityName>${i.blockItem[z].value[0]}</csdo:AuthorityName>`;
+            if (item.blockItem[z].name === 'Кем выдано' && item.blockItem[z].value[0] !== '') {
+              str += `<csdo:AuthorityName>${item.blockItem[z].value[0]}</csdo:AuthorityName>`;
             }
           }
           str += '</trcdo:OwnerDocDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -2179,87 +2356,91 @@ export const Fourth: React.FC = () => {
   const getVehicleTypeDetails = (): string => {
     let str = '';
     str += '<trcdo:VehicleTypeDetails>';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 0) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] !== '') {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 0) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] !== '') {
               str += `<trsdo:NotVehicleMakeNameIndicator>false</trsdo:NotVehicleMakeNameIndicator>
-                            <csdo:VehicleMakeName>${i.blockItem[z].value[0]}</csdo:VehicleMakeName>
-                            <trsdo:VehicleMakeCode>${brands[i.blockItem[z].value[0]]
-                  ? brands[i.blockItem[z].value[0]]
-                  : i.blockItem[z + 1].value[0]
+                            <csdo:VehicleMakeName>${item.blockItem[z].value[0]
+                }</csdo:VehicleMakeName>
+                            <trsdo:VehicleMakeCode>${brands[item.blockItem[z].value[0]]
+                  ? brands[item.blockItem[z].value[0]]
+                  : item.blockItem[z + 1].value[0]
                 }</trsdo:VehicleMakeCode>`;
-            } else if (i.blockItem[z].name === 'Марка' && i.blockItem[z].value[0] === '') {
+            } else if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] === '') {
               str += `<trsdo:NotVehicleMakeNameIndicator>true</trsdo:NotVehicleMakeNameIndicator>`;
             }
             if (
-              i.blockItem[z].name === 'Коммерческое наименование' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Коммерческое наименование' &&
+              item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:NotVehicleCommercialNameIndicator>false</trsdo:NotVehicleCommercialNameIndicator>
-                            <csdo:VehicleCommercialName>${i.blockItem[z].value[0]}</csdo:VehicleCommercialName>`;
+                            <csdo:VehicleCommercialName>${item.blockItem[z].value[0]}</csdo:VehicleCommercialName>`;
             } else if (
-              i.blockItem[z].name === 'Коммерческое наименование' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].name === 'Коммерческое наименование' &&
+              item.blockItem[z].value[0] === ''
             ) {
               str += `<trsdo:NotVehicleCommercialNameIndicator>true</trsdo:NotVehicleCommercialNameIndicator>`;
             }
-            if (i.blockItem[z].name === 'Тип' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleTypeId>${i.blockItem[z].value[0]}</trsdo:VehicleTypeId>`;
+            if (item.blockItem[z].name === 'Тип' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleTypeId>${item.blockItem[z].value[0]}</trsdo:VehicleTypeId>`;
             }
             if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Категория в соответствии с ТР ТС 031/2012 или ТР ТС 010/2011 или ТР ТС 018/2011 ' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:MachineTechCategoryCode>${i.blockItem[z].value[0]}</trsdo:MachineTechCategoryCode>`;
+              str += `<trsdo:MachineTechCategoryCode>${item.blockItem[z].value[0]}</trsdo:MachineTechCategoryCode>`;
             }
           }
         }
-        if (i.id === 1) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Тип движителя' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:PropulsionKindCode>${typePropulsion[i.blockItem[z].value[0]]
+        if (item.id === 1) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Тип движителя' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:PropulsionKindCode>${typePropulsion[item.blockItem[z].value[0]]
                 }</trsdo:PropulsionKindCode>
-                            <trsdo:PropulsionKindName>${i.blockItem[z].value[0]
+                            <trsdo:PropulsionKindName>${item.blockItem[z].value[0]
                 }</trsdo:PropulsionKindName>`;
             }
             if (
-              i.blockItem[z].name === 'Сведения о наличии реверсивного места оператора' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Сведения о наличии реверсивного места оператора' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:ReversibleControlIndicator>${i.blockItem[z].value[0]}</trsdo:ReversibleControlIndicator>`;
+              str += `<trsdo:ReversibleControlIndicator>${item.blockItem[z].value[0]}</trsdo:ReversibleControlIndicator>`;
             }
           }
         }
-        if (i.id === 7) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Схема компоновки' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleLayoutPatternText>${i.blockItem[z].value[0]}</trsdo:VehicleLayoutPatternText>`;
+        if (item.id === 7) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Схема компоновки' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:VehicleLayoutPatternText>${item.blockItem[z].value[0]}</trsdo:VehicleLayoutPatternText>`;
             }
           }
         }
-        if (i.id === 49) {
-          for (let z = 0; z < i.blockItem[0].value.length; z++) {
-            if ('files' in i.blockItem[0])
-              if (i.blockItem[0].value[0] !== '')
-                str += `<trsdo:VehiclePicture fileName="${i.blockItem[0].files[z]}">${i.blockItem[0].value[z]}</trsdo:VehiclePicture>`;
+        if (item.id === 49) {
+          for (let z = 0; z < item.blockItem[0].value.length; z++) {
+            if ('files' in item.blockItem[0])
+              if (item.blockItem[0].value[0] !== '')
+                str += `<trsdo:VehiclePicture fileName="${item.blockItem[0].files[z]}">${item.blockItem[0].value[z]}</trsdo:VehiclePicture>`;
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 15 && 'check' in i && i.check === false) {
-          if (i.blockItem[0].value[0] !== '')
-            str += `<trsdo:VehicleHybridDesignText>${i.blockItem[0].value[0]}</trsdo:VehicleHybridDesignText>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 15 && 'check' in item && item.check === false) {
+          if (item.blockItem[0].value[0] !== '')
+            str += `<trsdo:VehicleHybridDesignText>${item.blockItem[0].value[0]}</trsdo:VehicleHybridDesignText>`;
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     str += getLabeling();
@@ -2270,55 +2451,55 @@ export const Fourth: React.FC = () => {
   const getLabeling = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 2 && 'check' in i && i.check === false) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 2 && 'check' in item && item.check === false) {
           str += `<trcdo:VehicleLabelingDetails>`;
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Место расположения таблички изготовителя' &&
-              i.blockItem[z].value[0] !== '' &&
-              i.blockItem[z + 1].name !== 'Место расположения таблички изготовителя'
+              item.blockItem[z].name === 'Место расположения таблички изготовителя' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z + 1].name !== 'Место расположения таблички изготовителя'
             ) {
-              str += `<trsdo:VehicleComponentLocationText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>
+              str += `<trsdo:VehicleComponentLocationText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>
                             <trsdo:NotManufacturerPlateIndicator>false</trsdo:NotManufacturerPlateIndicator>`;
             } else if (
-              i.blockItem[z].name === 'Место расположения таблички изготовителя' &&
-              i.blockItem[z].value[0] !== '' &&
-              i.blockItem[z + 1].name === 'Место расположения таблички изготовителя'
+              item.blockItem[z].name === 'Место расположения таблички изготовителя' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z + 1].name === 'Место расположения таблички изготовителя'
             ) {
-              str += `<trsdo:VehicleComponentLocationText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>`;
+              str += `<trsdo:VehicleComponentLocationText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentLocationText>`;
             } else if (
-              i.blockItem[z].name === 'Место расположения таблички изготовителя' &&
-              i.blockItem[z].value[0] === ''
+              item.blockItem[z].name === 'Место расположения таблички изготовителя' &&
+              item.blockItem[z].value[0] === ''
             ) {
               str += `<trsdo:NotManufacturerPlateIndicator>true</trsdo:NotManufacturerPlateIndicator>`;
             }
             if (
-              i.blockItem[z].name ===
+              item.blockItem[z].name ===
               'Место расположения идентификационного номера самоходной машины (другого вида техники)' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleIdentificationNumberLocationText>${i.blockItem[z].value[0]}</trsdo:VehicleIdentificationNumberLocationText>`;
+              str += `<trsdo:VehicleIdentificationNumberLocationText>${item.blockItem[z].value[0]}</trsdo:VehicleIdentificationNumberLocationText>`;
             }
           }
         }
-        if (i.id === 2 && 'check' in i && i.check === true) {
+        if (item.id === 2 && 'check' in item && item.check === true) {
           str += `<trcdo:VehicleLabelingDetails><trsdo:NotManufacturerPlateIndicator>true</trsdo:NotManufacturerPlateIndicator>`;
         }
-        if (i.id === 4 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
+        if (item.id === 4 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Место расположения номера двигателя' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Место расположения номера двигателя' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:EngineIdentificationNumberLocationText>${i.blockItem[z].value[0]}</trsdo:EngineIdentificationNumberLocationText>`;
+              str += `<trsdo:EngineIdentificationNumberLocationText>${item.blockItem[z].value[0]}</trsdo:EngineIdentificationNumberLocationText>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     str += getIdCharacter();
     str += getEngineIdCharacter();
@@ -2331,45 +2512,46 @@ export const Fourth: React.FC = () => {
   const getIdCharacter = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 3) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 3) {
           // описание маркировки
-          if ('check' in i && i.check !== true) {
-            for (let z = 0; z < i.blockItem.length; z++) {
-              if (i.blockItem[z].name === 'С' && z === 0)
-                str += `<trcdo:VehicleIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${i.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
-              if (i.blockItem[z].name === 'По')
+          if ('check' in item && item.check !== true) {
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (item.blockItem[z].name === 'С' && z === 0)
+                str += `<trcdo:VehicleIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${item.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
+              if (item.blockItem[z].name === 'По')
                 str +=
-                  i.blockItem[z + 2].value[0] !== ''
-                    ? `<trsdo:IdCharacterQuantity>${i.blockItem[z + 2].value[0].length
+                  item.blockItem[z + 2].value[0] !== ''
+                    ? `<trsdo:IdCharacterQuantity>${item.blockItem[z + 2].value[0].length
                     }</trsdo:IdCharacterQuantity>`
-                    : `<trsdo:IdCharacterQuantity>${parseInt(i.blockItem[z].value[0]) - parseInt(i.blockItem[z - 1].value[0])
+                    : `<trsdo:IdCharacterQuantity>${parseInt(item.blockItem[z].value[0]) -
+                    parseInt(item.blockItem[z - 1].value[0])
                     }</trsdo:IdCharacterQuantity>`;
-              if (i.blockItem[z].name === 'Описание')
+              if (item.blockItem[z].name === 'Описание')
                 str +=
-                  i.blockItem[z].value[0] === ''
+                  item.blockItem[z].value[0] === ''
                     ? ''
-                    : `<trsdo:IdCharacterText>${i.blockItem[z].value[0]}</trsdo:IdCharacterText>`;
-              if (i.blockItem[z].name === 'Значение')
+                    : `<trsdo:IdCharacterText>${item.blockItem[z].value[0]}</trsdo:IdCharacterText>`;
+              if (item.blockItem[z].name === 'Значение')
                 str +=
-                  i.blockItem[z].value[0] === ''
+                  item.blockItem[z].value[0] === ''
                     ? ''
-                    : `<trcdo:IdCharacterValueDetails><trsdo:IdCharacterValueCode>${i.blockItem[z].value[0]}</trsdo:IdCharacterValueCode>`;
-              if (i.blockItem[z].name === 'Расшифровка значения')
+                    : `<trcdo:IdCharacterValueDetails><trsdo:IdCharacterValueCode>${item.blockItem[z].value[0]}</trsdo:IdCharacterValueCode>`;
+              if (item.blockItem[z].name === 'Расшифровка значения')
                 str +=
-                  i.blockItem[z].value[0] === ''
+                  item.blockItem[z].value[0] === ''
                     ? ''
-                    : `<trsdo:IdCharacterValueText>${i.blockItem[z].value[0]}</trsdo:IdCharacterValueText></trcdo:IdCharacterValueDetails>`;
-              if (i.blockItem[z].name === 'С' && z !== 0)
-                str += `</trcdo:VehicleIdCharacterDetails><trcdo:VehicleIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${i.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
+                    : `<trsdo:IdCharacterValueText>${item.blockItem[z].value[0]}</trsdo:IdCharacterValueText></trcdo:IdCharacterValueDetails>`;
+              if (item.blockItem[z].name === 'С' && z !== 0)
+                str += `</trcdo:VehicleIdCharacterDetails><trcdo:VehicleIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${item.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
             }
             str += `</trcdo:VehicleIdCharacterDetails>`;
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -2378,45 +2560,46 @@ export const Fourth: React.FC = () => {
   const getEngineIdCharacter = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 5) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 5) {
           //описание маркировки двигателя
-          if ('check' in i && i.check !== true) {
-            for (let z = 0; z < i.blockItem.length; z++) {
-              if (i.blockItem[z].name === 'С' && z === 0)
-                str += `<trcdo:EngineIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${i.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
-              if (i.blockItem[z].name === 'По')
+          if ('check' in item && item.check !== true) {
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (item.blockItem[z].name === 'С' && z === 0)
+                str += `<trcdo:EngineIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${item.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
+              if (item.blockItem[z].name === 'По')
                 str +=
-                  i.blockItem[z + 2].value[0] !== ''
-                    ? `<trsdo:IdCharacterQuantity>${i.blockItem[z + 2].value[0].length
+                  item.blockItem[z + 2].value[0] !== ''
+                    ? `<trsdo:IdCharacterQuantity>${item.blockItem[z + 2].value[0].length
                     }</trsdo:IdCharacterQuantity>`
-                    : `<trsdo:IdCharacterQuantity>${parseInt(i.blockItem[z].value[0]) - parseInt(i.blockItem[z - 1].value[0])
+                    : `<trsdo:IdCharacterQuantity>${parseInt(item.blockItem[z].value[0]) -
+                    parseInt(item.blockItem[z - 1].value[0])
                     }</trsdo:IdCharacterQuantity>`;
-              if (i.blockItem[z].name === 'Описание')
+              if (item.blockItem[z].name === 'Описание')
                 str +=
-                  i.blockItem[z].value[0] === ''
+                  item.blockItem[z].value[0] === ''
                     ? ''
-                    : `<trsdo:IdCharacterText>${i.blockItem[z].value[0]}</trsdo:IdCharacterText>`;
-              if (i.blockItem[z].name === 'Значение')
+                    : `<trsdo:IdCharacterText>${item.blockItem[z].value[0]}</trsdo:IdCharacterText>`;
+              if (item.blockItem[z].name === 'Значение')
                 str +=
-                  i.blockItem[z].value[0] === ''
+                  item.blockItem[z].value[0] === ''
                     ? ''
-                    : `<trcdo:IdCharacterValueDetails><trsdo:IdCharacterValueCode>${i.blockItem[z].value[0]}</trsdo:IdCharacterValueCode>`;
-              if (i.blockItem[z].name === 'Расшифровка значения')
+                    : `<trcdo:IdCharacterValueDetails><trsdo:IdCharacterValueCode>${item.blockItem[z].value[0]}</trsdo:IdCharacterValueCode>`;
+              if (item.blockItem[z].name === 'Расшифровка значения')
                 str +=
-                  i.blockItem[z].value[0] === ''
+                  item.blockItem[z].value[0] === ''
                     ? ''
-                    : `<trsdo:IdCharacterValueText>${i.blockItem[z].value[0]}</trsdo:IdCharacterValueText></trcdo:IdCharacterValueDetails>`;
-              if (i.blockItem[z].name === 'С' && z !== 0)
-                str += `</trcdo:EngineIdCharacterDetails><trcdo:EngineIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${i.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
+                    : `<trsdo:IdCharacterValueText>${item.blockItem[z].value[0]}</trsdo:IdCharacterValueText></trcdo:IdCharacterValueDetails>`;
+              if (item.blockItem[z].name === 'С' && z !== 0)
+                str += `</trcdo:EngineIdCharacterDetails><trcdo:EngineIdCharacterDetails><trsdo:IdCharacterStartingOrdinal>${item.blockItem[z].value[0]}</trsdo:IdCharacterStartingOrdinal>`;
             }
             str += `</trcdo:EngineIdCharacterDetails>`;
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -2425,18 +2608,18 @@ export const Fourth: React.FC = () => {
   const getTNVEDNumber = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 0) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Код ТН ВЭД' && i.blockItem[z].value[0] !== '') {
-              str += `<trcdo:TNVEDNumber>${i.blockItem[z].value[0]}</trcdo:TNVEDNumber>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 0) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Код ТН ВЭД' && item.blockItem[z].value[0] !== '') {
+              str += `<trcdo:TNVEDNumber>${item.blockItem[z].value[0]}</trcdo:TNVEDNumber>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -2445,32 +2628,38 @@ export const Fourth: React.FC = () => {
   const getBodywork = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 7) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 7) {
           str += '<trcdo:VehicleBodyworkDetails>';
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Количество дверей' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleDoorQuantity>${i.blockItem[z].value[0]}</trsdo:VehicleDoorQuantity>`;
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Количество дверей' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:VehicleDoorQuantity>${item.blockItem[z].value[0]}</trsdo:VehicleDoorQuantity>`;
             }
             if (
-              i.blockItem[z].name === 'Исполнение загрузочного пространства' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Исполнение загрузочного пространства' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:VehicleCarriageSpaceImplementationText>${i.blockItem[z].value[0]}</trsdo:VehicleCarriageSpaceImplementationText>`;
+              str += `<trsdo:VehicleCarriageSpaceImplementationText>${item.blockItem[z].value[0]}</trsdo:VehicleCarriageSpaceImplementationText>`;
             }
-            if (i.blockItem[z].name === 'Тип кузова' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleComponentText>${i.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+            if (item.blockItem[z].name === 'Тип кузова' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
             }
-            if (i.blockItem[z].name === 'Пассажировместимость' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehiclePassengerQuantity>${i.blockItem[z].value[0]}</trsdo:VehiclePassengerQuantity>`;
+            if (
+              item.blockItem[z].name === 'Пассажировместимость' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:VehiclePassengerQuantity>${item.blockItem[z].value[0]}</trsdo:VehiclePassengerQuantity>`;
             }
           }
           str += '</trcdo:VehicleBodyworkDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     if (str === '<trcdo:VehicleBodyworkDetails></trcdo:VehicleBodyworkDetails>') str = '';
@@ -2482,28 +2671,31 @@ export const Fourth: React.FC = () => {
     let str = '';
     let osi = 0;
     str += '<trcdo:VehicleRunningGearDetails>';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 6 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Количество колес' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleWheelQuantity>${i.blockItem[z].value[0]}</trsdo:VehicleWheelQuantity>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 6 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Количество колес' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:VehicleWheelQuantity>${item.blockItem[z].value[0]}</trsdo:VehicleWheelQuantity>`;
             }
             if (
-              i.blockItem[z].name === 'Количество ведущих колес' &&
-              i.blockItem[z].value[0] !== ''
+              item.blockItem[z].name === 'Количество ведущих колес' &&
+              item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:PoweredWheelQuantity>${i.blockItem[z].value[0]}</trsdo:PoweredWheelQuantity>`;
+              str += `<trsdo:PoweredWheelQuantity>${item.blockItem[z].value[0]}</trsdo:PoweredWheelQuantity>`;
             }
-            if (i.blockItem[z].name === 'Количество осей') {
-              osi = parseInt(i.blockItem[z].value[0]);
+            if (item.blockItem[z].name === 'Количество осей') {
+              osi = parseInt(item.blockItem[z].value[0]);
             }
           }
         }
-        if (i.id === 7) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Рама' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:MachineFrameText>${i.blockItem[z].value[0]}</trsdo:MachineFrameText>`;
+        if (item.id === 7) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Рама' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:MachineFrameText>${item.blockItem[z].value[0]}</trsdo:MachineFrameText>`;
             }
           }
 
@@ -2511,23 +2703,26 @@ export const Fourth: React.FC = () => {
             str += getAxes(`${z + 1}-ая ось`, check);
           }
         }
-        if (i.id === 10 && 'check' in i && i.check === false) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'База' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleWheelbaseMeasure measurementUnitCode="MMT">${i.blockItem[z].value[0]}</trsdo:VehicleWheelbaseMeasure>`;
+        if (item.id === 10 && 'check' in item && item.check === false) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'База' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleWheelbaseMeasure measurementUnitCode="MMT">${item.blockItem[z].value[0]}</trsdo:VehicleWheelbaseMeasure>`;
             }
           }
         }
-        if (i.id === 9) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Дорожный просвет' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleGroundClearanceMeasure measurementUnitCode="MMT">${i.blockItem[z].value[0]}</trsdo:VehicleGroundClearanceMeasure>`;
+        if (item.id === 9) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Дорожный просвет' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<trsdo:VehicleGroundClearanceMeasure measurementUnitCode="MMT">${item.blockItem[z].value[0]}</trsdo:VehicleGroundClearanceMeasure>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     str += getTransmissions();
     str += getSuspension();
@@ -2542,18 +2737,18 @@ export const Fourth: React.FC = () => {
   const getVariantDetails = (check: boolean): string => {
     let str = '';
     str += '<trcdo:VehicleVariantDetails>';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 0) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Модификация' && i.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleTypeVariantId>${i.blockItem[z].value[0]}</trsdo:VehicleTypeVariantId>`;
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 0) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Модификация' && item.blockItem[z].value[0] !== '') {
+              str += `<trsdo:VehicleTypeVariantId>${item.blockItem[z].value[0]}</trsdo:VehicleTypeVariantId>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     str += getBodywork();
     str += getRunningGear(check);
@@ -2581,29 +2776,29 @@ export const Fourth: React.FC = () => {
   const getOwner = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 44) {
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 44) {
           str += '<doc:OwnerDetails><doc:SignersList>';
-          for (let z = 0; z < i.blockItem.length; z++) {
+          for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              i.blockItem[z].name === 'Тип владельца' &&
-              i.blockItem[z].value[0] === 'Юридическое лицо'
+              item.blockItem[z].name === 'Тип владельца' &&
+              item.blockItem[z].value[0] === 'Юридическое лицо'
             ) {
-              str += `<ccdo:OrganizationId>${i.blockItem[z + 1].value[0]}</ccdo:OrganizationId>`;
+              str += `<ccdo:OrganizationId>${item.blockItem[z + 1].value[0]}</ccdo:OrganizationId>`;
             } else if (
-              i.blockItem[z].name === 'Тип владельца' &&
-              i.blockItem[z].value[0] === 'Физическое лицо'
+              item.blockItem[z].name === 'Тип владельца' &&
+              item.blockItem[z].value[0] === 'Физическое лицо'
             ) {
-              str += `<ccdo:OwnerIndividualDetails><ccdo:IndividualId>${i.blockItem[z + 1].value[0]
+              str += `<ccdo:OwnerIndividualDetails><ccdo:IndividualId>${item.blockItem[z + 1].value[0]
                 }</ccdo:IndividualId></ccdo:OwnerIndividualDetails>`;
             }
           }
           str += '</doc:SignersList></doc:OwnerDetails>';
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -2612,19 +2807,22 @@ export const Fourth: React.FC = () => {
   const getCountry = (): string => {
     let str = '';
 
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        if (i.id === 41) {
-          for (let z = 0; z < i.blockItem.length; z++) {
-            if (i.blockItem[z].name === 'Страна происхождения' && i.blockItem[z].value[0] !== '') {
-              str += `<csdo:UnifiedCountryCode codeListId="NSI_034">${country[i.blockItem[z].value[0]]
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 41) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (
+              item.blockItem[z].name === 'Страна происхождения' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<csdo:UnifiedCountryCode codeListId="NSI_034">${country[item.blockItem[z].value[0]]
                 }</csdo:UnifiedCountryCode>`;
             }
           }
         }
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
 
     return str;
@@ -2636,30 +2834,30 @@ export const Fourth: React.FC = () => {
     let mnemonic = '';
     let maker = '';
     let ogrn = '';
-    blockss.map((item) => {
-      item.blocksItem.map((i) => {
-        i.blockItem.map((ii) => {
-          if (ii.id === 158) {
-            mnemonic = ii.value[0];
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        item.blockItem.map((i) => {
+          if (i.id === 158) {
+            mnemonic = i.value[0];
           }
-          if (ii.id === 159) {
-            maker = ii.value[0];
+          if (i.id === 159) {
+            maker = i.value[0];
           }
-          if (ii.name === 'ОГРН') {
-            ogrn = ii.value[0];
+          if (i.name === 'ОГРН') {
+            ogrn = i.value[0];
           }
-          if (ii.name === 'Разные шины') {
-            check = ii.value[0] === 'true';
+          if (i.name === 'Разные шины') {
+            check = i.value[0] === 'true';
             check = !check;
           }
-          if ('numeric' in ii && ii.numeric === true) {
-            ii.value[0] = ii.value[0].replace(/,/, '.');
+          if ('numeric' in i && i.numeric === true) {
+            i.value[0] = i.value[0].replace(/,/, '.');
           }
-          return ii;
+          return i;
         });
-        return i;
+        return item;
       });
-      return item;
+      return items;
     });
     let data: string = `<doc:VehicleEPassportDetails xmlns:ccdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_ComplexDataObjects/0.4.17" xmlns:csdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_SimpleDataObjects/0.4.8" xmlns:doc="urn://x-artefacts-epts-ru/ELPTSAddData/1.0.11" xmlns:trcdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_TR_ComplexDataObjects/1.1.11" xmlns:trsdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_TR_SimpleDataObjects/1.0.14">
         <soapenv:Header/>
@@ -2734,24 +2932,26 @@ export const Fourth: React.FC = () => {
     return main_string.slice(0, pos) + ins_string + main_string.slice(pos);
   };
   return (
-    <Context.Provider
-      value={{
-        handleRadio,
-        handleChangeCheck,
-        handleChangeValue,
-        onClickDelete,
-        onClickAdd,
-        onCkickAddDopBlock,
-        uploadImage
-      }}
-    >
-      <Box display='flex' marginTop={5} height='100%' justifyContent='center' alignItems='center'>
-        <Blocks
-          blocks={blockss}
-          onChangeBlock={onChangeBlock}
-          onclickSubmit={onclickSubmit}
-        ></Blocks>
-      </Box>
-    </Context.Provider>
+    <ErrorBoundary>
+      <Context.Provider
+        value={{
+          handleRadio,
+          handleChangeCheck,
+          handleChangeValue,
+          onClickDelete,
+          onClickAdd,
+          onCkickAddDopBlock,
+          uploadImage
+        }}
+      >
+        <Box display='flex' marginTop={5} height='100%' justifyContent='center' alignItems='center'>
+          <Blocks
+            blocks={blocks}
+            onChangeBlock={onChangeBlock}
+            onclickSubmit={onclickSubmit}
+          ></Blocks>
+        </Box>
+      </Context.Provider>
+    </ErrorBoundary>
   );
 };

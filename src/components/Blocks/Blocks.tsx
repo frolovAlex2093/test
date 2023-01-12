@@ -1,56 +1,9 @@
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
+import { IBlocks } from '../../interfaces/interfaces';
 import { Block } from './Block/Block';
 
-interface IBlock {
-  blocks: {
-    blocksName: string;
-    id: number;
-    blocksItem: {
-      blockName: string;
-      checkbox?: boolean;
-      check?: boolean;
-      id: number;
-      button?: boolean;
-      buttonAdd?: boolean;
-      buttonDelete?: boolean;
-      blockItem: {
-        name: string;
-        type: string;
-        id: number;
-        require?: boolean;
-        checkbox?: boolean;
-        disabled: boolean;
-        pattern?: string;
-        options?: string[];
-        button?: boolean;
-        multiple?: boolean;
-        value: string[];
-        radio?: string[];
-        checkboxText?: string;
-        buttonDelete?: boolean;
-        buttonAdd?: boolean;
-        group?: number[];
-        endAdornment?: string;
-        label?: string;
-        buttons?: boolean[];
-        groupBlock?: number[];
-        count?: number;
-        files?: string[];
-        groupblockAdd?: number[];
-        countBlock?: number;
-        numeric?: boolean;
-        freeSolo?: boolean;
-        error?: boolean;
-      }[];
-    }[];
-  }[];
-
-  onChangeBlock: (id: number) => void;
-  onclickSubmit: () => void;
-}
-
-export const Blocks: React.FC<IBlock> = ({ blocks, onChangeBlock, onclickSubmit }) => {
+export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit }) => {
   return (
     <Box
       component='form'

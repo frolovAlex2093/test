@@ -1,4 +1,4 @@
-import { IDict } from '../pages/Third';
+import { IDict } from '../interfaces/interfaces';
 
 export const wheelPosition: IDict = {
   справа: '10',

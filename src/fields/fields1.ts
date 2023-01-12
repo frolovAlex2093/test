@@ -26,7 +26,7 @@ import {
   unitGear
 } from '../guides';
 
-export const blocks = [
+export const blocks1 = [
   {
     blocksName: '',
     id: 10,
@@ -2315,8 +2315,7 @@ export const blocks = [
             disabled: false,
             value: [''],
             files: [],
-            
-            
+            pattern: 'false'
           }
         ]
       }

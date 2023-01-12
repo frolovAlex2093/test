@@ -1,4 +1,4 @@
-import { IDict } from '../pages';
+import { IDict } from '../interfaces/interfaces';
 
 export const TNVED: IDict = {
   '8401': '8401',

@@ -1,12 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import { LinkList } from '../components';
-
-export type linkList = {
-  page: string;
-  text: string;
-  id: number;
-};
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import { linkList } from '../interfaces/interfaces';
 
 const firstLinkList: linkList[] = [
   {
@@ -16,22 +12,20 @@ const firstLinkList: linkList[] = [
   }
 ];
 
-interface IFirst {
-  onClickSecond: (id: number) => void;
-}
-
-export const First: React.FC<IFirst> = ({ onClickSecond }) => {
+export const First: React.FC = () => {
   return (
-    <Box display='flex' marginTop={5} height='100%' justifyContent='center' alignItems='center'>
-      <Box
-        display='flex'
-        flexDirection='column'
-        maxWidth='700px'
-        width='100%'
-        padding='0 15px 0 15px'
-      >
-        <LinkList linkList={firstLinkList} onClickSecond={onClickSecond}></LinkList>
+    <ErrorBoundary>
+      <Box display='flex' marginTop={5} height='100%' justifyContent='center' alignItems='center'>
+        <Box
+          display='flex'
+          flexDirection='column'
+          maxWidth='700px'
+          width='100%'
+          padding='0 15px 0 15px'
+        >
+          <LinkList linkList={firstLinkList}></LinkList>
+        </Box>
       </Box>
-    </Box>
+    </ErrorBoundary>
   );
 };

@@ -1,4 +1,4 @@
-import { IDict } from '../pages/Third';
+import { IDict } from '../interfaces/interfaces';
 
 export const massType: IDict = {
   'Технически допустимая максимальная масса, приходящаяся на каждую из осей, начиная с передней оси':

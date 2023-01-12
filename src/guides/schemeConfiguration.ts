@@ -1,4 +1,6 @@
-export const schemeConfiguration = {
+import { IDict } from '../interfaces/interfaces';
+
+export const schemeConfiguration: IDict = {
   'кабина над двигателем': '1',
   переднеприводная: '4',
   полноприводная: '6',

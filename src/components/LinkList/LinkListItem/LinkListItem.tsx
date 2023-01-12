@@ -1,23 +1,11 @@
 import React from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { ILinkListItem } from '../../../interfaces/interfaces';
 
-interface ILinkListItem {
-  listItem: string;
-  page: string;
-  id: number;
-  onClickSecond: (id: number) => void;
-}
-
-export const LinkListItem: React.FC<ILinkListItem> = ({ listItem, page, id, onClickSecond }) => {
+export const LinkListItem: React.FC<ILinkListItem> = ({ listItem, page }) => {
   return (
-    <Link
-      to={page}
-      style={{ textDecoration: 'none' }}
-      onClick={() => {
-        onClickSecond(id);
-      }}
-    >
+    <Link to={page} style={{ textDecoration: 'none' }}>
       <Paper
         elevation={15}
         sx={{
@@ -29,7 +17,6 @@ export const LinkListItem: React.FC<ILinkListItem> = ({ listItem, page, id, onCl
           border: 'solid #bdbdbd 1px'
         }}
       >
-
         <Box textAlign='left'>
           <Typography
             sx={{ cursor: 'pointer' }}
@@ -41,7 +28,6 @@ export const LinkListItem: React.FC<ILinkListItem> = ({ listItem, page, id, onCl
             {listItem}
           </Typography>
         </Box>
-
       </Paper>
     </Link>
   );

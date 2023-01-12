@@ -1,4 +1,4 @@
-import { IDict } from '../pages/Third';
+import { IDict } from '../interfaces/interfaces';
 
 export const brands: IDict = {
   'Отсутствует марка у базового ТС/шасси': '0',

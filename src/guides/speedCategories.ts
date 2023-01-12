@@ -1,4 +1,4 @@
-import { IDict } from '../pages';
+import { IDict } from '../interfaces/interfaces';
 
 export const speedCategories: IDict = {
   F: '1',

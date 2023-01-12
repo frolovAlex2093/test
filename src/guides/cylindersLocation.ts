@@ -1,4 +1,6 @@
-export const cylindersLocation = {
+import { IDict } from '../interfaces/interfaces';
+
+export const cylindersLocation: IDict = {
   рядное: '1',
   'V-образное': '4',
   оппозитное: '5',

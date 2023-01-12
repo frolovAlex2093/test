@@ -2311,6 +2311,7 @@ export const blocks2 = [
             disabled: false,
             value: [''],
             files: [],
+            pattern: 'false'
           }
         ]
       }
