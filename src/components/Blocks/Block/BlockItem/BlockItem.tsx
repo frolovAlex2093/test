@@ -31,7 +31,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-        //item.require = false;
+        // item.require = false;
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -149,6 +149,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                 ''
               ) : item.type === 'date' ? (
                 <TextField
+                  data-testid='date'
                   label='Дата документа'
                   type='date'
                   onBlur={(value) => {
@@ -360,7 +361,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             {item.type === 'files' ? (
               <>
                 <TextField
-                  data-testid="files"
+                  data-testid='files'
                   sx={{ marginTop: '-25px' }}
                   error={item.pattern !== 'false'}
                   required={item.require}
@@ -370,7 +371,6 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                   onChange={(event) => {
                     uploadImage?.(event, item.id);
                   }}
-                  
                 ></TextField>
                 {item.pattern === 'false' ? (
                   ''

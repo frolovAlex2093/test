@@ -1,6 +1,4 @@
-import { MemoryRouter } from 'react-router-dom';
-
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import { Context } from '../../../../pages';
 
@@ -196,6 +194,8 @@ describe('BlockItem component', () => {
 
     userEvent.click(screen.getByText('Отсутствует'));
 
+    expect(screen.getByLabelText('Отсутствует')).toBeTruthy();
+
     expect(handleRadio).toHaveBeenCalledTimes(2);
     expect(onClickDelete).toHaveBeenCalledTimes(2);
     expect(onClickAdd).toHaveBeenCalled();
@@ -221,6 +221,7 @@ describe('BlockItem component', () => {
 
     fireEvent.blur(screen.getByLabelText('test name 1'));
     userEvent.type(screen.getByLabelText('test name 2'), '1');
+    expect(screen.getByText('options 1')).toBeInTheDocument();
     userEvent.click(screen.getByText('options 1'));
 
     expect(handleChangeValue).toHaveBeenCalledTimes(2);
@@ -289,5 +290,23 @@ describe('BlockItem component', () => {
     expect(screen.getByText('options 4')).toBeInTheDocument();
 
     expect(handleChangeValue).toHaveBeenCalledTimes(3);
+  });
+  it('BlockItem component calendar', () => {
+    render(
+      <Context.Provider
+        value={{
+          handleRadio,
+          handleChangeCheck,
+          handleChangeValue,
+          onClickDelete,
+          onClickAdd,
+          onCkickAddDopBlock,
+          uploadImage
+        }}
+      >
+        <BlockItem blockItem={blockItem} />
+      </Context.Provider>
+    );
+    expect(screen.getByTestId('date')).toBeInTheDocument();
   });
 });

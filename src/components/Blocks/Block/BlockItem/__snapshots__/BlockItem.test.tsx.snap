@@ -555,6 +555,7 @@ Object {
           >
             <div
               class="MuiFormControl-root MuiTextField-root css-156lfgm-MuiFormControl-root-MuiTextField-root"
+              data-testid="date"
             >
               <label
                 class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
@@ -1262,6 +1263,7 @@ Object {
         >
           <div
             class="MuiFormControl-root MuiTextField-root css-156lfgm-MuiFormControl-root-MuiTextField-root"
+            data-testid="date"
           >
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
