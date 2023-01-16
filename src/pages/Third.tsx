@@ -682,19 +682,24 @@ export const Third: React.FC = () => {
               }
 
               str += `
-                            <trsdo:VehicleAxleOrdinal>${item.blockItem[z].value[0].split('-')[0]
-                }</trsdo:VehicleAxleOrdinal>
-                                ${item.blockItem[z + 1].value[0] === ''
-                  ? ''
-                  : `<trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure measurementUnitCode="KGM">${item.blockItem[z + 1].value[0]
-                  }</trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure>`
-                }
+                            <trsdo:VehicleAxleOrdinal>${
+                              item.blockItem[z].value[0].split('-')[0]
+                            }</trsdo:VehicleAxleOrdinal>
+                                ${
+                                  item.blockItem[z + 1].value[0] === ''
+                                    ? ''
+                                    : `<trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure measurementUnitCode="KGM">${
+                                        item.blockItem[z + 1].value[0]
+                                      }</trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure>`
+                                }
                             ${str2}
-                            ${item.blockItem[z + 3].value[0] === ''
-                  ? ''
-                  : `<trsdo:VehicleAxleSweptPathMeasure measurementUnitCode="MMT">${item.blockItem[z + 3].value[0]
-                  }</trsdo:VehicleAxleSweptPathMeasure>`
-                }
+                            ${
+                              item.blockItem[z + 3].value[0] === ''
+                                ? ''
+                                : `<trsdo:VehicleAxleSweptPathMeasure measurementUnitCode="MMT">${
+                                    item.blockItem[z + 3].value[0]
+                                  }</trsdo:VehicleAxleSweptPathMeasure>`
+                            }
                            `;
             }
           }
@@ -713,8 +718,9 @@ export const Third: React.FC = () => {
                   item.blockItem[z + 5].value[0] !== '' &&
                   item.blockItem[z + 6].value[0] !== ''
                 ) {
-                  str2 = `${item.blockItem[z + 3].value[0]}-${item.blockItem[z + 4].value[0]}/${item.blockItem[z + 5].value[0]
-                    }-${item.blockItem[z + 6].value[0]}`;
+                  str2 = `${item.blockItem[z + 3].value[0]}-${item.blockItem[z + 4].value[0]}/${
+                    item.blockItem[z + 5].value[0]
+                  }-${item.blockItem[z + 6].value[0]}`;
                 } else if (
                   item.blockItem[z + 3].value[0] !== '' &&
                   item.blockItem[z + 4].value[0] === '' &&
@@ -746,11 +752,13 @@ export const Third: React.FC = () => {
                 }
 
                 str += `<trcdo:VehicleTyre>
-                            <trsdo:VehicleTyreKindSize>${item.blockItem[z + 1].value[0]
-                  }</trsdo:VehicleTyreKindSize>
+                            <trsdo:VehicleTyreKindSize>${
+                              item.blockItem[z + 1].value[0]
+                            }</trsdo:VehicleTyreKindSize>
                             <trsdo:VehicleTyreKindIndex>${str2}</trsdo:VehicleTyreKindIndex>
-                            <trsdo:VehicleTyreKindSpeed>${item.blockItem[z + 7].value[0]
-                  }</trsdo:VehicleTyreKindSpeed>
+                            <trsdo:VehicleTyreKindSpeed>${
+                              item.blockItem[z + 7].value[0]
+                            }</trsdo:VehicleTyreKindSpeed>
                             </trcdo:VehicleTyre>`;
               }
             }
@@ -810,8 +818,9 @@ export const Third: React.FC = () => {
                 !isNaN(parseInt(item.blockItem[z].value[0])) &&
                 !isNaN(parseInt(item.blockItem[z + 1].value[0]))
               )
-                str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(item.blockItem[z].value[0]) + parseInt(item.blockItem[z + 1].value[0])
-                  }</trsdo:TransmissionUnitGearQuantity>`;
+                str += `<trsdo:TransmissionUnitGearQuantity>${
+                  parseInt(item.blockItem[z].value[0]) + parseInt(item.blockItem[z + 1].value[0])
+                }</trsdo:TransmissionUnitGearQuantity>`;
               else if (!isNaN(parseInt(item.blockItem[z].value[0])))
                 str += `<trsdo:TransmissionUnitGearQuantity>${parseInt(
                   item.blockItem[z].value[0]
@@ -1046,7 +1055,7 @@ export const Third: React.FC = () => {
               }
               if (
                 item.blockItem[z].name ===
-                'Отношение к частоте вращения двигателя вала отбора мощности' &&
+                  'Отношение к частоте вращения двигателя вала отбора мощности' &&
                 item.blockItem[z].value[0] !== ''
               ) {
                 str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
@@ -1078,8 +1087,9 @@ export const Third: React.FC = () => {
           str += '<trcdo:VehicleSuspensionDetails>';
           for (let z = 0; z < item.blockItem.length; z++) {
             if (item.blockItem[z].name === 'Вид подвески' && z === 0) {
-              str += `<trsdo:VehicleSuspensionKindCode>${suspension[item.blockItem[z].value[0]]
-                }</trsdo:VehicleSuspensionKindCode>`;
+              str += `<trsdo:VehicleSuspensionKindCode>${
+                suspension[item.blockItem[z].value[0]]
+              }</trsdo:VehicleSuspensionKindCode>`;
             }
             if (item.blockItem[z].name === 'Описание' && item.blockItem[z].value[0] !== '') {
               str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:VehicleSuspensionDetails>`;
@@ -1087,8 +1097,9 @@ export const Third: React.FC = () => {
               str += `</trcdo:VehicleSuspensionDetails>`;
             }
             if (item.blockItem[z].name === 'Вид подвески' && z !== 0) {
-              str += `<trcdo:VehicleSuspensionDetails><trsdo:VehicleSuspensionKindCode>${suspension[item.blockItem[z].value[0]]
-                }</trsdo:VehicleSuspensionKindCode>`;
+              str += `<trcdo:VehicleSuspensionDetails><trsdo:VehicleSuspensionKindCode>${
+                suspension[item.blockItem[z].value[0]]
+              }</trsdo:VehicleSuspensionKindCode>`;
             }
           }
         }
@@ -1113,12 +1124,15 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== ''
             ) {
               str += `
-                            <trsdo:VehicleComponentText>${item.blockItem[z + 1].value[0]
-                }</trsdo:VehicleComponentText>
-                            <trsdo:SteeringWheelPositionCode>${steeringType[item.blockItem[z].value[0]]
-                }</trsdo:SteeringWheelPositionCode>
-                            <trsdo:VehicleComponentLocationText>${item.blockItem[z].value[0]
-                }</trsdo:VehicleComponentLocationText>`;
+                            <trsdo:VehicleComponentText>${
+                              item.blockItem[z + 1].value[0]
+                            }</trsdo:VehicleComponentText>
+                            <trsdo:SteeringWheelPositionCode>${
+                              steeringType[item.blockItem[z].value[0]]
+                            }</trsdo:SteeringWheelPositionCode>
+                            <trsdo:VehicleComponentLocationText>${
+                              item.blockItem[z].value[0]
+                            }</trsdo:VehicleComponentLocationText>`;
             }
           }
           str += '</trcdo:VehicleSteeringDetails>';
@@ -1145,8 +1159,10 @@ export const Third: React.FC = () => {
                 item.blockItem[z + 5].value[0] !== ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}-${item.blockItem[z + 3].value[0]
-                  }/${item.blockItem[z + 4].value[0]}-${item.blockItem[z + 5].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}-${
+                    item.blockItem[z + 3].value[0]
+                  }/${item.blockItem[z + 4].value[0]}-${
+                    item.blockItem[z + 5].value[0]
                   }</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
@@ -1156,7 +1172,8 @@ export const Third: React.FC = () => {
                 item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}/${item.blockItem[z + 4].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}/${
+                    item.blockItem[z + 4].value[0]
                   }</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
@@ -1166,7 +1183,8 @@ export const Third: React.FC = () => {
                 item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}-${item.blockItem[z + 3].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]}-${
+                    item.blockItem[z + 3].value[0]
                   }/-</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
@@ -1176,7 +1194,8 @@ export const Third: React.FC = () => {
                 item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>${item.blockItem[z + 2].value[0]
+                  `<trsdo:VehicleTyreKindIndex>${
+                    item.blockItem[z + 2].value[0]
                   }/-</trsdo:VehicleTyreKindIndex>`
                 );
               } else if (
@@ -1186,7 +1205,8 @@ export const Third: React.FC = () => {
                 item.blockItem[z + 5].value[0] === ''
               ) {
                 str.push(
-                  `<trsdo:VehicleTyreKindIndex>-/${item.blockItem[z + 4].value[0]
+                  `<trsdo:VehicleTyreKindIndex>-/${
+                    item.blockItem[z + 4].value[0]
                   }</trsdo:VehicleTyreKindIndex>`
                 );
               } else str.push('');
@@ -1234,10 +1254,11 @@ export const Third: React.FC = () => {
                 item.blockItem[z].name === 'Шина временного использования' &&
                 item.blockItem[z].name !== ''
               ) {
-                str += `<trsdo:IsSupplementVehicleTyre>${item.blockItem[z].value[0] === '' || item.blockItem[z].value[0] === 'false'
+                str += `<trsdo:IsSupplementVehicleTyre>${
+                  item.blockItem[z].value[0] === '' || item.blockItem[z].value[0] === 'false'
                     ? 'false'
                     : 'true'
-                  }</trsdo:IsSupplementVehicleTyre>`;
+                }</trsdo:IsSupplementVehicleTyre>`;
               }
               if (
                 item.blockItem[z].name === 'Размерность' &&
@@ -1318,7 +1339,7 @@ export const Third: React.FC = () => {
             }
             if (
               item.blockItem[z].name ===
-              'Технически допустимая статическая вертикальная нагрузка в точке сцепки тягово-сцепного устройства' &&
+                'Технически допустимая статическая вертикальная нагрузка в точке сцепки тягово-сцепного устройства' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:VehicleHitchLoadMeasure measurementUnitCode="KGM">${item.blockItem[z].value[0]}</trsdo:VehicleHitchLoadMeasure>`;
@@ -1347,10 +1368,12 @@ export const Third: React.FC = () => {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (item.blockItem[z].name === 'Топливо' && item.blockItem[z].value[0] !== '') {
               for (let j = 0; j < item.blockItem[z].value.length; j++) {
-                str += `<trsdo:VehicleFuelKindCode>${fuelType[item.blockItem[z].value[j]]
-                  }</trsdo:VehicleFuelKindCode>
-                                   <trsdo:VehicleFuelKindName>${item.blockItem[z].value[j]
-                  }</trsdo:VehicleFuelKindName>`;
+                str += `<trsdo:VehicleFuelKindCode>${
+                  fuelType[item.blockItem[z].value[j]]
+                }</trsdo:VehicleFuelKindCode>
+                                   <trsdo:VehicleFuelKindName>${
+                                     item.blockItem[z].value[j]
+                                   }</trsdo:VehicleFuelKindName>`;
               }
             }
           }
@@ -1483,8 +1506,9 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== '' &&
               z === 0
             ) {
-              str += `<trsdo:VehicleBrakingSystemKindCode>${brakingType[item.blockItem[z].value[0]]
-                }</trsdo:VehicleBrakingSystemKindCode>`;
+              str += `<trsdo:VehicleBrakingSystemKindCode>${
+                brakingType[item.blockItem[z].value[0]]
+              }</trsdo:VehicleBrakingSystemKindCode>`;
             }
             if (item.blockItem[z].name === 'Описание' && item.blockItem[z].value[0] !== '') {
               str += `<trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
@@ -1494,8 +1518,9 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== '' &&
               z !== 0
             ) {
-              str += `</trcdo:VehicleBrakingSystemDetails><trcdo:VehicleBrakingSystemDetails><trsdo:VehicleBrakingSystemKindCode>${brakingType[item.blockItem[z].value[0]]
-                }</trsdo:VehicleBrakingSystemKindCode>`;
+              str += `</trcdo:VehicleBrakingSystemDetails><trcdo:VehicleBrakingSystemDetails><trsdo:VehicleBrakingSystemKindCode>${
+                brakingType[item.blockItem[z].value[0]]
+              }</trsdo:VehicleBrakingSystemKindCode>`;
             } else if (
               item.blockItem[z].name === 'Наименование элемента тормозной системы' &&
               item.blockItem[z].value[0] === '' &&
@@ -1587,12 +1612,14 @@ export const Third: React.FC = () => {
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
               if (item.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 1].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
               if (item.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 2].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxPowerDetails>`;
             } else if (
@@ -1616,12 +1643,14 @@ export const Third: React.FC = () => {
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
               if (item.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 1].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
               if (item.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 2].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxTorqueDetails>`;
             } else if (
@@ -1703,12 +1732,14 @@ export const Third: React.FC = () => {
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
               if (item.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 1].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
               if (item.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 2].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxPowerDetails>`;
             } else if (
@@ -1732,12 +1763,14 @@ export const Third: React.FC = () => {
             ) {
               str += `<trcdo:VehicleShaftRotationFrequency>`;
               if (item.blockItem[z + 1].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${item.blockItem[z + 1].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMinMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 1].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMinMeasure>`;
               }
               if (item.blockItem[z + 2].value[0] !== '') {
-                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${item.blockItem[z + 2].value[0]
-                  }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
+                str += `<trcdo:VehicleShaftRotationFrequencyMaxMeasure measurementUnitCode="RPM">${
+                  item.blockItem[z + 2].value[0]
+                }</trcdo:VehicleShaftRotationFrequencyMaxMeasure>`;
               }
               str += `</trcdo:VehicleShaftRotationFrequency></trcdo:EngineMaxTorqueDetails>`;
             } else if (
@@ -1789,7 +1822,7 @@ export const Third: React.FC = () => {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (
               item.blockItem[z].name ===
-              'Положение и размещение приводного двигателя (двигателей)' &&
+                'Положение и размещение приводного двигателя (двигателей)' &&
               item.blockItem[z].value[0] !== ''
             ) {
               for (let j = 0; j < item.blockItem[z].value.length; j++) {
@@ -1910,8 +1943,9 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== '' &&
               z === 0
             ) {
-              str += `<trsdo:ElectricalMachineKindCode>${electricalMachineType[item.blockItem[z].value[0]]
-                }</trsdo:ElectricalMachineKindCode>`;
+              str += `<trsdo:ElectricalMachineKindCode>${
+                electricalMachineType[item.blockItem[z].value[0]]
+              }</trsdo:ElectricalMachineKindCode>`;
             }
             if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] !== '') {
               str += `<trsdo:VehicleComponentMakeName>${item.blockItem[z].value[0]}</trsdo:VehicleComponentMakeName>`;
@@ -1936,8 +1970,9 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== '' &&
               z !== 0
             ) {
-              str += `</trcdo:VehicleElectricalMachineDetails><trcdo:VehicleElectricalMachineDetails><trsdo:ElectricalMachineKindCode>${electricalMachineType[item.blockItem[z].value[0]]
-                }</trsdo:ElectricalMachineKindCode>`;
+              str += `</trcdo:VehicleElectricalMachineDetails><trcdo:VehicleElectricalMachineDetails><trsdo:ElectricalMachineKindCode>${
+                electricalMachineType[item.blockItem[z].value[0]]
+              }</trsdo:ElectricalMachineKindCode>`;
             } else if (
               item.blockItem[z].name === 'Вид электромашины' &&
               item.blockItem[z].value[0] === '' &&
@@ -1965,8 +2000,9 @@ export const Third: React.FC = () => {
         if (item.id === 12) {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (item.blockItem[z].name === 'Вид массы' && item.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleMassMeasure measurementUnitCode="KGM" vehicleMassCode="${massType[item.blockItem[z].value[0]]
-                }">${item.blockItem[z + 1].value[0]}</trsdo:VehicleMassMeasure>`;
+              str += `<trsdo:VehicleMassMeasure measurementUnitCode="KGM" vehicleMassCode="${
+                massType[item.blockItem[z].value[0]]
+              }">${item.blockItem[z + 1].value[0]}</trsdo:VehicleMassMeasure>`;
             }
           }
         }
@@ -2052,7 +2088,7 @@ export const Third: React.FC = () => {
                 str.lastIndexOf(
                   `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator></trcdo:VehicleEngineIdDetails>`
                 ) -
-                `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
+                  `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                                 </trcdo:VehicleEngineIdDetails`.length
               );
             }
@@ -2116,7 +2152,7 @@ export const Third: React.FC = () => {
                 str.indexOf(
                   `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator></trcdo:MainPoweredAxleIdDetails>`
                 ) -
-                `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
+                  `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                                 </trcdo:MainPoweredAxleIdDetails`.length
               );
             }
@@ -2126,7 +2162,7 @@ export const Third: React.FC = () => {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (
               item.blockItem[z].name ===
-              'Сведения об идентификационном номере устройства вызова экстренных оперативных служб' &&
+                'Сведения об идентификационном номере устройства вызова экстренных оперативных служб' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleEmergencyCallDeviceIdDetails>
@@ -2135,7 +2171,7 @@ export const Third: React.FC = () => {
                         </trcdo:VehicleEmergencyCallDeviceIdDetails>`;
             } else if (
               item.blockItem[z].name ===
-              'Сведения об идентификационном номере устройства вызова экстренных оперативных служб' &&
+                'Сведения об идентификационном номере устройства вызова экстренных оперативных служб' &&
               item.blockItem[z].value[0] === ''
             ) {
               str += `<trcdo:VehicleEmergencyCallDeviceIdDetails>
@@ -2144,7 +2180,7 @@ export const Third: React.FC = () => {
             }
             if (
               item.blockItem[z].name ===
-              'Сведения об идентификационном номере аппаратуры спутниковой навигации' &&
+                'Сведения об идентификационном номере аппаратуры спутниковой навигации' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleSatelliteNavigationIdDetails>
@@ -2153,7 +2189,7 @@ export const Third: React.FC = () => {
                         </trcdo:VehicleSatelliteNavigationIdDetails>`;
             } else if (
               item.blockItem[z].name ===
-              'Сведения об идентификационном номере аппаратуры спутниковой навигации' &&
+                'Сведения об идентификационном номере аппаратуры спутниковой навигации' &&
               item.blockItem[z].value[0] === ''
             ) {
               str += `<trcdo:VehicleSatelliteNavigationIdDetails>
@@ -2183,8 +2219,9 @@ export const Third: React.FC = () => {
               item.blockItem[z].name === 'Категория в соответствии с Правилами оформления' &&
               item.blockItem[z].value[0] !== ''
             ) {
-              str += `<trsdo:MachineCategoryCode>${categoryId[item.blockItem[z].value[0]]
-                }</trsdo:MachineCategoryCode>`;
+              str += `<trsdo:MachineCategoryCode>${
+                categoryId[item.blockItem[z].value[0]]
+              }</trsdo:MachineCategoryCode>`;
             }
           }
         }
@@ -2192,7 +2229,7 @@ export const Third: React.FC = () => {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (
               item.blockItem[z].name ===
-              'Наименование, определяемое назначением самоходной машины (другого вида техники) ' &&
+                'Наименование, определяемое назначением самоходной машины (другого вида техники) ' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:VehicleCharacteristicsName>${item.blockItem[z].value[0]}</trsdo:VehicleCharacteristicsName>`;
@@ -2202,13 +2239,14 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== ''
             ) {
               for (let j = 0; j < item.blockItem[z].value.length; j++) {
-                str += `<trsdo:VehicleBodyColourCode>${color[item.blockItem[z].value[j]]
-                  }</trsdo:VehicleBodyColourCode>`;
+                str += `<trsdo:VehicleBodyColourCode>${
+                  color[item.blockItem[z].value[j]]
+                }</trsdo:VehicleBodyColourCode>`;
               }
             }
             if (
               item.blockItem[z].name ===
-              'Признак комбинированного цвета кузова (кабины, прицепа)' &&
+                'Признак комбинированного цвета кузова (кабины, прицепа)' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:BodyMultiColourIndicator>${item.blockItem[z].value[0]}</trsdo:BodyMultiColourIndicator>`;
@@ -2229,8 +2267,9 @@ export const Third: React.FC = () => {
               item.blockItem[z].name === 'Месяц изготовления' &&
               item.blockItem[z].value[0] !== ''
             ) {
-              str += `<csdo:ManufactureMonth>--${month[item.blockItem[z].value[0]]
-                }</csdo:ManufactureMonth>`;
+              str += `<csdo:ManufactureMonth>--${
+                month[item.blockItem[z].value[0]]
+              }</csdo:ManufactureMonth>`;
             }
           }
         }
@@ -2335,12 +2374,14 @@ export const Third: React.FC = () => {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] !== '') {
               str += `<trsdo:NotVehicleMakeNameIndicator>false</trsdo:NotVehicleMakeNameIndicator>
-                            <csdo:VehicleMakeName>${item.blockItem[z].value[0]
-                }</csdo:VehicleMakeName>
-                            <trsdo:VehicleMakeCode>${brands[item.blockItem[z].value[0]]
-                  ? brands[item.blockItem[z].value[0]]
-                  : item.blockItem[z + 1].value[0]
-                }</trsdo:VehicleMakeCode>`;
+                            <csdo:VehicleMakeName>${
+                              item.blockItem[z].value[0]
+                            }</csdo:VehicleMakeName>
+                            <trsdo:VehicleMakeCode>${
+                              brands[item.blockItem[z].value[0]]
+                                ? brands[item.blockItem[z].value[0]]
+                                : item.blockItem[z + 1].value[0]
+                            }</trsdo:VehicleMakeCode>`;
             } else if (item.blockItem[z].name === 'Марка' && item.blockItem[z].value[0] === '') {
               str += `<trsdo:NotVehicleMakeNameIndicator>true</trsdo:NotVehicleMakeNameIndicator>`;
             }
@@ -2361,7 +2402,7 @@ export const Third: React.FC = () => {
             }
             if (
               item.blockItem[z].name ===
-              'Категория в соответствии с ТР ТС 031/2012 или ТР ТС 010/2011 или ТР ТС 018/2011 ' &&
+                'Категория в соответствии с ТР ТС 031/2012 или ТР ТС 010/2011 или ТР ТС 018/2011 ' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:MachineTechCategoryCode>${item.blockItem[z].value[0]}</trsdo:MachineTechCategoryCode>`;
@@ -2371,10 +2412,12 @@ export const Third: React.FC = () => {
         if (item.id === 1) {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (item.blockItem[z].name === 'Тип движителя' && item.blockItem[z].value[0] !== '') {
-              str += `<trsdo:PropulsionKindCode>${typePropulsion[item.blockItem[z].value[0]]
-                }</trsdo:PropulsionKindCode>
-                            <trsdo:PropulsionKindName>${item.blockItem[z].value[0]
-                }</trsdo:PropulsionKindName>`;
+              str += `<trsdo:PropulsionKindCode>${
+                typePropulsion[item.blockItem[z].value[0]]
+              }</trsdo:PropulsionKindCode>
+                            <trsdo:PropulsionKindName>${
+                              item.blockItem[z].value[0]
+                            }</trsdo:PropulsionKindName>`;
             }
             if (
               item.blockItem[z].name === 'Сведения о наличии реверсивного места оператора' &&
@@ -2450,7 +2493,7 @@ export const Third: React.FC = () => {
             }
             if (
               item.blockItem[z].name ===
-              'Место расположения идентификационного номера самоходной машины (другого вида техники)' &&
+                'Место расположения идентификационного номера самоходной машины (другого вида техники)' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:VehicleIdentificationNumberLocationText>${item.blockItem[z].value[0]}</trsdo:VehicleIdentificationNumberLocationText>`;
@@ -2496,11 +2539,13 @@ export const Third: React.FC = () => {
               if (item.blockItem[z].name === 'По')
                 str +=
                   item.blockItem[z + 2].value[0] !== ''
-                    ? `<trsdo:IdCharacterQuantity>${item.blockItem[z + 2].value[0].length
-                    }</trsdo:IdCharacterQuantity>`
-                    : `<trsdo:IdCharacterQuantity>${parseInt(item.blockItem[z].value[0]) -
-                    parseInt(item.blockItem[z - 1].value[0])
-                    }</trsdo:IdCharacterQuantity>`;
+                    ? `<trsdo:IdCharacterQuantity>${
+                        item.blockItem[z + 2].value[0].length
+                      }</trsdo:IdCharacterQuantity>`
+                    : `<trsdo:IdCharacterQuantity>${
+                        parseInt(item.blockItem[z].value[0]) -
+                        parseInt(item.blockItem[z - 1].value[0])
+                      }</trsdo:IdCharacterQuantity>`;
               if (item.blockItem[z].name === 'Описание')
                 str +=
                   item.blockItem[z].value[0] === ''
@@ -2544,11 +2589,13 @@ export const Third: React.FC = () => {
               if (item.blockItem[z].name === 'По')
                 str +=
                   item.blockItem[z + 2].value[0] !== ''
-                    ? `<trsdo:IdCharacterQuantity>${item.blockItem[z + 2].value[0].length
-                    }</trsdo:IdCharacterQuantity>`
-                    : `<trsdo:IdCharacterQuantity>${parseInt(item.blockItem[z].value[0]) -
-                    parseInt(item.blockItem[z - 1].value[0])
-                    }</trsdo:IdCharacterQuantity>`;
+                    ? `<trsdo:IdCharacterQuantity>${
+                        item.blockItem[z + 2].value[0].length
+                      }</trsdo:IdCharacterQuantity>`
+                    : `<trsdo:IdCharacterQuantity>${
+                        parseInt(item.blockItem[z].value[0]) -
+                        parseInt(item.blockItem[z - 1].value[0])
+                      }</trsdo:IdCharacterQuantity>`;
               if (item.blockItem[z].name === 'Описание')
                 str +=
                   item.blockItem[z].value[0] === ''
@@ -2753,8 +2800,9 @@ export const Third: React.FC = () => {
               item.blockItem[z].name === 'Страна происхождения' &&
               item.blockItem[z].value[0] !== ''
             ) {
-              str += `<csdo:UnifiedCountryCode codeListId="NSI_034">${country[item.blockItem[z].value[0]]
-                }</csdo:UnifiedCountryCode>`;
+              str += `<csdo:UnifiedCountryCode codeListId="NSI_034">${
+                country[item.blockItem[z].value[0]]
+              }</csdo:UnifiedCountryCode>`;
             }
           }
         }

@@ -31,7 +31,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-        //item.require = false;
+        item.require = false;
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -69,7 +69,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                   control={
                     <Checkbox
                       onChange={
-                        () => { }
+                        () => {}
                         // handleMultiple?.(item.id)
                       }
                     ></Checkbox>
@@ -123,9 +123,9 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                         onBlur={
                           item.freeSolo
                             ? (value) => {
-                              handleChangeValue?.(item.id, value.target.value);
-                            }
-                            : () => { }
+                                handleChangeValue?.(item.id, value.target.value);
+                              }
+                            : () => {}
                         }
                       />
                     )}
@@ -239,6 +239,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                       whiteSpace: 'nowrap'
                     }}
                     variant='outlined'
+                    aria-label='add'
                   >
                     {item.buttonText ? item.buttonText : 'Добавить'}
                   </Button>
@@ -253,6 +254,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                       alignItems: 'center'
                     }}
                     variant='outlined'
+                    aria-label='delete'
                   >
                     Удалить
                   </Button>
@@ -269,6 +271,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     whiteSpace: 'nowrap'
                   }}
                   variant='outlined'
+                  aria-label='add'
                 >
                   {item.buttonText ? item.buttonText : 'Добавить'}
                 </Button>
@@ -284,6 +287,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     alignItems: 'center'
                   }}
                   variant='outlined'
+                  aria-label='delete'
                 >
                   Удалить
                 </Button>
@@ -309,6 +313,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                       whiteSpace: 'nowrap'
                     }}
                     variant='outlined'
+                    aria-label='addGroup'
                   >
                     Добавить группу
                   </Button>
@@ -324,6 +329,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                       marginBottom: '10px'
                     }}
                     variant='outlined'
+                    aria-label='deleteGroup'
                   >
                     Удалить
                   </Button>
@@ -341,6 +347,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     whiteSpace: 'nowrap'
                   }}
                   variant='outlined'
+                  aria-label='addGroup'
                 >
                   Добавить группу
                 </Button>
@@ -353,6 +360,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             {item.type === 'files' ? (
               <>
                 <TextField
+                  data-testid="files"
                   sx={{ marginTop: '-25px' }}
                   error={item.pattern !== 'false'}
                   required={item.require}
@@ -362,6 +370,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                   onChange={(event) => {
                     uploadImage?.(event, item.id);
                   }}
+                  
                 ></TextField>
                 {item.pattern === 'false' ? (
                   ''

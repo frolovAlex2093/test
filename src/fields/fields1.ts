@@ -115,7 +115,8 @@ export const blocks1 = [
             checkbox: true,
             disabled: false,
             value: [''],
-            pattern: '^.{0,50}$'
+            pattern: '^.{0,50}$',
+            
           },
           {
             name: 'Модификация',

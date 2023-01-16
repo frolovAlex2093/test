@@ -79,6 +79,7 @@ export interface IBlocks {
                 numeric?: boolean;
                 freeSolo?: boolean;
                 error?: boolean;
+                error2?: boolean
             }[];
         }[];
     }[];
@@ -125,6 +126,7 @@ export interface IBlock {
             numeric?: boolean;
             freeSolo?: boolean;
             error?: boolean;
+            error2?: boolean
         }[];
     }[];
     onChangeBlock: (id: number) => void;
@@ -162,5 +164,6 @@ export interface IBlockItem {
         numeric?: boolean;
         freeSolo?: boolean;
         error?: boolean;
+        error2?: boolean
     }[];
 }
