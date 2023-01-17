@@ -223,7 +223,7 @@ export const Third: React.FC = () => {
               } else if (value === null) {
                 i.value[0] = '';
               } else {
-                i.value[0] = value;
+                i.value[0] = value.replace(/ +/g, ' ').trim();
               }
               if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
                 i.error = alertValidation(i.pattern, i.value[0]);
