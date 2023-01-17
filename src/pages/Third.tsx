@@ -2356,7 +2356,10 @@ export const Third: React.FC = () => {
             if (item.blockItem[z].name === 'Кем выдано' && item.blockItem[z].value[0] !== '') {
               str += `<csdo:AuthorityName>${item.blockItem[z].value[0]}</csdo:AuthorityName>`;
             }
-            if (item.blockItem[z].name === 'Количество страниц' && item.blockItem[z].value[0] !== '') {
+            if (
+              item.blockItem[z].name === 'Количество страниц' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
               str += `<csdo:PageQuantity>${item.blockItem[z].value[0]}</csdo:PageQuantity>`;
             }
           }
@@ -2820,6 +2823,7 @@ export const Third: React.FC = () => {
   };
 
   const onclickSubmit = () => {
+    let date = new Date();
     let check = true;
     let a = document.createElement('a');
     let mnemonic = '';
@@ -2862,7 +2866,9 @@ export const Third: React.FC = () => {
                             <urn1:Mnemonic>${mnemonic}</urn1:Mnemonic>
                             <urn1:HumanReadableName>${maker}</urn1:HumanReadableName>
                         </urn1:Sender>
-                        <urn1:SendingTimestamp>2019-03-20T17:50:28.525+03:00</urn1:SendingTimestamp>
+                        <urn1:SendingTimestamp>${date
+                          .toISOString()
+                          .replace('Z', '+03:00')}</urn1:SendingTimestamp>
                         <urn1:Recipient>
                             <urn1:Mnemonic>ELPTS</urn1:Mnemonic>
                             <urn1:HumanReadableName>ИС СИСТЕМЫ ЭЛЕКТРОННЫХ ПАСПОРТОВ</urn1:HumanReadableName>

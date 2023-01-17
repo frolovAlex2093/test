@@ -2886,6 +2886,7 @@ export const Fourth: React.FC = () => {
   };
 
   const onclickSubmit = () => {
+    let date = new Date();
     let check = true;
     let a = document.createElement('a');
     let mnemonic = '';
@@ -2928,7 +2929,9 @@ export const Fourth: React.FC = () => {
                             <urn1:Mnemonic>${mnemonic}</urn1:Mnemonic>
                             <urn1:HumanReadableName>${maker}</urn1:HumanReadableName>
                         </urn1:Sender>
-                        <urn1:SendingTimestamp>2019-03-20T17:50:28.525+03:00</urn1:SendingTimestamp>
+                        <urn1:SendingTimestamp>${date
+                          .toISOString()
+                          .replace('Z', '+03:00')}</urn1:SendingTimestamp>
                         <urn1:Recipient>
                             <urn1:Mnemonic>ELPTS</urn1:Mnemonic>
                             <urn1:HumanReadableName>ИС СИСТЕМЫ ЭЛЕКТРОННЫХ ПАСПОРТОВ</urn1:HumanReadableName>
