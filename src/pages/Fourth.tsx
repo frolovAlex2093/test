@@ -2958,7 +2958,9 @@ export const Fourth: React.FC = () => {
     data += getCountry();
 
     data += `<csdo:BusinessEntityName>${maker}</csdo:BusinessEntityName>
-        <csdo:BusinessEntityId kindId="1">${ogrn}</csdo:BusinessEntityId>
+        <csdo:BusinessEntityId kindId="${
+          /^BY.{0,}$/.test(ogrn) ? '4' : /^RU.{0,}$/.test(ogrn) ? '1' : ''
+        }">${ogrn}</csdo:BusinessEntityId>
         </doc:VehicleEPassportDetails>
         </urn1:MessagePrimaryContent>
         <urn1:PersonalSignature/>

@@ -54,7 +54,7 @@ export const blocks1 = [
             value: ['']
           },
           {
-            name: 'ОГРН',
+            name: 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН',
             type: 'TextField',
             id: 198,
             require: false,
