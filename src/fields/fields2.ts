@@ -45,7 +45,7 @@ export const blocks2 = [
             value: ['']
           },
           {
-            name: 'Полное название изготовителя',
+            name: 'Полное название организации оформителя',
             type: 'TextField',
             id: 159,
             require: false,
@@ -380,7 +380,7 @@ export const blocks2 = [
           'Структура и содержание идентификационного номера самоходной машины (другого вида техники)',
         id: 3,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'С',
@@ -451,7 +451,7 @@ export const blocks2 = [
         blockName: 'Структура и содержание номера двигателя',
         id: 5,
         checkbox: true,
-        check: false,
+        check: true,
         button: false,
         buttonAdd: false,
         buttonDelete: false,
@@ -596,22 +596,58 @@ export const blocks2 = [
             error: false
           },
           {
-            name: 'Вид оси',
-            type: 'Autocomplete',
+            name: 'Колеса со сдвоенными шинами',
+            type: 'checkbox',
             id: 33,
-            multiple: true,
             require: false,
             checkbox: false,
             disabled: false,
-            value: [''],
-            options: [
-              'Колеса со сдвоенными шинами',
-              'Управляемая ось',
-              'Ведущая ось',
-              'Тормозная ось'
-            ],
-            buttonText: 'Добавить описание оси'
+            value: ['flase']
           },
+          {
+            name: 'Управляемая ось',
+            type: 'checkbox',
+            id: 200,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: ['flase']
+          },
+          {
+            name: 'Ведущая ось',
+            type: 'checkbox',
+            id: 201,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: ['flase']
+          },
+          {
+            name: 'Тормозная ось',
+            type: 'checkbox',
+            id: 202,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: ['flase']
+          },
+          // {
+          //   name: 'Вид оси',
+          //   type: 'Autocomplete',
+          //   id: 33,
+          //   multiple: true,
+          //   require: false,
+          //   checkbox: false,
+          //   disabled: false,
+          //   value: [''],
+          //   options: [
+          //     'Колеса со сдвоенными шинами',
+          //     'Управляемая ось',
+          //     'Ведущая ось',
+          //     'Тормозная ось'
+          //   ],
+          //   buttonText: 'Добавить описание оси'
+          // },
           {
             name: 'Колея',
             type: 'TextField',
@@ -624,7 +660,7 @@ export const blocks2 = [
             button: true,
             buttonAdd: true,
             buttonDelete: false,
-            group: [32, 167, 33, 169],
+            group: [32, 167, 33, 200, 201, 202, 169],
             buttonText: 'Добавить ось',
             pattern: '^[0-9]{0,24}((.|,)[0-9]{1,6})?$',
             numeric: true,
@@ -1089,7 +1125,7 @@ export const blocks2 = [
         blockName: 'Основной электрический двигатель',
         id: 17,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Марка',
@@ -1243,7 +1279,7 @@ export const blocks2 = [
         blockName: 'Дополнительный двигатель внутреннего сгорания',
         id: 23,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Марка',
@@ -1402,7 +1438,7 @@ export const blocks2 = [
         blockName: 'Дополнительный электрический двигатель',
         id: 24,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Марка',
@@ -1484,7 +1520,7 @@ export const blocks2 = [
         blockName: 'Устройство накопления энергии',
         id: 60,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Тип',
@@ -1650,7 +1686,7 @@ export const blocks2 = [
         blockName: 'Трансмиссия',
         id: 29,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Тип',
@@ -1684,7 +1720,7 @@ export const blocks2 = [
         blockName: 'Коробка передач',
         id: 30,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Марка',
@@ -1825,7 +1861,7 @@ export const blocks2 = [
         blockName: 'Раздаточная коробка',
         id: 31,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Марка',
@@ -1921,7 +1957,7 @@ export const blocks2 = [
         blockName: 'Главная передача',
         id: 32,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Распределение по осям',
@@ -2026,7 +2062,7 @@ export const blocks2 = [
         blockName: 'Вал отбора мощности',
         id: 33,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Тип',
@@ -2086,7 +2122,7 @@ export const blocks2 = [
         blockName: 'Электромашина',
         id: 34,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Вид электромашины',
@@ -2393,8 +2429,9 @@ export const blocks2 = [
             id: 150,
             require: false,
             checkbox: false,
-            disabled: false,
-            value: ['']
+            disabled: true,
+            value: ['Свидетельство о регистрации СМ'],
+            defaulValue: "Свидетельство о регистрации СМ"
           },
           {
             name: 'Номер документа',

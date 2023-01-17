@@ -79,7 +79,8 @@ export interface IBlocks {
                 numeric?: boolean;
                 freeSolo?: boolean;
                 error?: boolean;
-                error2?: boolean
+                defaulValue?: string
+
             }[];
         }[];
     }[];
@@ -126,7 +127,8 @@ export interface IBlock {
             numeric?: boolean;
             freeSolo?: boolean;
             error?: boolean;
-            error2?: boolean
+            defaulValue?: string
+
         }[];
     }[];
     onChangeBlock: (id: number) => void;
@@ -164,6 +166,6 @@ export interface IBlockItem {
         numeric?: boolean;
         freeSolo?: boolean;
         error?: boolean;
-        error2?: boolean
+        defaulValue?: string
     }[];
 }

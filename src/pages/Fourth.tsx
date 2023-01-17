@@ -133,11 +133,13 @@ export const Fourth: React.FC = () => {
           item.blockItem.map((i) => {
             if (i.id === id) {
               if (i.type === 'checkbox') {
-                if (i.value.includes('false') === true) {
-                  i.value[0] = 'true';
-                } else {
-                  i.value[0] = 'false';
-                }
+                i.value[0] = `${checked}`;
+                console.log(i.value[0]);
+                // if (i.value.includes('false') === true) {
+                //   i.value[0] = 'true';
+                // } else {
+                //   i.value[0] = 'false';
+                // }
               } else if ('disabled' in i) i.disabled = !i.disabled;
             }
             if (i.name === 'Разные шины') {
@@ -176,7 +178,7 @@ export const Fourth: React.FC = () => {
                   item.blockItem[z + 3].disabled = !(item.blockItem[z].value[0] === 'true');
                   item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
                 } else if (item.blockItem[z].name === 'Двускатная шина') {
-                  item.blockItem[z + 3].disabled = item.blockItem[z].value[0] === 'true';
+                  item.blockItem[z + 3].disabled = !(item.blockItem[z].value[0] === 'true');
                   item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
                 }
               }
@@ -309,7 +311,7 @@ export const Fourth: React.FC = () => {
             indexStart = item.blockItem.map((el) => el.id).indexOf(group[0]);
             if (indexStart >= 0) {
               for (let z = 0; z < group.length; z++) {
-                if (item.blockItem[z].name === 'Двускатная шина') {
+                if (item.blockItem[z].type === 'checkbox') {
                   item.blockItem.splice(indexStart + z + group.length, 0, {
                     ...item.blockItem[z + indexStart],
                     id: max + 1,
@@ -359,7 +361,7 @@ export const Fourth: React.FC = () => {
                     item.blockItem[z].name === 'Двускатная шина' &&
                     item.blockItem[z].value[0] === 'true'
                   ) {
-                    item.blockItem[z + 3].disabled = true;
+                    item.blockItem[z + 3].disabled = !true;
                     item.blockItem[z + 4].disabled = item.blockItem[z + 3].disabled;
                   }
                 }
@@ -442,6 +444,7 @@ export const Fourth: React.FC = () => {
         })
       );
     }
+    console.log(blocks);
   };
 
   const onClickDelete = (id: number, group: number[] | undefined) => {
@@ -692,47 +695,46 @@ export const Fourth: React.FC = () => {
           str += `<trcdo:VehicleAxleDetails>`;
           for (let z = 0; z < item.blockItem.length; z++) {
             if (item.blockItem[z].value[0].includes('ось') && item.blockItem[z].value[0] === num) {
-              if (item.blockItem[z + 2].value.includes('Колеса со сдвоенными шинами')) {
-                str2 += `<trsdo:DualTireAxleIndicator>true</trsdo:DualTireAxleIndicator>`;
-              } else {
-                str2 += `<trsdo:DualTireAxleIndicator>false</trsdo:DualTireAxleIndicator>`;
+              if (item.blockItem[z + 2].name === 'Колеса со сдвоенными шинами') {
+                str2 += `<trsdo:DualTireAxleIndicator>${
+                  item.blockItem[z + 2].value[0]
+                }</trsdo:DualTireAxleIndicator>`;
               }
-              if (item.blockItem[z + 2].value.includes('Управляемая ось')) {
-                str2 += `<trsdo:SteeringAxleIndicator>true</trsdo:SteeringAxleIndicator>`;
-              } else {
-                str2 += `<trsdo:SteeringAxleIndicator>false</trsdo:SteeringAxleIndicator>`;
+              if (item.blockItem[z + 3].name === 'Управляемая ось') {
+                str2 += `<trsdo:SteeringAxleIndicator>${
+                  item.blockItem[z + 3].value[0]
+                }</trsdo:SteeringAxleIndicator>`;
               }
-              if (item.blockItem[z + 2].value.includes('Ведущая ось')) {
-                str2 += `<trsdo:DrivingAxleIndicator>true</trsdo:DrivingAxleIndicator>`;
-              } else {
-                str2 += `<trsdo:DrivingAxleIndicator>false</trsdo:DrivingAxleIndicator>`;
+              if (item.blockItem[z + 4].name === 'Ведущая ось') {
+                str2 += `<trsdo:DrivingAxleIndicator>${
+                  item.blockItem[z + 4].value[0]
+                }</trsdo:DrivingAxleIndicator>`;
               }
-              if (item.blockItem[z + 2].value.includes('Тормозная ось')) {
-                str2 += `<trsdo:BrakingAxleIndicator>true</trsdo:BrakingAxleIndicator>`;
-              } else {
-                str2 += `<trsdo:BrakingAxleIndicator>false</trsdo:BrakingAxleIndicator>`;
+              if (item.blockItem[z + 5].name === 'Тормозная ось') {
+                str2 += `<trsdo:BrakingAxleIndicator>${
+                  item.blockItem[z + 5].value[0]
+                }</trsdo:BrakingAxleIndicator>`;
               }
 
-              str += `
-                            <trsdo:VehicleAxleOrdinal>${
-                              item.blockItem[z].value[0].split('-')[0]
-                            }</trsdo:VehicleAxleOrdinal>
-                                ${
-                                  item.blockItem[z + 1].value[0] === ''
-                                    ? ''
-                                    : `<trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure measurementUnitCode="KGM">${
-                                        item.blockItem[z + 1].value[0]
-                                      }</trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure>`
-                                }
-                            ${str2}
-                            ${
-                              item.blockItem[z + 3].value[0] === ''
-                                ? ''
-                                : `<trsdo:VehicleAxleSweptPathMeasure measurementUnitCode="MMT">${
-                                    item.blockItem[z + 3].value[0]
-                                  }</trsdo:VehicleAxleSweptPathMeasure>`
-                            }
-                           `;
+              str += `<trsdo:VehicleAxleOrdinal>${
+                item.blockItem[z].value[0].split('-')[0]
+              }</trsdo:VehicleAxleOrdinal>
+              ${
+                item.blockItem[z + 1].value[0] === ''
+                  ? ''
+                  : `<trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure measurementUnitCode="KGM">${
+                      item.blockItem[z + 1].value[0]
+                    }</trsdo:VehicleTechnicallyPermissibleMaxWeightOnAxleMeasure>`
+              }
+              ${str2}
+              ${
+                item.blockItem[z + 6].value[0] === ''
+                  ? ''
+                  : `<trsdo:VehicleAxleSweptPathMeasure measurementUnitCode="MMT">${
+                      item.blockItem[z + 6].value[0]
+                    }</trsdo:VehicleAxleSweptPathMeasure>`
+              }
+              `;
             }
           }
         }
