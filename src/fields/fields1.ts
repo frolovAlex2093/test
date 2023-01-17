@@ -2445,6 +2445,15 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: ['']
+          },
+          {
+            name: 'Количество страниц',
+            type: 'TextField',
+            id: 203,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: ['']
           }
         ]
       }

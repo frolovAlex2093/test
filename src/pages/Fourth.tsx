@@ -2383,6 +2383,12 @@ export const Fourth: React.FC = () => {
             if (item.blockItem[z].name === 'Кем выдано' && item.blockItem[z].value[0] !== '') {
               str += `<csdo:AuthorityName>${item.blockItem[z].value[0]}</csdo:AuthorityName>`;
             }
+            if (
+              item.blockItem[z].name === 'Количество страниц' &&
+              item.blockItem[z].value[0] !== ''
+            ) {
+              str += `<csdo:PageQuantity>${item.blockItem[z].value[0]}</csdo:PageQuantity>`;
+            }
           }
           str += '</trcdo:OwnerDocDetails>';
         }
