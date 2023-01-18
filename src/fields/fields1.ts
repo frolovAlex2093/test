@@ -629,7 +629,7 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['flase']
+            value: ['false']
           },
           {
             name: 'Колея',
