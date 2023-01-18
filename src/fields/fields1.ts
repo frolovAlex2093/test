@@ -1658,18 +1658,18 @@ export const blocks1 = [
             group: [191, 95, 96, 97, 98, 99, 100, 101, 102],
             buttonText: 'Добавить шины'
           },
-          {
-            name: 'Максимальные допустимые размеры на осях с тормозной системой',
-            type: 'TextField',
-            id: 103,
-            require: false,
-            checkbox: false,
-            disabled: false,
-            value: [''],
-            button: true,
-            buttonAdd: true,
-            buttonDelete: false
-          }
+          // {
+          //   name: 'Максимальные допустимые размеры на осях с тормозной системой',
+          //   type: 'TextField',
+          //   id: 103,
+          //   require: false,
+          //   checkbox: false,
+          //   disabled: false,
+          //   value: [''],
+          //   button: true,
+          //   buttonAdd: true,
+          //   buttonDelete: false
+          // }
         ]
       },
       {

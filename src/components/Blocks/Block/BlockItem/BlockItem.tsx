@@ -31,7 +31,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-         //item.require = false;
+        //  item.require = false;
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -168,7 +168,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                   inputProps={{
                     pattern: item.pattern ? item.pattern : '.{0,}'
                   }}
-                  value = {item.defaulValue}
+                  value={item.defaulValue}
                   // value={item.value !== null && item.value[0] !== '' ? item.value : ''}
                   error={item.error}
                   disabled={item.disabled}

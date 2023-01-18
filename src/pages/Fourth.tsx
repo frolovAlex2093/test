@@ -328,6 +328,23 @@ export const Fourth: React.FC = () => {
                 newGroup.push(max + 1);
                 max++;
               }
+              if (item.id === 27) {
+                for (let z = 0; z < item.blockItem.length; z++) {
+                  if (
+                    item.blockItem[z].name === 'Двускатная шина' &&
+                    item.blockItem[z].value[0] === 'true'
+                  ) {
+                    item.blockItem[z + 3].disabled = false;
+                    item.blockItem[z + 4].disabled = false;
+                  } else if (
+                    item.blockItem[z].name === 'Двускатная шина' &&
+                    (item.blockItem[z].value[0] === 'false' || item.blockItem[z].value[0] === '')
+                  ) {
+                    item.blockItem[z + 3].disabled = true;
+                    item.blockItem[z + 4].disabled = true;
+                  }
+                }
+              }
               item.blockItem.map((i) => {
                 if ('count' in i && i.count !== undefined) {
                   if (
