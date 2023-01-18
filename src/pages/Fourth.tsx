@@ -143,7 +143,7 @@ export const Fourth: React.FC = () => {
               } else if ('disabled' in i) i.disabled = !i.disabled;
             }
             if (i.name === 'Разные шины') {
-              checkTires = i.value[0] === 'true';
+              checkTires = i.value[0] !== 'true';
             }
             if (i.name === 'Бесступенчатая коробка передач') {
               checkGear = i.value[0] === 'true';
