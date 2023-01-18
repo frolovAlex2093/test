@@ -148,7 +148,7 @@ export const Third: React.FC = () => {
               } else if ('disabled' in i) i.disabled = !i.disabled;
             }
             if (i.name === 'Разные шины') {
-              checkTires = i.value[0] !== 'true';
+              checkTires = i.value[0] === 'true';
             }
             if (i.name === 'Бесступенчатая коробка передач') {
               checkGear = i.value[0] === 'true';
@@ -176,7 +176,7 @@ export const Third: React.FC = () => {
           if (item.id === 27) {
             item.blockItem.map((i) => {
               if (i.name === 'Расположение') {
-                i.disabled = checkTires;
+                i.disabled = !checkTires;
               }
               for (let z = 0; z < item.blockItem.length; z++) {
                 if (item.blockItem[z].name === 'Двускатная шина' && item.blockItem[z].id === 96) {
@@ -726,7 +726,7 @@ export const Third: React.FC = () => {
         }
         str2 = '';
         if (item.id === 27) {
-          if (check) {
+          if (!check) {
             for (let z = 0; z < item.blockItem.length; z++) {
               if (
                 item.blockItem[z].value[0].includes('ось') &&
@@ -1243,7 +1243,7 @@ export const Third: React.FC = () => {
   const getTyre = (check: boolean): string => {
     let str = '';
     let str2 = [];
-    if (check === false)
+    if (check !== false)
       blocks.map((items) => {
         items.blocksItem.map((item) => {
           if (item.id === 27 && 'check' in item && item.check === false) {

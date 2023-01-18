@@ -602,7 +602,7 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['flase']
+            value: ['false']
           },
           {
             name: 'Управляемая ось',
@@ -611,7 +611,7 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['flase']
+            value: ['false']
           },
           {
             name: 'Ведущая ось',
@@ -620,7 +620,7 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['flase']
+            value: ['false']
           },
           {
             name: 'Тормозная ось',
@@ -629,7 +629,7 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['flase']
+            value: ['false']
           },
           // {
           //   name: 'Вид оси',
@@ -1570,7 +1570,7 @@ export const blocks2 = [
             id: 190,
             require: true,
             checkbox: false,
-            value: ['true'],
+            value: ['false'],
             disabled: true
           },
           {
