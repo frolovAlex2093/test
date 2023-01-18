@@ -6,7 +6,7 @@ import { linkList } from '../interfaces/interfaces';
 
 const firstLinkList: linkList[] = [
   {
-    page: '/second',
+    page: '/fifth',
     text: 'Самоходные машины',
     id: 0
   }

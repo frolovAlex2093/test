@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { ILinkListItem } from '../../../interfaces/interfaces';
+import { IDict, ILinkListItem } from '../../../interfaces/interfaces';
 
 export const LinkListItem: React.FC<ILinkListItem> = ({ listItem, page }) => {
+  const [active, setActive] = useState<IDict>({ textDecoration: 'none' });
+
+  useEffect(() => {
+    if (
+      listItem === 'Изготовление транспортного средства (шасси, машины)' ||
+      listItem ===
+        'Ввоз транспортного средства (шасси, машины) на таможенную территорию Союза из государства, не являющегося членом Союза'
+    ) {
+      setActive({ textDecoration: 'none', opacity: '0.4', pointerEvents: 'none' });
+    }
+  }, [listItem]);
+
   return (
-    <Link to={page} style={{ textDecoration: 'none' }}>
+    <Link to={page} style={active}>
       <Paper
         elevation={15}
         sx={{
