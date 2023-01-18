@@ -2857,7 +2857,7 @@ export const Third: React.FC = () => {
           if (i.id === 159) {
             maker = i.value[0];
           }
-          if (i.name === 'ОГРН') {
+          if (i.name === 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН') {
             ogrn = i.value[0];
           }
           if (i.name === 'Разные шины') {
@@ -2914,7 +2914,7 @@ export const Third: React.FC = () => {
 
     data += `<csdo:BusinessEntityName>${maker}</csdo:BusinessEntityName>
     <csdo:BusinessEntityId kindId="${
-      /^BY.{0,}$/.test(ogrn) ? '4' : /^RU.{0,}$/.test(ogrn) ? '1' : ''
+      /^BY.{0,}$/.test(mnemonic) ? '4' : /^RU.{0,}$/.test(mnemonic) ? '1' : ''
     }">${ogrn}</csdo:BusinessEntityId>
         </doc:VehicleEPassportDetails>
         </urn1:MessagePrimaryContent>
