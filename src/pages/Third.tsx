@@ -231,6 +231,7 @@ export const Third: React.FC = () => {
                 i.error = alertValidation(i.pattern, i.value[0]);
               }
             }
+
             if (i.id === 166) {
               axes = parseInt(i.value[0]);
               for (let z = 0; z < axes; z++) {
@@ -252,6 +253,19 @@ export const Third: React.FC = () => {
             }
             return i;
           });
+          if (item.id === 31 || item.id === 32) {
+            let checkGear = false;
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (item.blockItem[z].name === 'Число передач' && item.blockItem[z].value[0] !== '') {
+                checkGear = false;
+              } else if(item.blockItem[z].name === 'Число передач' && item.blockItem[z].value[0] === '') {
+                checkGear = true;
+              }
+              if(item.blockItem[z].name === "Наименование передачи" || item.blockItem[z].name === "Вид передаточного числа" || item.blockItem[z].name === "Передаточное число"){
+                item.blockItem[z].disabled = checkGear
+              }
+            }
+          }
           return item;
         });
         return items;
@@ -924,36 +938,55 @@ export const Third: React.FC = () => {
                   item.blockItem[z].value[0]
                 )}</trsdo:TransmissionUnitGearQuantity>`;
             }
+            // if (
+            //   item.blockItem[z].name === 'Наименование передачи' &&
+            //   (item.blockItem[z].value[0] !== '' ||
+            //     item.blockItem[z + 1].value[0] !== '' ||
+            //     item.blockItem[z + 2].value[0] !== '')
+            // ) {
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
             }
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] === ''
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails>`;
             }
             if (
               item.blockItem[z].name === 'Вид передаточного числа' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trsdo:TransmissionUnitGearType>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
             }
 
-            if (item.blockItem[z].name === 'Передаточное число') {
-              if (item.blockItem[z].value[0] !== '') {
+            if (
+              item.blockItem[z].name === 'Передаточное число' &&
+              item.blockItem[z].disabled !== true
+            ) {
+              if (item.blockItem[z].value[0] !== '' && item.blockItem[z].disabled !== true) {
                 str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
               }
-              if (item.blockItem[z - 2].value[0].includes('З.Х.')) {
+              if (
+                item.blockItem[z - 2].value[0].includes('З.Х.') &&
+                item.blockItem[z - 2].disabled !== true
+              ) {
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>true</trsdo:TransmissionUnitReverseGearIndicator>`;
-              } else
+              } else if (
+                item.blockItem[z - 2].value[0].includes('З.Х.') === false &&
+                item.blockItem[z - 2].disabled !== true
+              )
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>false</trsdo:TransmissionUnitReverseGearIndicator>`;
 
               str += `</trcdo:TransmissionUnitGearDetails>`;
             }
+            // }
 
             if (
               item.blockItem[z].name === 'Марка' &&
@@ -1001,30 +1034,42 @@ export const Third: React.FC = () => {
             }
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
             }
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] === ''
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails>`;
             }
             if (
               item.blockItem[z].name === 'Вид передаточного числа' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trsdo:TransmissionUnitGearType>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
             }
 
-            if (item.blockItem[z].name === 'Передаточное число') {
-              if (item.blockItem[z].value[0] !== '') {
+            if (
+              item.blockItem[z].name === 'Передаточное число' &&
+              item.blockItem[z].disabled !== true
+            ) {
+              if (item.blockItem[z].value[0] !== '' && item.blockItem[z].disabled !== true) {
                 str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
               }
-              if (item.blockItem[z - 2].value[0].includes('З.Х.')) {
+              if (
+                item.blockItem[z - 2].value[0].includes('З.Х.') &&
+                item.blockItem[z - 2].disabled !== true
+              ) {
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>true</trsdo:TransmissionUnitReverseGearIndicator>`;
-              } else
+              } else if (
+                item.blockItem[z - 2].value[0].includes('З.Х.') === false &&
+                item.blockItem[z - 2].disabled !== true
+              )
                 str += `<trsdo:TransmissionUnitReverseGearIndicator>false</trsdo:TransmissionUnitReverseGearIndicator>`;
 
               str += `</trcdo:TransmissionUnitGearDetails>`;
@@ -1143,16 +1188,15 @@ export const Third: React.FC = () => {
               item.blockItem[z].name === 'Положение рулевого колеса' &&
               item.blockItem[z].value[0] !== ''
             ) {
-              str += `
-                            <trsdo:VehicleComponentText>${
-                              item.blockItem[z + 1].value[0]
-                            }</trsdo:VehicleComponentText>
-                            <trsdo:SteeringWheelPositionCode>${
-                              steeringType[item.blockItem[z].value[0]]
-                            }</trsdo:SteeringWheelPositionCode>
-                            <trsdo:VehicleComponentLocationText>${
-                              item.blockItem[z].value[0]
-                            }</trsdo:VehicleComponentLocationText>`;
+              str += `<trsdo:VehicleComponentText>${
+                item.blockItem[z + 1].value[0]
+              }</trsdo:VehicleComponentText>
+              <trsdo:SteeringWheelPositionCode>${
+                steeringType[item.blockItem[z].value[0]]
+              }</trsdo:SteeringWheelPositionCode>
+              <trsdo:VehicleComponentLocationText>${
+                item.blockItem[z].value[0]
+              }</trsdo:VehicleComponentLocationText>`;
             }
           }
           str += '</trcdo:VehicleSteeringDetails>';

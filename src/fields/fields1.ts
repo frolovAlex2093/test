@@ -629,7 +629,7 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['false']
+            value: ['flase']
           },
           {
             name: 'Колея',
@@ -1905,7 +1905,7 @@ export const blocks1 = [
             label: 'Передаточные числа',
             require: false,
             checkbox: false,
-            disabled: false,
+            disabled: true,
             value: [''],
             options: Object.keys(unitGear)
           },
@@ -1915,7 +1915,7 @@ export const blocks1 = [
             id: 119,
             require: false,
             checkbox: false,
-            disabled: false,
+            disabled: true,
             value: [''],
             options: ['высшее', 'высший разряд', 'низшее', 'низший разряд']
           },
@@ -1923,9 +1923,9 @@ export const blocks1 = [
             name: 'Передаточное число',
             type: 'TextField',
             id: 120,
-            require: false,
+            require: true,
             checkbox: false,
-            disabled: false,
+            disabled: true,
             value: [''],
             button: true,
             buttonAdd: true,
@@ -2009,7 +2009,7 @@ export const blocks1 = [
             label: 'Передаточные числа',
             require: false,
             checkbox: false,
-            disabled: false,
+            disabled: true,
             value: [''],
             options: Object.keys(unitGear)
           },
@@ -2019,7 +2019,7 @@ export const blocks1 = [
             id: 126,
             require: false,
             checkbox: false,
-            disabled: false,
+            disabled: true,
             value: [''],
             options: ['высшее', 'высший разряд', 'низшее', 'низший разряд']
           },
@@ -2027,9 +2027,9 @@ export const blocks1 = [
             name: 'Передаточное число',
             type: 'TextField',
             id: 127,
-            require: false,
+            require: true,
             checkbox: false,
-            disabled: false,
+            disabled: true,
             value: [''],
             button: true,
             buttonAdd: true,

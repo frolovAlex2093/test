@@ -261,6 +261,26 @@ export const Fourth: React.FC = () => {
           if (item.id === 44) {
             item.blockItem[1].name = ownerStr;
           }
+          if (item.id === 31 || item.id === 32) {
+            let checkGear = false;
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (item.blockItem[z].name === 'Число передач' && item.blockItem[z].value[0] !== '') {
+                checkGear = false;
+              } else if (
+                item.blockItem[z].name === 'Число передач' &&
+                item.blockItem[z].value[0] === ''
+              ) {
+                checkGear = true;
+              }
+              if (
+                item.blockItem[z].name === 'Наименование передачи' ||
+                item.blockItem[z].name === 'Вид передаточного числа' ||
+                item.blockItem[z].name === 'Передаточное число'
+              ) {
+                item.blockItem[z].disabled = checkGear;
+              }
+            }
+          }
           return item;
         });
         return items;
@@ -957,24 +977,30 @@ export const Fourth: React.FC = () => {
             }
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
             }
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] === ''
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails>`;
             }
             if (
               item.blockItem[z].name === 'Вид передаточного числа' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trsdo:TransmissionUnitGearType>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
             }
 
-            if (item.blockItem[z].name === 'Передаточное число') {
+            if (
+              item.blockItem[z].name === 'Передаточное число' &&
+              item.blockItem[z].disabled !== true
+            ) {
               if (item.blockItem[z].value[0] !== '') {
                 str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
               }
@@ -1032,24 +1058,30 @@ export const Fourth: React.FC = () => {
             }
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails><trsdo:TransmissionUnitGearName>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearName>`;
             }
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
-              item.blockItem[z].value[0] === ''
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trcdo:TransmissionUnitGearDetails>`;
             }
             if (
               item.blockItem[z].name === 'Вид передаточного числа' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].disabled !== true
             ) {
               str += `<trsdo:TransmissionUnitGearType>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearType>`;
             }
 
-            if (item.blockItem[z].name === 'Передаточное число') {
+            if (
+              item.blockItem[z].name === 'Передаточное число' &&
+              item.blockItem[z].disabled !== true
+            ) {
               if (item.blockItem[z].value[0] !== '') {
                 str += `<trsdo:TransmissionUnitGearRate>${item.blockItem[z].value[0]}</trsdo:TransmissionUnitGearRate>`;
               }
