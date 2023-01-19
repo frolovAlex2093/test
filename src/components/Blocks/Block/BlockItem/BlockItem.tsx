@@ -135,7 +135,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                 <>
                   {' '}
                   <FormControlLabel
-                    sx={{}}
+                    sx={{height: "23px"}}
                     disabled={item.disabled}
                     control={
                       <Checkbox
