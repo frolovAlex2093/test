@@ -258,11 +258,18 @@ export const Third: React.FC = () => {
             for (let z = 0; z < item.blockItem.length; z++) {
               if (item.blockItem[z].name === 'Число передач' && item.blockItem[z].value[0] !== '') {
                 checkGear = false;
-              } else if(item.blockItem[z].name === 'Число передач' && item.blockItem[z].value[0] === '') {
+              } else if (
+                item.blockItem[z].name === 'Число передач' &&
+                item.blockItem[z].value[0] === ''
+              ) {
                 checkGear = true;
               }
-              if(item.blockItem[z].name === "Наименование передачи" || item.blockItem[z].name === "Вид передаточного числа" || item.blockItem[z].name === "Передаточное число"){
-                item.blockItem[z].disabled = checkGear
+              if (
+                item.blockItem[z].name === 'Наименование передачи' ||
+                item.blockItem[z].name === 'Вид передаточного числа' ||
+                item.blockItem[z].name === 'Передаточное число'
+              ) {
+                item.blockItem[z].disabled = checkGear;
               }
             }
           }
@@ -2309,6 +2316,12 @@ export const Third: React.FC = () => {
               }
             }
             if (
+              item.blockItem[z].name ===
+                'Признак комбинированного цвета кузова (кабины, прицепа)' &&
+              item.blockItem[z - 1].value.length > 1
+            ) {
+              str += `<trsdo:BodyMultiColourIndicator>true</trsdo:BodyMultiColourIndicator>`;
+            } else if (
               item.blockItem[z].name ===
                 'Признак комбинированного цвета кузова (кабины, прицепа)' &&
               item.blockItem[z].value[0] !== ''

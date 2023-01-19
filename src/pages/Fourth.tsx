@@ -2325,6 +2325,12 @@ export const Fourth: React.FC = () => {
             if (
               item.blockItem[z].name ===
                 'Признак комбинированного цвета кузова (кабины, прицепа)' &&
+              item.blockItem[z - 1].value.length > 1
+            ) {
+              str += `<trsdo:BodyMultiColourIndicator>true</trsdo:BodyMultiColourIndicator>`;
+            } else if (
+              item.blockItem[z].name ===
+                'Признак комбинированного цвета кузова (кабины, прицепа)' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:BodyMultiColourIndicator>${item.blockItem[z].value[0]}</trsdo:BodyMultiColourIndicator>`;
