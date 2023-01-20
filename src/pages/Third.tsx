@@ -31,8 +31,10 @@ export const Third: React.FC = () => {
     if (pattern === '^.{0,50}$' && /^.{0,50}$/.test(value) === false) return true;
     if (pattern === '^.{0,120}$' && /^.{0,120}$/.test(value) === false) return true;
     if (pattern === '^.{0,200}$' && /^.{0,200}$/.test(value) === false) return true;
+    if (pattern === '^.{0,300}$' && /^.{0,300}$/.test(value) === false) return true;
     if (pattern === '^.{0,500}$' && /^.{0,500}$/.test(value) === false) return true;
     if (pattern === '^.{0,1000}$' && /^.{0,1000}$/.test(value) === false) return true;
+    if (pattern === '^.{0,4000}$' && /^.{0,4000}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{0,4}$' && /^[0-9]{0,4}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{0,20}$' && /^[0-9]{0,20}$/.test(value) === false) return true;
     if (pattern === '^.{0,20}$' && /^.{0,20}$/.test(value) === false) return true;

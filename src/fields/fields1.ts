@@ -51,7 +51,9 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: "^.{0,300}$",
+            error: false
           },
           {
             name: 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН',
@@ -60,7 +62,9 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: "^.{0,20}$",
+            error: false
           }
         ]
       }
@@ -115,7 +119,8 @@ export const blocks1 = [
             checkbox: true,
             disabled: false,
             value: [''],
-            pattern: '^.{0,50}$'
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Модификация',
@@ -124,7 +129,10 @@ export const blocks1 = [
             require: false,
             checkbox: true,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: '^.{0,50}$',
+            error: false
+
           },
           {
             name: 'Код ТН ВЭД',
@@ -132,6 +140,7 @@ export const blocks1 = [
             id: 4,
             require: true,
             disabled: false,
+            checkbox: false,
             value: [''],
             options: Object.keys(TNVED),
             freeSolo: true
@@ -143,7 +152,9 @@ export const blocks1 = [
             require: true,
             disabled: false,
             value: [''],
-            options: Object.keys(categoryId)
+            options: Object.keys(categoryId),
+            checkbox: false,
+
           },
           {
             name: 'Категория в соответствии с ТР ТС 031/2012 или ТР ТС 010/2011 или ТР ТС 018/2011 ',
@@ -1493,8 +1504,9 @@ export const blocks1 = [
             disabled: false,
             value: [''],
             endAdornment: 'В',
-            patter: '^[0-9]{0,24}((.|,)[0-9]{1,6})?$',
-            numeric: true
+            pattern: '^[0-9]{0,24}((.|,)[0-9]{1,6})?$',
+            numeric: true,
+            error: false
           }
         ]
       },
@@ -1512,7 +1524,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            options: Object.keys(powerStorageType)
+            options: Object.keys(powerStorageType),
           },
           {
             name: 'Место расположения',
@@ -2311,7 +2323,9 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: "^.{0,4000}$",
+            error: false
           }
         ]
       }
@@ -2355,7 +2369,9 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: "^.{0,4000}$",
+            error: false
           }
         ]
       }
@@ -2426,7 +2442,7 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
           },
           {
             name: 'Дата документа',

@@ -27,7 +27,9 @@ export const Fourth: React.FC = () => {
     if (pattern === '^.{0,50}$' && /^.{0,50}$/.test(value) === false) return true;
     if (pattern === '^.{0,120}$' && /^.{0,120}$/.test(value) === false) return true;
     if (pattern === '^.{0,200}$' && /^.{0,200}$/.test(value) === false) return true;
+    if (pattern === '^.{0,300}$' && /^.{0,300}$/.test(value) === false) return true;
     if (pattern === '^.{0,500}$' && /^.{0,500}$/.test(value) === false) return true;
+    if (pattern === '^.{0,4000}$' && /^.{0,4000}$/.test(value) === false) return true;
     if (pattern === '^.{0,1000}$' && /^.{0,1000}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{0,4}$' && /^[0-9]{0,4}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{0,20}$' && /^[0-9]{0,20}$/.test(value) === false) return true;
@@ -267,7 +269,7 @@ export const Fourth: React.FC = () => {
                 if ('hidden' in i && i.hidden !== undefined) {
                   i.hidden = true;
                 }
-                return i
+                return i;
               });
             }
             if (ownerStr === 'Идентификатор (СНИЛС)') {
@@ -287,7 +289,7 @@ export const Fourth: React.FC = () => {
                 ) {
                   i.hidden = true;
                 }
-                return i
+                return i;
               });
             }
             if (ownerStr === 'Идентификатор (ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН)') {
@@ -295,7 +297,7 @@ export const Fourth: React.FC = () => {
                 if ('hidden' in i && i.hidden !== undefined) {
                   i.hidden = false;
                 }
-                return i
+                return i;
               });
             }
             for (let z = 0; z < item.blockItem.length; z++) {
@@ -2855,7 +2857,7 @@ export const Fourth: React.FC = () => {
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:VehicleWheelQuantity>${item.blockItem[z].value[0]}</trsdo:VehicleWheelQuantity>`;
-            }else if (
+            } else if (
               item.blockItem[z].name === 'Количество колес' &&
               item.blockItem[z].value[0] === ''
             ) {
@@ -3076,9 +3078,9 @@ export const Fourth: React.FC = () => {
           if (item.blockItem[0].value[0] !== '')
             str += `<csdo:NoteText>${item.blockItem[0].value[0]}</csdo:NoteText>`;
         }
-        return item
+        return item;
       });
-      return items
+      return items;
     });
     return str;
   };

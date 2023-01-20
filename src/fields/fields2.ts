@@ -133,6 +133,7 @@ export const blocks2 = [
             require: true,
             disabled: false,
             value: [''],
+            checkbox: false,
             options: Object.keys(TNVED),
             freeSolo: true
           },
@@ -142,6 +143,7 @@ export const blocks2 = [
             id: 5,
             require: true,
             disabled: false,
+            checkbox: false,
             value: [''],
             options: Object.keys(categoryId)
           },

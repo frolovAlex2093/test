@@ -11,7 +11,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { IBlockItem } from '../../../../interfaces/interfaces';
 import { Context } from '../../../../pages/Third';
 
@@ -93,12 +93,12 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     freeSolo={item.freeSolo}
                     multiple={item.multiple}
                     getOptionDisabled={(option) =>
-                      item.value !== null && item.name === "Цвет кузова (кабины, прицепа)" &&
-                      (item.value.length === 3 
-                        // || 
-                        // item.value.includes(option)
-                        )
-                        ? true
+                      item.value !== null &&
+                      item.name === 'Цвет кузова (кабины, прицепа)' &&
+                      item.value.length === 3
+                        ? // ||
+                          // item.value.includes(option)
+                          true
                         : false
                     }
                     onChange={(event, value) => handleChangeValue?.(item.id, value)}
@@ -228,10 +228,12 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                 {item.pattern === '^[0-9]{4}$' ? 'Некорректный год' : ''}
                 {item.pattern === '^.{0,50}$' ? 'Не больше 50 символов' : ''}
                 {item.pattern === '^.{0,20}$' ? 'Не больше 20 символов' : ''}
+                {item.pattern === '^.{0,300}$' ? 'Не больше 3000 символов' : ''}
                 {item.pattern === '^.{0,120}$' ? 'Не больше 120 символов' : ''}
                 {item.pattern === '^.{0,200}$' ? 'Не больше 200 символов' : ''}
                 {item.pattern === '^.{0,500}$' ? 'Не больше 500 символов' : ''}
                 {item.pattern === '^.{0,1000}$' ? 'Не больше 1000 символов' : ''}
+                {item.pattern === '^.{0,4000}$' ? 'Не больше 4000 символов' : ''}
                 {item.pattern === '^[0-9]{0,4}$' ? 'Не больше 4 цифр' : ''}
                 {item.pattern === '^[0-9]{0,24}((.|,)[0-9]{1,6})?$'
                   ? 'Не больше 24 цифр и 6 после запятой'
