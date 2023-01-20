@@ -11,7 +11,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { IBlockItem } from '../../../../interfaces/interfaces';
 import { Context } from '../../../../pages/Third';
 
@@ -31,7 +31,8 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-         //item.require = false;
+        // item.require = false;
+        const options = item.options !== undefined ? item.options : [''];
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -80,17 +81,31 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             ) : (
               ''
             )}
-            <Box display='flex' flexDirection='row' margin='10px 0' alignItems='center'>
+            <Box
+              display={item.hidden ? 'none' : 'flex'}
+              flexDirection='row'
+              margin='10px 0'
+              alignItems='center'
+            >
               {item.type === 'Autocomplete' ? (
                 item.multiple ? (
                   <Autocomplete
                     freeSolo={item.freeSolo}
                     multiple={item.multiple}
+                    getOptionDisabled={(option) =>
+                      item.value !== null && item.name === "Цвет кузова (кабины, прицепа)" &&
+                      (item.value.length === 3 
+                        // || 
+                        // item.value.includes(option)
+                        )
+                        ? true
+                        : false
+                    }
                     onChange={(event, value) => handleChangeValue?.(item.id, value)}
                     disabled={item.disabled}
                     size='small'
                     id={item.id + ''}
-                    options={item.options ? item.options : pp}
+                    options={options}
                     sx={{ width: '100%', maxWidth: '830px' }}
                     disablePortal
                     renderInput={(params) => (
@@ -135,7 +150,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                 <>
                   {' '}
                   <FormControlLabel
-                    sx={{height: "23px"}}
+                    sx={{ height: '23px' }}
                     disabled={item.disabled}
                     control={
                       <Checkbox
@@ -177,7 +192,10 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                   label={item.name}
                   variant='outlined'
                   size='small'
-                  sx={{ width: '100%', maxWidth: '830px' }}
+                  sx={{
+                    width: '100%',
+                    maxWidth: '830px'
+                  }}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position='end'>

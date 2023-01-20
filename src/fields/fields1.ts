@@ -2297,7 +2297,7 @@ export const blocks1 = [
     ]
   },
   {
-    blocksName: 'Дополнительные характеристики',
+    blocksName: 'Информация изготовителя',
     id: 4,
     blocksItem: [
       {
@@ -2305,7 +2305,7 @@ export const blocks1 = [
         id: 39,
         blockItem: [
           {
-            name: 'Дополнительные характеристики',
+            name: 'Информация изготовителя',
             type: 'TextField',
             id: 144,
             require: false,

@@ -1667,7 +1667,7 @@ export const blocks2 = [
             buttonDelete: false,
             group: [191, 95, 96, 97, 98, 99, 100, 101, 102],
             buttonText: 'Добавить шины'
-          },
+          }
           // {
           //   name: 'Максимальные допустимые размеры на осях с тормозной системой',
           //   type: 'TextField',
@@ -2308,7 +2308,7 @@ export const blocks2 = [
     ]
   },
   {
-    blocksName: 'Дополнительные характеристики',
+    blocksName: 'Информация изготовителя',
     id: 4,
     blocksItem: [
       {
@@ -2316,7 +2316,7 @@ export const blocks2 = [
         id: 39,
         blockItem: [
           {
-            name: 'Дополнительные характеристики',
+            name: 'Информация изготовителя',
             type: 'TextField',
             id: 144,
             require: false,
@@ -2431,7 +2431,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: true,
             value: ['Свидетельство о регистрации СМ'],
-            defaulValue: "Свидетельство о регистрации СМ"
+            defaulValue: 'Свидетельство о регистрации СМ'
           },
           {
             name: 'Номер документа',
@@ -2482,7 +2482,7 @@ export const blocks2 = [
         id: 44,
         blockItem: [
           {
-            name: 'Тип владельца',
+            name: 'Тип собственника',
             type: 'Autocomplete',
             id: 154,
             require: true,
@@ -2492,15 +2492,69 @@ export const blocks2 = [
             options: ['Юридическое лицо', 'Физическое лицо']
           },
           {
-            name: 'Идентификатор (ОГРН для ЮЛ/СНИЛС для ФЛ)',
-            type: 'TextField',
-            id: 155,
+            name: 'Страна',
+            type: 'Autocomplete',
+            id: 204,
             require: false,
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: '^.{0,20}$',
-            error: false
+            options: Object.keys(country),
+            hidden: true
+          },
+          {
+            name: 'Полное наименование организации',
+            type: 'TextField',
+            id: 205,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: [''],
+            hidden: true
+          },
+          {
+            name: 'Адрес электронной почты',
+            type: 'TextField',
+            id: 206,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: [''],
+            hidden: true
+          },
+          {
+            name: 'Идентификатор (ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН для ЮЛ/СНИЛС для ФЛ)',
+            type: 'TextField',
+            id: 207,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: [''],
+            hidden: true
+          },
+          {
+            name: 'Пробег',
+            type: 'TextField',
+            id: 208,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: [''],
+            endAdornment: 'КМ',
+            numeric: true,
+            hidden: true
+          },
+          {
+            name: 'Стоимость',
+            type: 'TextField',
+            id: 209,
+            require: false,
+            checkbox: false,
+            disabled: false,
+            value: [''],
+            endAdornment: 'RUB',
+            numeric: true,
+            hidden: true
           }
         ]
       }

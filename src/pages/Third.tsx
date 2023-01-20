@@ -1189,30 +1189,50 @@ export const Third: React.FC = () => {
     blocks.map((items) => {
       items.blocksItem.map((item) => {
         if (item.id === 36 && 'check' in item && item.check === false) {
-          str += '<trcdo:VehicleSteeringDetails>';
           for (let z = 0; z < item.blockItem.length; z++) {
             if (
               item.blockItem[z].name === 'Положение рулевого колеса' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z + 1].value[0] !== ''
             ) {
+              str += '<trcdo:VehicleSteeringDetails>';
               str += `<trsdo:VehicleComponentText>${
                 item.blockItem[z + 1].value[0]
-              }</trsdo:VehicleComponentText>
-              <trsdo:SteeringWheelPositionCode>${
+              }</trsdo:VehicleComponentText><trsdo:SteeringWheelPositionCode>${
                 steeringType[item.blockItem[z].value[0]]
-              }</trsdo:SteeringWheelPositionCode>
-              <trsdo:VehicleComponentLocationText>${
+              }</trsdo:SteeringWheelPositionCode><trsdo:VehicleComponentLocationText>${
                 item.blockItem[z].value[0]
               }</trsdo:VehicleComponentLocationText>`;
+              str += '</trcdo:VehicleSteeringDetails>';
+            } else if (
+              item.blockItem[z].name === 'Положение рулевого колеса' &&
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z + 1].value[0] !== ''
+            ) {
+              str += '<trcdo:VehicleSteeringDetails>';
+              str += `<trsdo:VehicleComponentText>${
+                item.blockItem[z + 1].value[0]
+              }</trsdo:VehicleComponentText>`;
+              str += '</trcdo:VehicleSteeringDetails>';
+            } else if (
+              item.blockItem[z].name === 'Положение рулевого колеса' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z + 1].value[0] === ''
+            ) {
+              str += '<trcdo:VehicleSteeringDetails>';
+              str += `<trsdo:SteeringWheelPositionCode>${
+                steeringType[item.blockItem[z].value[0]]
+              }</trsdo:SteeringWheelPositionCode><trsdo:VehicleComponentLocationText>${
+                item.blockItem[z].value[0]
+              }</trsdo:VehicleComponentLocationText>`;
+              str += '</trcdo:VehicleSteeringDetails>';
             }
           }
-          str += '</trcdo:VehicleSteeringDetails>';
         }
         return item;
       });
       return items;
     });
-    if (str === '<trcdo:VehicleSteeringDetails></trcdo:VehicleSteeringDetails>') str = '';
     return str;
   };
 
@@ -2352,7 +2372,7 @@ export const Third: React.FC = () => {
         }
         if (item.id === 39) {
           if (
-            item.blockItem[0].name === 'Дополнительные характеристики' &&
+            item.blockItem[0].name === 'Информация изготовителя' &&
             item.blockItem[0].value[0] !== ''
           ) {
             str += `<csdo:NoteText>${item.blockItem[0].value[0]}</csdo:NoteText>`;
@@ -2779,6 +2799,11 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:VehicleWheelQuantity>${item.blockItem[z].value[0]}</trsdo:VehicleWheelQuantity>`;
+            } else if (
+              item.blockItem[z].name === 'Количество колес' &&
+              item.blockItem[z].value[0] === ''
+            ) {
+              str += `<trsdo:VehicleWheelQuantity>0</trsdo:VehicleWheelQuantity>`;
             }
             if (
               item.blockItem[z].name === 'Количество ведущих колес' &&
@@ -2897,6 +2922,22 @@ export const Third: React.FC = () => {
     return str;
   };
 
+  const getNoteText = (): string => {
+    let str = '';
+
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 40) {
+          if (item.blockItem[0].value[0] !== '')
+            str += `<csdo:NoteText>${item.blockItem[0].value[0]}</csdo:NoteText>`;
+        }
+        return item;
+      });
+      return items;
+    });
+    return str;
+  };
+
   const onclickSubmit = () => {
     let date = new Date();
     date.setHours(date.getHours() + 3);
@@ -2967,6 +3008,7 @@ export const Third: React.FC = () => {
     data += getDocumentDetails();
     data += getVehicleTypeDetails();
     data += getVariantDetails(check);
+    data += getNoteText();
     data += getCountry();
 
     data += `<csdo:BusinessEntityName>${maker}</csdo:BusinessEntityName>

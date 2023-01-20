@@ -246,20 +246,65 @@ export const Fourth: React.FC = () => {
             if (i.name === 'Порядковый номер оси' && 'options' in i && i.options !== undefined) {
               i.options = options;
             }
-            if (i.name === 'Тип владельца') {
+            if (i.name === 'Тип собственника') {
               if (i.value[0] === 'Юридическое лицо') {
-                ownerStr = 'Идентификатор (ОГРН)';
+                ownerStr = 'Идентификатор (ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН)';
               } else if (i.value[0] === 'Физическое лицо') {
                 ownerStr = 'Идентификатор (СНИЛС)';
               } else if (i.value[0] === '') {
-                ownerStr = 'Идентификатор (ОГРН для ЮЛ/СНИЛС для ФЛ)';
+                ownerStr =
+                  'Идентификатор (ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН для ЮЛ/СНИЛС для ФЛ)';
               }
             }
 
             return i;
           });
           if (item.id === 44) {
-            item.blockItem[1].name = ownerStr;
+            if (
+              ownerStr === 'Идентификатор (ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН для ЮЛ/СНИЛС для ФЛ)'
+            ) {
+              item.blockItem.map((i) => {
+                if ('hidden' in i && i.hidden !== undefined) {
+                  i.hidden = true;
+                }
+                return i
+              });
+            }
+            if (ownerStr === 'Идентификатор (СНИЛС)') {
+              console.log('qqq');
+              item.blockItem.map((i) => {
+                if (
+                  'hidden' in i &&
+                  i.hidden !== undefined &&
+                  i.name !== 'Полное наименование организации'
+                ) {
+                  i.hidden = false;
+                }
+                if (
+                  'hidden' in i &&
+                  i.hidden !== undefined &&
+                  i.name === 'Полное наименование организации'
+                ) {
+                  i.hidden = true;
+                }
+                return i
+              });
+            }
+            if (ownerStr === 'Идентификатор (ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН)') {
+              item.blockItem.map((i) => {
+                if ('hidden' in i && i.hidden !== undefined) {
+                  i.hidden = false;
+                }
+                return i
+              });
+            }
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (item.blockItem[z].name.includes('Идентификатор')) {
+                item.blockItem[z].name = ownerStr;
+                console.log(ownerStr);
+              }
+            }
+            // item.blockItem[1].name = ownerStr;
           }
           if (item.id === 31 || item.id === 32) {
             let checkGear = false;
@@ -1200,30 +1245,50 @@ export const Fourth: React.FC = () => {
     blocks.map((items) => {
       items.blocksItem.map((item) => {
         if (item.id === 36 && 'check' in item && item.check === false) {
-          str += '<trcdo:VehicleSteeringDetails>';
           for (let z = 0; z < item.blockItem.length; z++) {
             if (
               item.blockItem[z].name === 'Положение рулевого колеса' &&
-              item.blockItem[z].value[0] !== ''
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z + 1].value[0] !== ''
             ) {
+              str += '<trcdo:VehicleSteeringDetails>';
               str += `<trsdo:VehicleComponentText>${
                 item.blockItem[z + 1].value[0]
-              }</trsdo:VehicleComponentText>
-                            <trsdo:SteeringWheelPositionCode>${
-                              steeringType[item.blockItem[z].value[0]]
-                            }</trsdo:SteeringWheelPositionCode>
-                            <trsdo:VehicleComponentLocationText>${
-                              item.blockItem[z].value[0]
-                            }</trsdo:VehicleComponentLocationText>`;
+              }</trsdo:VehicleComponentText><trsdo:SteeringWheelPositionCode>${
+                steeringType[item.blockItem[z].value[0]]
+              }</trsdo:SteeringWheelPositionCode><trsdo:VehicleComponentLocationText>${
+                item.blockItem[z].value[0]
+              }</trsdo:VehicleComponentLocationText>`;
+              str += '</trcdo:VehicleSteeringDetails>';
+            } else if (
+              item.blockItem[z].name === 'Положение рулевого колеса' &&
+              item.blockItem[z].value[0] === '' &&
+              item.blockItem[z + 1].value[0] !== ''
+            ) {
+              str += '<trcdo:VehicleSteeringDetails>';
+              str += `<trsdo:VehicleComponentText>${
+                item.blockItem[z + 1].value[0]
+              }</trsdo:VehicleComponentText>`;
+              str += '</trcdo:VehicleSteeringDetails>';
+            } else if (
+              item.blockItem[z].name === 'Положение рулевого колеса' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z + 1].value[0] === ''
+            ) {
+              str += '<trcdo:VehicleSteeringDetails>';
+              str += `<trsdo:SteeringWheelPositionCode>${
+                steeringType[item.blockItem[z].value[0]]
+              }</trsdo:SteeringWheelPositionCode><trsdo:VehicleComponentLocationText>${
+                item.blockItem[z].value[0]
+              }</trsdo:VehicleComponentLocationText>`;
+              str += '</trcdo:VehicleSteeringDetails>';
             }
           }
-          str += '</trcdo:VehicleSteeringDetails>';
         }
         return item;
       });
       return items;
     });
-    if (str === '<trcdo:VehicleSteeringDetails></trcdo:VehicleSteeringDetails>') str = '';
     return str;
   };
 
@@ -2359,7 +2424,7 @@ export const Fourth: React.FC = () => {
         }
         if (item.id === 39) {
           if (
-            item.blockItem[0].name === 'Дополнительные характеристики' &&
+            item.blockItem[0].name === 'Информация изготовителя' &&
             item.blockItem[0].value[0] !== ''
           ) {
             str += `<csdo:NoteText>${item.blockItem[0].value[0]}</csdo:NoteText>`;
@@ -2790,6 +2855,11 @@ export const Fourth: React.FC = () => {
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trsdo:VehicleWheelQuantity>${item.blockItem[z].value[0]}</trsdo:VehicleWheelQuantity>`;
+            }else if (
+              item.blockItem[z].name === 'Количество колес' &&
+              item.blockItem[z].value[0] === ''
+            ) {
+              str += `<trsdo:VehicleWheelQuantity>0</trsdo:VehicleWheelQuantity>`;
             }
             if (
               item.blockItem[z].name === 'Количество ведущих колес' &&
@@ -2889,20 +2959,77 @@ export const Fourth: React.FC = () => {
     blocks.map((items) => {
       items.blocksItem.map((item) => {
         if (item.id === 44) {
-          str += '<doc:OwnerDetails><doc:SignersList>';
+          str += '<doc:OwnerDetails><doc:DocumentDetails>';
           for (let z = 0; z < item.blockItem.length; z++) {
-            if (
-              item.blockItem[z].name === 'Тип владельца' &&
-              item.blockItem[z].value[0] === 'Юридическое лицо'
-            ) {
-              str += `<ccdo:OrganizationId>${item.blockItem[z + 1].value[0]}</ccdo:OrganizationId>`;
-            } else if (
-              item.blockItem[z].name === 'Тип владельца' &&
-              item.blockItem[z].value[0] === 'Физическое лицо'
-            ) {
-              str += `<ccdo:OwnerIndividualDetails><ccdo:IndividualId>${
-                item.blockItem[z + 1].value[0]
-              }</ccdo:IndividualId></ccdo:OwnerIndividualDetails>`;
+            if (item.blockItem[z].name === 'Пробег' && item.blockItem[z].value[0] !== '') {
+              str += `<doc:VehicleMileage measurementUnitCode="KMT">${item.blockItem[z].value[0]}</doc:VehicleMileage>`;
+            }
+            if (item.blockItem[z].name === 'Стоимость' && item.blockItem[z].value[0] !== '') {
+              str += `<doc:VehicleCost currencyCodeListId="NSI_078" currencyCode="RUB">${item.blockItem[z].value[0]}</doc:VehicleCost>`;
+            }
+          }
+          str +=
+            '</doc:DocumentDetails><doc:SignersList><doc:SignerTypeCode>3</doc:SignerTypeCode>';
+          if (
+            item.blockItem[0].name === 'Тип собственника' &&
+            item.blockItem[0].value[0] === 'Физическое лицо'
+          ) {
+            str += '<ccdo:OwnerIndividualDetails>';
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (item.blockItem[z].name.includes('СНИЛС') && item.blockItem[z].value[0] !== '') {
+                str += `<ccdo:IndividualId kindId="${
+                  item.blockItem[z - 3].value[0].includes('Республика Беларусь')
+                    ? '4'
+                    : item.blockItem[z - 3].value[0].includes('Российская Федерация')
+                    ? '1'
+                    : ''
+                }">${item.blockItem[z].value[0]}</ccdo:IndividualId>`;
+              }
+            }
+            str += '</ccdo:OwnerIndividualDetails>';
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (
+                item.blockItem[z].name === 'Адрес электронной почты' &&
+                item.blockItem[z].value[0] !== ''
+              ) {
+                str += `<doc:CommunicationDetails CommunicationChannelCode="EM">${item.blockItem[z].value[0]}</doc:CommunicationDetails>`;
+              }
+            }
+          } else if (
+            item.blockItem[0].name === 'Тип собственника' &&
+            item.blockItem[0].value[0] === 'Юридическое лицо'
+          ) {
+            str += '<ccdo:OwnerOrganizationDetails>';
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (item.blockItem[z].name === 'Страна' && item.blockItem[z].value[0] !== '') {
+                str += `<ccdo:EECCountryCode>${
+                  country[item.blockItem[z].value[0]]
+                }</ccdo:EECCountryCode>`;
+              }
+              if (
+                item.blockItem[z].name === 'Полное наименование организации' &&
+                item.blockItem[z].value[0] !== ''
+              ) {
+                str += `<csdo:OrganizationName>${item.blockItem[z].value[0]}</csdo:OrganizationName>`;
+              }
+              if (item.blockItem[z].name.includes('ОГРН') && item.blockItem[z].value[0] !== '') {
+                str += `<ccdo:OrganizationId kindId="${
+                  item.blockItem[z - 3].value[0].includes('Республика Беларусь')
+                    ? '4'
+                    : item.blockItem[z - 3].value[0].includes('Российская Федерация')
+                    ? '1'
+                    : ''
+                }">${item.blockItem[z].value[0]}</ccdo:OrganizationId>`;
+              }
+            }
+            str += '</ccdo:OwnerOrganizationDetails>';
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (
+                item.blockItem[z].name === 'Адрес электронной почты' &&
+                item.blockItem[z].value[0] !== ''
+              ) {
+                str += `<doc:CommunicationDetails CommunicationChannelCode="EM">${item.blockItem[z].value[0]}</doc:CommunicationDetails>`;
+              }
             }
           }
           str += '</doc:SignersList></doc:OwnerDetails>';
@@ -2940,6 +3067,22 @@ export const Fourth: React.FC = () => {
     return str;
   };
 
+  const getNoteText = (): string => {
+    let str = '';
+
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 40) {
+          if (item.blockItem[0].value[0] !== '')
+            str += `<csdo:NoteText>${item.blockItem[0].value[0]}</csdo:NoteText>`;
+        }
+        return item
+      });
+      return items
+    });
+    return str;
+  };
+
   const onclickSubmit = () => {
     let date = new Date();
     date.setHours(date.getHours() + 3);
@@ -2973,8 +3116,9 @@ export const Fourth: React.FC = () => {
       });
       return items;
     });
-    let data: string = `<doc:VehicleEPassportDetails xmlns:ccdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_ComplexDataObjects/0.4.17" xmlns:csdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_SimpleDataObjects/0.4.8" xmlns:doc="urn://x-artefacts-epts-ru/ELPTSAddData/1.0.11" xmlns:trcdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_TR_ComplexDataObjects/1.1.11" xmlns:trsdo="urn://x-artefacts-epts-ru/ELPTSAddData_EEC_M_TR_SimpleDataObjects/1.0.14">
-        <soapenv:Header/>
+    let data: string = `
+    <soapenv:Envelope xsi:schemaLocation="urn://x-artefacts-epts-ru/ELPTSAddData/1.0.11 R019_VehicleEPassportDetails_v1.0.11.xsd" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ccdo="urn://x-artefacts-epts-ru/EEC_M_ComplexDataObjects/0.4.17" xmlns:csdo="urn://x-artefacts-epts-ru/EEC_M_SimpleDataObjects/0.4.8" xmlns:doc="urn://x-artefacts-epts-ru/ELPTSAddData/1.0.11" xmlns:pas="http://passport.integration.pts.fors.ru/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:trcdo="urn://x-artefacts-epts-ru/EEC_M_TR_ComplexDataObjects/1.1.11" xmlns:trsdo="urn://x-artefacts-epts-ru/EEC_M_TR_SimpleDataObjects/1.0.14" xmlns:urn1="urn://x-artefacts-epts-ru/EPTS_Services/1.0.1">
+    <soapenv:Header/>
         <soapenv:Body>
             <pas:ELPTSAddData>
                 <MessageType>REQUEST</MessageType>
@@ -3011,6 +3155,7 @@ export const Fourth: React.FC = () => {
     data += getVehicleTypeDetails();
     data += getVariantDetails(check);
     data += getOwner();
+    data += getNoteText();
     data += getCountry();
 
     data += `<csdo:BusinessEntityName>${maker}</csdo:BusinessEntityName>
