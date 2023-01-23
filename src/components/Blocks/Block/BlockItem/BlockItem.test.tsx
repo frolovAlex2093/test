@@ -10,7 +10,7 @@ const handleChangeCheck = jest.fn();
 const handleChangeValue = jest.fn();
 const onClickDelete = jest.fn();
 const onClickAdd = jest.fn();
-const onCkickAddDopBlock = jest.fn();
+const onClickAddDopBlock = jest.fn();
 const uploadImage = jest.fn();
 
 const blockItem = [
@@ -49,7 +49,7 @@ const blockItem = [
     id: 3,
     require: true,
     checkbox: true,
-    disabled: true,
+    disabled: false,
     value: [''],
     pattern: '^[0-9]{4}$',
     numeric: true,
@@ -121,7 +121,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >
@@ -131,13 +131,13 @@ describe('BlockItem component', () => {
     expect(screen.getByLabelText('test name 1')).toBeInTheDocument();
     expect(screen.getByLabelText('test name 2')).toBeInTheDocument();
     expect(screen.getByLabelText('test name 3')).toBeInTheDocument();
-    expect(screen.getByLabelText('test name 4')).toBeInTheDocument();
+    expect(screen.getByText('test name 4')).toBeInTheDocument();
     expect(screen.getByLabelText('test name 5')).toBeInTheDocument();
     expect(screen.getByLabelText('test name 6')).toBeInTheDocument();
     expect(screen.getByLabelText('test name 8')).toBeInTheDocument();
 
     expect(screen.getByText('endAdornment')).toBeInTheDocument();
-    expect(screen.getByLabelText<HTMLInputElement>('test name 4').disabled).toBeTruthy();
+    expect(screen.getByText<HTMLInputElement>('test name 4').disabled).not.toBeTruthy();
     expect(screen.getByText('Некорректный год')).toBeInTheDocument();
   });
   it('BlockItem render buttons', () => {
@@ -149,7 +149,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >
@@ -176,7 +176,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >
@@ -199,7 +199,7 @@ describe('BlockItem component', () => {
     expect(handleRadio).toHaveBeenCalledTimes(2);
     expect(onClickDelete).toHaveBeenCalledTimes(2);
     expect(onClickAdd).toHaveBeenCalled();
-    expect(onCkickAddDopBlock).toHaveBeenCalled();
+    expect(onClickAddDopBlock).toHaveBeenCalled();
     expect(handleChangeCheck).toHaveBeenCalled();
   });
   it('BlockItem handleChangeValue work', () => {
@@ -211,7 +211,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >
@@ -235,7 +235,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >
@@ -253,7 +253,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >
@@ -271,7 +271,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >
@@ -300,7 +300,7 @@ describe('BlockItem component', () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >

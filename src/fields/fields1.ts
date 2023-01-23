@@ -20,9 +20,9 @@ import {
   suspension,
   TNVED,
   typeGearBox,
-  typeMainTransmisson,
+  typeMainTransmission,
   typePropulsion,
-  typeTransmisson,
+  typeTransmission,
   unitGear
 } from '../guides';
 
@@ -450,7 +450,7 @@ export const blocks1 = [
             buttons: [true, false],
             groupBlock: [20, 21, 22, 23, 24],
             count: 0,
-            groupblockAdd: [20, 21, 22, 23, 24],
+            groupBlockAdd: [20, 21, 22, 23, 24],
             countBlock: 0,
             buttonText: 'Добавить значение и расшифровку',
             pattern: '^.{0,1000}$',
@@ -1044,7 +1044,7 @@ export const blocks1 = [
             error: false
           },
           {
-            name: 'Минимальная cкорость вращения коленчатого вала',
+            name: 'Минимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 64,
             require: false,
@@ -1057,7 +1057,7 @@ export const blocks1 = [
             error: false
           },
           {
-            name: 'Максимальная cкорость вращения коленчатого вала',
+            name: 'Максимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 65,
             require: false,
@@ -1239,7 +1239,7 @@ export const blocks1 = [
         check: false,
         blockItem: [
           {
-            name: 'Тип cистемы зажигания',
+            name: 'Тип системы зажигания',
             type: 'Autocomplete',
             id: 76,
             require: false,
@@ -1357,7 +1357,7 @@ export const blocks1 = [
             error: false
           },
           {
-            name: 'Минимальная cкорость вращения коленчатого вала',
+            name: 'Минимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 85,
             require: false,
@@ -1370,7 +1370,7 @@ export const blocks1 = [
             error: false
           },
           {
-            name: 'Максимальная cкорость вращения коленчатого вала',
+            name: 'Максимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 86,
             require: false,
@@ -1698,7 +1698,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            options: Object.keys(typeTransmisson)
+            options: Object.keys(typeTransmission)
           },
           {
             name: 'Схема трансмиссии',
@@ -1849,7 +1849,7 @@ export const blocks1 = [
             buttonDelete: false,
             group: [111, 112, 113, 163, 164],
             groupBlock: [106, 107, 108, 109, 110, 161, 111, 112, 113, 163, 164],
-            groupblockAdd: [106, 107, 108, 109, 110, 161, 111, 112, 113, 163, 164],
+            groupBlockAdd: [106, 107, 108, 109, 110, 161, 111, 112, 113, 163, 164],
             countBlock: 0,
             count: 0,
             buttonText: 'Добавить передачу',
@@ -1945,7 +1945,7 @@ export const blocks1 = [
             group: [118, 119, 120],
             buttons: [true, false],
             groupBlock: [114, 115, 116, 117, 118, 119, 120],
-            groupblockAdd: [114, 115, 116, 117, 118, 119, 120],
+            groupBlockAdd: [114, 115, 116, 117, 118, 119, 120],
             countBlock: 0,
             count: 0,
             buttonText: 'Добавить передачу',
@@ -2000,7 +2000,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            options: Object.keys(typeMainTransmisson)
+            options: Object.keys(typeMainTransmission)
           },
           {
             name: 'Число передач',
@@ -2049,7 +2049,7 @@ export const blocks1 = [
             group: [125, 126, 127],
             buttons: [true, false],
             groupBlock: [121, 122, 123, 124, 197, 125, 126, 127],
-            groupblockAdd: [121, 122, 123, 124, 197, 125, 126, 127],
+            groupBlockAdd: [121, 122, 123, 124, 197, 125, 126, 127],
             countBlock: 0,
             count: 0,
             buttonText: 'Добавить передачу',
@@ -2432,7 +2432,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: true,
             value: ['Свидетельство о регистрации СМ'],
-            defaulValue: "Свидетельство о регистрации СМ"
+            defaultValue: "Свидетельство о регистрации СМ"
 
           },
           {

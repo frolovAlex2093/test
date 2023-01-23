@@ -51,7 +51,7 @@ export const Third: React.FC = () => {
     return false;
   };
 
-  const onCkickAddDopBlock = (id: number, groupBlock: number[] | undefined) => {
+  const onClickAddDopBlock = (id: number, groupBlock: number[] | undefined) => {
     if (groupBlock !== undefined) {
       let max = 0;
       let indexStart = null;
@@ -1510,7 +1510,7 @@ export const Third: React.FC = () => {
         if (item.id === 21 && 'check' in item && item.check === false) {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              item.blockItem[z].name === 'Тип cистемы зажигания' &&
+              item.blockItem[z].name === 'Тип системы зажигания' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleIgnitionDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:VehicleIgnitionDetails>`;
@@ -3059,7 +3059,7 @@ export const Third: React.FC = () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >

@@ -24,7 +24,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
     handleRadio,
     onClickDelete,
     onClickAdd,
-    onCkickAddDopBlock,
+    onClickAddDopBlock,
     uploadImage
   } = React.useContext(Context);
 
@@ -183,7 +183,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                   inputProps={{
                     pattern: item.pattern ? item.pattern : '.{0,}'
                   }}
-                  value={item.defaulValue}
+                  value={item.defaultValue}
                   // value={item.value !== null && item.value[0] !== '' ? item.value : ''}
                   error={item.error}
                   disabled={item.disabled}
@@ -235,6 +235,15 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                 {item.pattern === '^.{0,1000}$' ? 'Не больше 1000 символов' : ''}
                 {item.pattern === '^.{0,4000}$' ? 'Не больше 4000 символов' : ''}
                 {item.pattern === '^[0-9]{0,4}$' ? 'Не больше 4 цифр' : ''}
+                {item.pattern === '^[0-9]+$' ? 'Не число' : ''}
+                {item.pattern === '^[0-9]+(,|.)[0-9]{2}$' ? 'Положительное число с двумя знаками после запятой' : ''}
+
+
+                
+                {item.pattern ===
+                '^(([a-zA-Z0-9_]|[^a-zA-Z0-9_])+)@([a-zA-Z0-9_]+).([a-zA-Z0-9_]+)$'
+                  ? 'Введите корректный Email'
+                  : ''}
                 {item.pattern === '^[0-9]{0,24}((.|,)[0-9]{1,6})?$'
                   ? 'Не больше 24 цифр и 6 после запятой'
                   : ''}
@@ -324,7 +333,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
               item.buttons[1] ? (
                 <Box display='flex' alignItems='center'>
                   <Button
-                    onClick={() => onCkickAddDopBlock?.(item.id, item.groupblockAdd)}
+                    onClick={() => onClickAddDopBlock?.(item.id, item.groupBlockAdd)}
                     size='small'
                     sx={{
                       width: 'min-content',
@@ -359,7 +368,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                 </Box>
               ) : item.buttons[0] ? (
                 <Button
-                  onClick={() => onCkickAddDopBlock?.(item.id, item.groupblockAdd)}
+                  onClick={() => onClickAddDopBlock?.(item.id, item.groupBlockAdd)}
                   size='small'
                   sx={{
                     width: 'min-content',
@@ -418,3 +427,6 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
     </Box>
   );
 };
+
+
+// https://${publisher}.gallery.vsassets.io/_apis/public/gallery/publisher/${publisher}/extension/${extension name}/${version}/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage

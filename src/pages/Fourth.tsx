@@ -24,6 +24,7 @@ export const Fourth: React.FC = () => {
 
   const alertValidation = (pattern: string, value: string): boolean => {
     if (pattern === '^[0-9]{4}$' && /^[0-9]{4}$/.test(value) === false) return true;
+    if (pattern === '^[0-9]+$' && /^[0-9]+$/.test(value) === false) return true;
     if (pattern === '^.{0,50}$' && /^.{0,50}$/.test(value) === false) return true;
     if (pattern === '^.{0,120}$' && /^.{0,120}$/.test(value) === false) return true;
     if (pattern === '^.{0,200}$' && /^.{0,200}$/.test(value) === false) return true;
@@ -34,6 +35,15 @@ export const Fourth: React.FC = () => {
     if (pattern === '^[0-9]{0,4}$' && /^[0-9]{0,4}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{0,20}$' && /^[0-9]{0,20}$/.test(value) === false) return true;
     if (pattern === '^.{0,20}$' && /^.{0,20}$/.test(value) === false) return true;
+    if (pattern === '^[0-9]+(,|.)[0-9]{2}$' && /^[0-9]+(,|.)[0-9]{2}$/.test(value) === false)
+      return true;
+
+    if (
+      pattern === '^(([a-zA-Z0-9_]|[^a-zA-Z0-9_])+)@([a-zA-Z0-9_]+).([a-zA-Z0-9_]+)$' &&
+      /^(([a-zA-Z0-9_]|[^a-zA-Z0-9_])+)@([a-zA-Z0-9_]+)\.([a-zA-Z0-9_]+)$/.test(value) === false
+    )
+      return true;
+
     if (
       pattern === '^[0-9]{0,24}((.|,)[0-9]{1,6})?$' &&
       /^[0-9]{0,24}((.|,)[0-9]{1,6})?$/.test(value) === false
@@ -47,7 +57,7 @@ export const Fourth: React.FC = () => {
     return false;
   };
 
-  const onCkickAddDopBlock = (id: number, groupBlock: number[] | undefined) => {
+  const onClickAddDopBlock = (id: number, groupBlock: number[] | undefined) => {
     if (groupBlock !== undefined) {
       let max = 0;
       let indexStart = null;
@@ -1566,7 +1576,7 @@ export const Fourth: React.FC = () => {
         if (item.id === 21 && 'check' in item && item.check === false) {
           for (let z = 0; z < item.blockItem.length; z++) {
             if (
-              item.blockItem[z].name === 'Тип cистемы зажигания' &&
+              item.blockItem[z].name === 'Тип системы зажигания' &&
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleIgnitionDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText></trcdo:VehicleIgnitionDetails>`;
@@ -3205,7 +3215,7 @@ export const Fourth: React.FC = () => {
           handleChangeValue,
           onClickDelete,
           onClickAdd,
-          onCkickAddDopBlock,
+          onClickAddDopBlock,
           uploadImage
         }}
       >

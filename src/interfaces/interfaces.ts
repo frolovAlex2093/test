@@ -13,7 +13,7 @@ export interface ContextProps {
   handleMultiple?: (id: number) => void;
   onClickDelete?: (id: number, group: number[] | undefined) => void;
   onClickAdd?: (id: number, group: number[] | undefined) => void;
-  onCkickAddDopBlock?: (id: number, groupBlock: number[] | undefined) => void;
+  onClickAddDopBlock?: (id: number, groupBlock: number[] | undefined) => void;
   uploadImage?: (event: any, id: number) => void;
 }
 
@@ -74,12 +74,12 @@ export interface IBlocks {
         groupBlock?: number[];
         count?: number;
         files?: string[];
-        groupblockAdd?: number[];
+        groupBlockAdd?: number[];
         countBlock?: number;
         numeric?: boolean;
         freeSolo?: boolean;
         error?: boolean;
-        defaulValue?: string;
+        defaultValue?: string;
         hidden?: boolean;
       }[];
     }[];
@@ -121,13 +121,13 @@ export interface IBlock {
       groupBlock?: number[];
       count?: number;
       files?: string[];
-      groupblockAdd?: number[];
+      groupBlockAdd?: number[];
       countBlock?: number;
       pattern?: string;
       numeric?: boolean;
       freeSolo?: boolean;
       error?: boolean;
-      defaulValue?: string;
+      defaultValue?: string;
       hidden?: boolean;
     }[];
   }[];
@@ -159,14 +159,14 @@ export interface IBlockItem {
     groupBlock?: number[];
     count?: number;
     files?: string[];
-    groupblockAdd?: number[];
+    groupBlockAdd?: number[];
     countBlock?: number;
     buttonText?: string;
     pattern?: string;
     numeric?: boolean;
     freeSolo?: boolean;
     error?: boolean;
-    defaulValue?: string;
+    defaultValue?: string;
     hidden?: boolean;
   }[];
 }

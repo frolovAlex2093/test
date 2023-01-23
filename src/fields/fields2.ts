@@ -20,9 +20,9 @@ import {
   suspension,
   TNVED,
   typeGearBox,
-  typeMainTransmisson,
+  typeMainTransmission,
   typePropulsion,
-  typeTransmisson,
+  typeTransmission,
   unitGear
 } from '../guides';
 
@@ -51,7 +51,9 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: '^.{0,300}$',
+            error: false
           },
           {
             name: 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН',
@@ -60,7 +62,9 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: '^.{0,20}$',
+            error: false
           }
         ]
       }
@@ -115,7 +119,8 @@ export const blocks2 = [
             checkbox: true,
             disabled: false,
             value: [''],
-            pattern: '^.{0,50}$'
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Модификация',
@@ -124,7 +129,9 @@ export const blocks2 = [
             require: false,
             checkbox: true,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Код ТН ВЭД',
@@ -441,7 +448,7 @@ export const blocks2 = [
             buttons: [true, false],
             groupBlock: [20, 21, 22, 23, 24],
             count: 0,
-            groupblockAdd: [20, 21, 22, 23, 24],
+            groupBlockAdd: [20, 21, 22, 23, 24],
             countBlock: 0,
             buttonText: 'Добавить значение и расшифровку',
             pattern: '^.{0,1000}$',
@@ -633,23 +640,6 @@ export const blocks2 = [
             disabled: false,
             value: ['false']
           },
-          // {
-          //   name: 'Вид оси',
-          //   type: 'Autocomplete',
-          //   id: 33,
-          //   multiple: true,
-          //   require: false,
-          //   checkbox: false,
-          //   disabled: false,
-          //   value: [''],
-          //   options: [
-          //     'Колеса со сдвоенными шинами',
-          //     'Управляемая ось',
-          //     'Ведущая ось',
-          //     'Тормозная ось'
-          //   ],
-          //   buttonText: 'Добавить описание оси'
-          // },
           {
             name: 'Колея',
             type: 'TextField',
@@ -1052,7 +1042,7 @@ export const blocks2 = [
             error: false
           },
           {
-            name: 'Минимальная cкорость вращения коленчатого вала',
+            name: 'Минимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 64,
             require: false,
@@ -1065,7 +1055,7 @@ export const blocks2 = [
             error: false
           },
           {
-            name: 'Максимальная cкорость вращения коленчатого вала',
+            name: 'Максимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 65,
             require: false,
@@ -1247,7 +1237,7 @@ export const blocks2 = [
         check: false,
         blockItem: [
           {
-            name: 'Тип cистемы зажигания',
+            name: 'Тип системы зажигания',
             type: 'Autocomplete',
             id: 76,
             require: false,
@@ -1365,7 +1355,7 @@ export const blocks2 = [
             error: false
           },
           {
-            name: 'Минимальная cкорость вращения коленчатого вала',
+            name: 'Минимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 85,
             require: false,
@@ -1378,7 +1368,7 @@ export const blocks2 = [
             error: false
           },
           {
-            name: 'Максимальная cкорость вращения коленчатого вала',
+            name: 'Максимальная скорость вращения коленчатого вала',
             type: 'TextField',
             id: 86,
             require: false,
@@ -1698,7 +1688,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            options: Object.keys(typeTransmisson)
+            options: Object.keys(typeTransmission)
           },
           {
             name: 'Схема трансмиссии',
@@ -1849,7 +1839,7 @@ export const blocks2 = [
             buttonDelete: false,
             group: [111, 112, 113, 163, 164],
             groupBlock: [106, 107, 108, 109, 110, 161, 111, 112, 113, 163, 164],
-            groupblockAdd: [106, 107, 108, 109, 110, 161, 111, 112, 113, 163, 164],
+            groupBlockAdd: [106, 107, 108, 109, 110, 161, 111, 112, 113, 163, 164],
             countBlock: 0,
             count: 0,
             buttonText: 'Добавить передачу',
@@ -1945,7 +1935,7 @@ export const blocks2 = [
             group: [118, 119, 120],
             buttons: [true, false],
             groupBlock: [114, 115, 116, 117, 118, 119, 120],
-            groupblockAdd: [114, 115, 116, 117, 118, 119, 120],
+            groupBlockAdd: [114, 115, 116, 117, 118, 119, 120],
             countBlock: 0,
             count: 0,
             buttonText: 'Добавить передачу',
@@ -2001,7 +1991,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            options: Object.keys(typeMainTransmisson)
+            options: Object.keys(typeMainTransmission)
           },
           {
             name: 'Число передач',
@@ -2050,7 +2040,7 @@ export const blocks2 = [
             group: [125, 126, 127],
             buttons: [true, false],
             groupBlock: [121, 122, 123, 124, 197, 125, 126, 127],
-            groupblockAdd: [121, 122, 123, 124, 197, 125, 126, 127],
+            groupBlockAdd: [121, 122, 123, 124, 197, 125, 126, 127],
             countBlock: 0,
             count: 0,
             buttonText: 'Добавить передачу',
@@ -2220,7 +2210,7 @@ export const blocks2 = [
             buttonDelete: false,
             group: [137, 138],
             pattern: '^.{0,1000}$',
-            buttonText: 'Добавть подвеску',
+            buttonText: 'Добавить подвеску',
             error: false
           }
         ]
@@ -2433,7 +2423,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: true,
             value: ['Свидетельство о регистрации СМ'],
-            defaulValue: 'Свидетельство о регистрации СМ'
+            defaultValue: 'Свидетельство о регистрации СМ'
           },
           {
             name: 'Номер документа',
@@ -2469,7 +2459,8 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            numeric: true,
           }
         ]
       }
@@ -2512,7 +2503,9 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            hidden: true
+            hidden: true,
+            pattern: '^.{0,300}$',
+            error: false
           },
           {
             name: 'Адрес электронной почты',
@@ -2522,7 +2515,9 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            hidden: true
+            hidden: true,
+            pattern: '^(([a-zA-Z0-9_]|[^a-zA-Z0-9_])+)@([a-zA-Z0-9_]+).([a-zA-Z0-9_]+)$',
+            error: false
           },
           {
             name: 'Идентификатор (ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН для ЮЛ/СНИЛС для ФЛ)',
@@ -2532,7 +2527,9 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            hidden: true
+            hidden: true,
+            pattern: "^.{0,20}$",
+            error: false
           },
           {
             name: 'Пробег',
@@ -2544,7 +2541,9 @@ export const blocks2 = [
             value: [''],
             endAdornment: 'КМ',
             numeric: true,
-            hidden: true
+            hidden: true,
+            pattern: '^[0-9]+$',
+            error: false
           },
           {
             name: 'Стоимость',
@@ -2556,7 +2555,9 @@ export const blocks2 = [
             value: [''],
             endAdornment: 'RUB',
             numeric: true,
-            hidden: true
+            hidden: true,
+            pattern: '^[0-9]+(,|.)[0-9]{2}$',
+            error: false
           }
         ]
       }
