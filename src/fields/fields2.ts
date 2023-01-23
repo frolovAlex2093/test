@@ -1554,7 +1554,7 @@ export const blocks2 = [
         blockName: 'Шины',
         id: 27,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Разные шины',
@@ -1604,7 +1604,9 @@ export const blocks2 = [
             disabled: false,
             value: [''],
             label:
-              'Индекс несущей способности для максимально допустимой нагрузки для односкатных шин'
+              'Индекс несущей способности для максимально допустимой нагрузки для односкатных шин',
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Максимально',
@@ -1613,7 +1615,9 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Минимально',
@@ -1624,7 +1628,9 @@ export const blocks2 = [
             disabled: true,
             value: [''],
             label:
-              'Индекс несущей способности для максимально допустимой нагрузки для двускатных шин'
+              'Индекс несущей способности для максимально допустимой нагрузки для двускатных шин',
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Максимально',
@@ -1633,7 +1639,9 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: true,
-            value: ['']
+            value: [''],
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Скоростная категория',
@@ -1660,18 +1668,6 @@ export const blocks2 = [
             group: [191, 95, 96, 97, 98, 99, 100, 101, 102],
             buttonText: 'Добавить шины'
           }
-          // {
-          //   name: 'Максимальные допустимые размеры на осях с тормозной системой',
-          //   type: 'TextField',
-          //   id: 103,
-          //   require: false,
-          //   checkbox: false,
-          //   disabled: false,
-          //   value: [''],
-          //   button: true,
-          //   buttonAdd: true,
-          //   buttonDelete: false
-          // }
         ]
       },
       {
@@ -2432,7 +2428,10 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: "^.{0,50}$",
+            // error: false
+            
           },
           {
             name: 'Дата документа',
@@ -2450,7 +2449,9 @@ export const blocks2 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: "^.{0,300}$",
+            error: false
           },
           {
             name: 'Количество страниц',
@@ -2460,7 +2461,9 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            numeric: true,
+            pattern: "^[0-9]{0,4}$",
+            error: false,
+            numeric: true
           }
         ]
       }
@@ -2528,7 +2531,7 @@ export const blocks2 = [
             disabled: false,
             value: [''],
             hidden: true,
-            pattern: "^.{0,20}$",
+            pattern: '^.{0,20}$',
             error: false
           },
           {

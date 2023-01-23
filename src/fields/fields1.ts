@@ -52,7 +52,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^.{0,300}$",
+            pattern: '^.{0,300}$',
             error: false
           },
           {
@@ -63,7 +63,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^.{0,20}$",
+            pattern: '^.{0,20}$',
             error: false
           }
         ]
@@ -132,7 +132,6 @@ export const blocks1 = [
             value: [''],
             pattern: '^.{0,50}$',
             error: false
-
           },
           {
             name: 'Код ТН ВЭД',
@@ -153,8 +152,7 @@ export const blocks1 = [
             disabled: false,
             value: [''],
             options: Object.keys(categoryId),
-            checkbox: false,
-
+            checkbox: false
           },
           {
             name: 'Категория в соответствии с ТР ТС 031/2012 или ТР ТС 010/2011 или ТР ТС 018/2011 ',
@@ -1524,7 +1522,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            options: Object.keys(powerStorageType),
+            options: Object.keys(powerStorageType)
           },
           {
             name: 'Место расположения',
@@ -1556,7 +1554,7 @@ export const blocks1 = [
         blockName: 'Шины',
         id: 27,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Разные шины',
@@ -1669,7 +1667,7 @@ export const blocks1 = [
             buttonDelete: false,
             group: [191, 95, 96, 97, 98, 99, 100, 101, 102],
             buttonText: 'Добавить шины'
-          },
+          }
           // {
           //   name: 'Максимальные допустимые размеры на осях с тормозной системой',
           //   type: 'TextField',
@@ -2324,7 +2322,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^.{0,4000}$",
+            pattern: '^.{0,4000}$',
             error: false
           }
         ]
@@ -2370,7 +2368,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^.{0,4000}$",
+            pattern: '^.{0,4000}$',
             error: false
           }
         ]
@@ -2432,8 +2430,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: true,
             value: ['Свидетельство о регистрации СМ'],
-            defaultValue: "Свидетельство о регистрации СМ"
-
+            defaultValue: 'Свидетельство о регистрации СМ'
           },
           {
             name: 'Номер документа',
@@ -2443,6 +2440,8 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
+            pattern: '^.{0,50}$',
+            error: false
           },
           {
             name: 'Дата документа',
@@ -2460,7 +2459,9 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: '^.{0,300}$',
+            error: false
           },
           {
             name: 'Количество страниц',
@@ -2469,7 +2470,10 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: '^[0-9]{0,4}$',
+            // error: false,
+            // numeric: true
           }
         ]
       }

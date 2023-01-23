@@ -146,12 +146,6 @@ export const Fourth: React.FC = () => {
             if (i.id === id) {
               if (i.type === 'checkbox') {
                 i.value[0] = `${checked}`;
-                console.log(i.value[0]);
-                // if (i.value.includes('false') === true) {
-                //   i.value[0] = 'true';
-                // } else {
-                //   i.value[0] = 'false';
-                // }
               } else if ('disabled' in i) i.disabled = !i.disabled;
             }
             if (i.name === 'Разные шины') {
@@ -223,6 +217,7 @@ export const Fourth: React.FC = () => {
     let options: string[] = [];
     let axes: number = 0;
     let ownerStr: string = '';
+    let countTires: number = 0
     setBlocks(
       blocks.map((items) => {
         items.blocksItem.map((item) => {
@@ -238,6 +233,9 @@ export const Fourth: React.FC = () => {
               if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
                 i.error = alertValidation(i.pattern, i.value[0]);
               }
+            }
+            if(i.id === 31){
+              countTires = Number(i.value[0])
             }
             if (i.id === 166) {
               axes = parseInt(i.value[0]);
@@ -283,7 +281,6 @@ export const Fourth: React.FC = () => {
               });
             }
             if (ownerStr === 'Идентификатор (СНИЛС)') {
-              console.log('qqq');
               item.blockItem.map((i) => {
                 if (
                   'hidden' in i &&
@@ -313,10 +310,8 @@ export const Fourth: React.FC = () => {
             for (let z = 0; z < item.blockItem.length; z++) {
               if (item.blockItem[z].name.includes('Идентификатор')) {
                 item.blockItem[z].name = ownerStr;
-                console.log(ownerStr);
               }
             }
-            // item.blockItem[1].name = ownerStr;
           }
           if (item.id === 31 || item.id === 32) {
             let checkGear = false;
@@ -335,6 +330,16 @@ export const Fourth: React.FC = () => {
                 item.blockItem[z].name === 'Передаточное число'
               ) {
                 item.blockItem[z].disabled = checkGear;
+              }
+            }
+          }
+          if(item.id === 27){
+            if("check" in item && item.check !== undefined){
+              if(countTires > 0){
+                item.check = false
+              }
+              else{
+                item.check = true
               }
             }
           }
@@ -538,7 +543,6 @@ export const Fourth: React.FC = () => {
         })
       );
     }
-    console.log(blocks);
   };
 
   const onClickDelete = (id: number, group: number[] | undefined) => {

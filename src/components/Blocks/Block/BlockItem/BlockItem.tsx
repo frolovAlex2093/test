@@ -184,7 +184,6 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     pattern: item.pattern ? item.pattern : '.{0,}'
                   }}
                   value={item.defaultValue}
-                  // value={item.value !== null && item.value[0] !== '' ? item.value : ''}
                   error={item.error}
                   disabled={item.disabled}
                   required={item.require}

@@ -113,7 +113,6 @@ export const Third: React.FC = () => {
                 if ('group' in i && i.group !== undefined) {
                   for (let z = i.group.length - 1; z >= 0; z--) {
                     newGroup[z] = max - z;
-                    console.log(newGroup);
                   }
                   i.group = newGroup.reverse();
                 }
@@ -141,12 +140,6 @@ export const Third: React.FC = () => {
             if (i.id === id) {
               if (i.type === 'checkbox') {
                 i.value[0] = `${checked}`;
-                console.log(i.value[0]);
-                // if (i.value.includes('false') === true) {
-                //   i.value[0] = 'true';
-                // } else {
-                //   i.value[0] = 'false';
-                // }
               } else if ('disabled' in i) i.disabled = !i.disabled;
             }
             if (i.name === 'Разные шины') {
@@ -217,6 +210,7 @@ export const Third: React.FC = () => {
     let checkPropulsion: boolean = true;
     let options: string[] = [];
     let axes: number = 0;
+    let countTires: number = 0;
     setBlocks(
       blocks.map((items) => {
         items.blocksItem.map((item) => {
@@ -233,7 +227,9 @@ export const Third: React.FC = () => {
                 i.error = alertValidation(i.pattern, i.value[0]);
               }
             }
-
+            if (i.id === 31) {
+              countTires = Number(i.value[0]);
+            }
             if (i.id === 166) {
               axes = parseInt(i.value[0]);
               for (let z = 0; z < axes; z++) {
@@ -272,6 +268,15 @@ export const Third: React.FC = () => {
                 item.blockItem[z].name === 'Передаточное число'
               ) {
                 item.blockItem[z].disabled = checkGear;
+              }
+            }
+          }
+          if (item.id === 27) {
+            if ('check' in item && item.check !== undefined) {
+              if (countTires > 0) {
+                item.check = false;
+              } else {
+                item.check = true;
               }
             }
           }
@@ -329,7 +334,6 @@ export const Third: React.FC = () => {
                     id: max + 1,
                     value: ['false']
                   });
-                  console.log(item.blockItem[z + indexStart]);
                 } else {
                   item.blockItem.splice(indexStart + z + group.length, 0, {
                     ...item.blockItem[z + indexStart],
@@ -453,7 +457,6 @@ export const Third: React.FC = () => {
         })
       );
     }
-    console.log(blocks);
   };
 
   const onClickDelete = (id: number, group: number[] | undefined) => {
@@ -609,10 +612,8 @@ export const Third: React.FC = () => {
           items.blocksItem.map((item) => {
             if (item.id === 49) {
               item.blockItem.map((i) => {
-                console.log('www');
                 if ('pattern' in i && i.pattern !== undefined) {
                   i.pattern = 'Приложите от 4 до 6 файлов';
-                  console.log(i);
                 }
                 return i;
               });
@@ -947,12 +948,6 @@ export const Third: React.FC = () => {
                   item.blockItem[z].value[0]
                 )}</trsdo:TransmissionUnitGearQuantity>`;
             }
-            // if (
-            //   item.blockItem[z].name === 'Наименование передачи' &&
-            //   (item.blockItem[z].value[0] !== '' ||
-            //     item.blockItem[z + 1].value[0] !== '' ||
-            //     item.blockItem[z + 2].value[0] !== '')
-            // ) {
             if (
               item.blockItem[z].name === 'Наименование передачи' &&
               item.blockItem[z].value[0] !== '' &&
@@ -995,7 +990,6 @@ export const Third: React.FC = () => {
 
               str += `</trcdo:TransmissionUnitGearDetails>`;
             }
-            // }
 
             if (
               item.blockItem[z].name === 'Марка' &&
@@ -1921,10 +1915,6 @@ export const Third: React.FC = () => {
               for (let j = 0; j < item.blockItem[z].value.length; j++) {
                 str += `<trsdo:VehicleComponentLocationText>${item.blockItem[z].value[j]}</trsdo:VehicleComponentLocationText>`;
               }
-              // item.blockItem[z].value.map((el) => {
-              //   str += `<trsdo:VehicleComponentLocationText>${el}</trsdo:VehicleComponentLocationText>`;
-              //   return el;
-              // });
             }
           }
         }
