@@ -233,6 +233,9 @@ export const Fourth: React.FC = () => {
               if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
                 i.error = alertValidation(i.pattern, i.value[0]);
               }
+              if("numeric" in i && i.numeric === true){
+                i.value[0] = i.value[0].replace(/ +/g, '')
+              }
             }
             if(i.id === 31){
               countTires = Number(i.value[0])
@@ -292,7 +295,7 @@ export const Fourth: React.FC = () => {
                 if (
                   'hidden' in i &&
                   i.hidden !== undefined &&
-                  i.name === 'Полное наименование организации'
+                  (i.name === 'Полное наименование организации' || i.name === "Страна" || i.name === "Адрес электронной почты")
                 ) {
                   i.hidden = true;
                 }
@@ -2993,13 +2996,7 @@ export const Fourth: React.FC = () => {
             str += '<ccdo:OwnerIndividualDetails>';
             for (let z = 0; z < item.blockItem.length; z++) {
               if (item.blockItem[z].name.includes('СНИЛС') && item.blockItem[z].value[0] !== '') {
-                str += `<ccdo:IndividualId kindId="${
-                  item.blockItem[z - 3].value[0].includes('Республика Беларусь')
-                    ? '4'
-                    : item.blockItem[z - 3].value[0].includes('Российская Федерация')
-                    ? '1'
-                    : ''
-                }">${item.blockItem[z].value[0]}</ccdo:IndividualId>`;
+                str += `<ccdo:IndividualId kindId="15">${item.blockItem[z].value[0]}</ccdo:IndividualId>`;
               }
             }
             str += '</ccdo:OwnerIndividualDetails>';

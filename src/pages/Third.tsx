@@ -226,6 +226,9 @@ export const Third: React.FC = () => {
               if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
                 i.error = alertValidation(i.pattern, i.value[0]);
               }
+              if("numeric" in i && i.numeric === true){
+                i.value[0] = i.value[0].replace(/ +/g, '')
+              }
             }
             if (i.id === 31) {
               countTires = Number(i.value[0]);
