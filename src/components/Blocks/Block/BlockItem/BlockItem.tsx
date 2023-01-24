@@ -124,7 +124,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     onChange={(event, value) => handleChangeValue?.(item.id, value)}
                     disabled={item.disabled}
                     size='small'
-                    defaultValue={item.name === 'Вид массы' && item.value !== null && item.value[0] !== "" ? options[2] : ''}
+                    defaultValue={item.name === 'Вид массы' && item.value !== null && item.value[0] !== "" ? options[2] : null}
                     id={item.id + ''}
                     options={options}
                     sx={{ width: '100%', maxWidth: '830px' }}
