@@ -29,7 +29,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-        item.require = false;
+        //item.require = false;
         const options = item.options !== undefined ? item.options : [''];
         return (
           <Box key={index} display='flex' flexDirection='column'>
