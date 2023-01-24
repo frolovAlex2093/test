@@ -29,7 +29,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-        //item.require = false;
+        // item.require = false;
         const options = item.options !== undefined ? item.options : [''];
         return (
           <Box key={index} display='flex' flexDirection='column'>
@@ -124,7 +124,13 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     onChange={(event, value) => handleChangeValue?.(item.id, value)}
                     disabled={item.disabled}
                     size='small'
-                    defaultValue={item.name === 'Вид массы' && item.value !== null && item.value[0] !== "" ? options[2] : null}
+                    isOptionEqualToValue={(option, value) => option === value}
+                    value={(item.value !== null && item.value[0]) || null}
+                    defaultValue={
+                      item.name === 'Вид массы' && item.value !== null && item.value[0] !== ''
+                        ? options[2]
+                        : null
+                    }
                     id={item.id + ''}
                     options={options}
                     sx={{ width: '100%', maxWidth: '830px' }}

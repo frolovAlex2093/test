@@ -226,8 +226,8 @@ export const Third: React.FC = () => {
               if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
                 i.error = alertValidation(i.pattern, i.value[0]);
               }
-              if("numeric" in i && i.numeric === true){
-                i.value[0] = i.value[0].replace(/ +/g, '')
+              if ('numeric' in i && i.numeric === true) {
+                i.value[0] = i.value[0].replace(/ +/g, '');
               }
             }
             if (i.id === 31) {
@@ -363,6 +363,13 @@ export const Third: React.FC = () => {
                     item.blockItem[z + 3].disabled = true;
                     item.blockItem[z + 4].disabled = true;
                   }
+                }
+              }
+              if (item.id === 12) {
+                for (let z = 0; z < item.blockItem.length; z++) {
+                  if (z === 0) {
+                    item.blockItem[z].disabled = true;
+                  } else item.blockItem[z].disabled = false;
                 }
               }
               item.blockItem.map((i) => {

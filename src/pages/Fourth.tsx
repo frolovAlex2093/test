@@ -217,7 +217,7 @@ export const Fourth: React.FC = () => {
     let options: string[] = [];
     let axes: number = 0;
     let ownerStr: string = '';
-    let countTires: number = 0
+    let countTires: number = 0;
     setBlocks(
       blocks.map((items) => {
         items.blocksItem.map((item) => {
@@ -233,12 +233,12 @@ export const Fourth: React.FC = () => {
               if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
                 i.error = alertValidation(i.pattern, i.value[0]);
               }
-              if("numeric" in i && i.numeric === true){
-                i.value[0] = i.value[0].replace(/ +/g, '')
+              if ('numeric' in i && i.numeric === true) {
+                i.value[0] = i.value[0].replace(/ +/g, '');
               }
             }
-            if(i.id === 31){
-              countTires = Number(i.value[0])
+            if (i.id === 31) {
+              countTires = Number(i.value[0]);
             }
             if (i.id === 166) {
               axes = parseInt(i.value[0]);
@@ -295,7 +295,9 @@ export const Fourth: React.FC = () => {
                 if (
                   'hidden' in i &&
                   i.hidden !== undefined &&
-                  (i.name === 'Полное наименование организации' || i.name === "Страна" || i.name === "Адрес электронной почты")
+                  (i.name === 'Полное наименование организации' ||
+                    i.name === 'Страна' ||
+                    i.name === 'Адрес электронной почты')
                 ) {
                   i.hidden = true;
                 }
@@ -336,13 +338,12 @@ export const Fourth: React.FC = () => {
               }
             }
           }
-          if(item.id === 27){
-            if("check" in item && item.check !== undefined){
-              if(countTires > 0){
-                item.check = false
-              }
-              else{
-                item.check = true
+          if (item.id === 27) {
+            if ('check' in item && item.check !== undefined) {
+              if (countTires > 0) {
+                item.check = false;
+              } else {
+                item.check = true;
               }
             }
           }
@@ -469,6 +470,13 @@ export const Fourth: React.FC = () => {
                 }
               }
             }
+            if(item.id === 12){
+              for(let z = 0; z < item.blockItem.length; z++){
+                if(z === 0){
+                  item.blockItem[z].disabled = true
+                }else item.blockItem[z].disabled = false
+              }
+            }
             item.blockItem.map((i) => {
               if (i.id === id) {
                 if ('buttons' in i && i.buttons !== undefined) {
@@ -546,6 +554,7 @@ export const Fourth: React.FC = () => {
         })
       );
     }
+    console.log(blocks);
   };
 
   const onClickDelete = (id: number, group: number[] | undefined) => {

@@ -837,9 +837,9 @@ export const blocks2 = [
             name: 'Вид массы',
             type: 'Autocomplete',
             id: 49,
-            require: false,
+            require: true,
             checkbox: false,
-            disabled: false,
+            disabled: true,
             value: ['Технически допустимая максимальная масса самоходной машины (другого вида техники)'],
             options: [
               'Полезная нагрузка самоходной машины (другого вида техники)',
