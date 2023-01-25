@@ -5,6 +5,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  IconButton,
   InputAdornment,
   Radio,
   RadioGroup,
@@ -14,6 +15,7 @@ import {
 import React from 'react';
 import { IBlockItem } from '../../../../interfaces/interfaces';
 import { Context } from '../../../../pages/Third';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   const {
@@ -23,14 +25,18 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
     onClickDelete,
     onClickAdd,
     onClickAddDopBlock,
-    uploadImage
+    uploadImage,
+    deleteFile
   } = React.useContext(Context);
+
+  document.querySelector('.file');
 
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
         // item.require = false;
         const options = item.options !== undefined ? item.options : [''];
+
         return (
           <Box key={index} display='flex' flexDirection='column'>
             {item.label ? (
@@ -396,17 +402,43 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             {item.type === 'files' ? (
               <>
                 <TextField
+                  
+                  className='file'
                   data-testid='files'
-                  sx={{ marginTop: '-25px' }}
+                  sx={{ marginTop: '-25px', color:"transparent"}}
                   error={item.pattern !== 'false'}
                   required={item.require}
                   variant='outlined'
                   type='file'
-                  inputProps={{ multiple: true, accept: 'image/png, image/jpeg' }}
+                  inputProps={{style: {color:'transparent'}, title:'', multiple: true, accept: 'image/png, image/jpeg' }}
                   onChange={(event) => {
+                    // clear();
+                    // event.target.value = ""
                     uploadImage?.(event, item.id);
+                    // event.target.value = ""
                   }}
                 ></TextField>
+                {item.files !== null &&
+                Array.isArray(item.files) &&
+                item.files !== undefined &&
+                item.files[0] !== ''
+                  ? item.files.map((i: string, index) => {
+                      return (
+                        <Box
+                          key={index}
+                          display='flex'
+                          flexDirection='row'
+                          alignItems='center'
+                          marginLeft='15px'
+                        >
+                          <Typography sx={{ marginRight: '10px' }}>{i}</Typography>
+                          <IconButton color='error' onClick={() => deleteFile?.(i)}>
+                            <CloseIcon />
+                          </IconButton>
+                        </Box>
+                      );
+                    })
+                  : ''}
                 {item.pattern === 'false' ? (
                   ''
                 ) : item.pattern === 'Приложите от 4 до 6 файлов' ||

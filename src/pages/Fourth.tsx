@@ -57,6 +57,28 @@ export const Fourth: React.FC = () => {
     return false;
   };
 
+  const deleteFile = (file: string) => {
+    if (typeof file === 'string')
+      setBlocks(
+        blocks.map((items) => {
+          if (items.id === 11) {
+            items.blocksItem.map((item) => {
+              item.blockItem.map((i) => {
+                if ('files' in i && i.files !== undefined) {
+                  i.value.splice(i.files.indexOf(file), 1);
+                  i.files.splice(i.files.indexOf(file), 1);
+                  alerts(i.files);
+                }
+                return i;
+              });
+              return item;
+            });
+          }
+          return items;
+        })
+      );
+  };
+
   const onClickAddDopBlock = (id: number, groupBlock: number[] | undefined) => {
     if (groupBlock !== undefined) {
       let max = 0;
@@ -470,11 +492,11 @@ export const Fourth: React.FC = () => {
                 }
               }
             }
-            if(item.id === 12){
-              for(let z = 0; z < item.blockItem.length; z++){
-                if(z === 0){
-                  item.blockItem[z].disabled = true
-                }else item.blockItem[z].disabled = false
+            if (item.id === 12) {
+              for (let z = 0; z < item.blockItem.length; z++) {
+                if (z === 0) {
+                  item.blockItem[z].disabled = true;
+                } else item.blockItem[z].disabled = false;
               }
             }
             item.blockItem.map((i) => {
@@ -705,7 +727,7 @@ export const Fourth: React.FC = () => {
     });
   };
 
-  const alerts = (files: any, event: any) => {
+  const alerts = (files: any, event?: any) => {
     if (files.length < 4 || files.length > 6) {
       setBlocks(
         blocks.map((items) => {
@@ -714,6 +736,9 @@ export const Fourth: React.FC = () => {
               item.blockItem.map((i) => {
                 if ('pattern' in i && i.pattern !== undefined) {
                   i.pattern = 'Приложите от 4 до 6 файлов';
+                }
+                if ('files' in i && i.files !== undefined) {
+                  i.files = [''];
                 }
                 return i;
               });
@@ -724,7 +749,7 @@ export const Fourth: React.FC = () => {
         })
       );
       alert('Приложите от 4 до 6 файлов');
-      event.preventDefault();
+      // event.preventDefault();
       return false;
     } else {
       for (let j = 0; j < files.length; j++) {
@@ -746,7 +771,7 @@ export const Fourth: React.FC = () => {
             })
           );
           alert(`Файл ${files[j].name} больше 512кб`);
-          event.preventDefault();
+          // event.preventDefault();
           return false;
         } else {
           return true;
@@ -3226,7 +3251,8 @@ export const Fourth: React.FC = () => {
           onClickDelete,
           onClickAdd,
           onClickAddDopBlock,
-          uploadImage
+          uploadImage,
+          deleteFile
         }}
       >
         <Box display='flex' marginTop={5} height='100%' justifyContent='center' alignItems='center'>

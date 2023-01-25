@@ -51,6 +51,28 @@ export const Third: React.FC = () => {
     return false;
   };
 
+  const deleteFile = (file: string) => {
+    if (typeof file === 'string')
+      setBlocks(
+        blocks.map((items) => {
+          if (items.id === 11) {
+            items.blocksItem.map((item) => {
+              item.blockItem.map((i) => {
+                if ('files' in i && i.files !== undefined) {
+                  i.value.splice(i.files.indexOf(file), 1);
+                  i.files.splice(i.files.indexOf(file), 1);
+                  alerts(i.files)
+                }
+                return i
+              });
+              return item;
+            });
+          }
+          return items;
+        })
+      );
+  };
+
   const onClickAddDopBlock = (id: number, groupBlock: number[] | undefined) => {
     if (groupBlock !== undefined) {
       let max = 0;
@@ -615,7 +637,7 @@ export const Third: React.FC = () => {
     });
   };
 
-  const alerts = (files: any, event: any) => {
+  const alerts = (files: any, event?: any) => {
     if (files.length < 4 || files.length > 6) {
       setBlocks(
         blocks.map((items) => {
@@ -624,6 +646,10 @@ export const Third: React.FC = () => {
               item.blockItem.map((i) => {
                 if ('pattern' in i && i.pattern !== undefined) {
                   i.pattern = 'Приложите от 4 до 6 файлов';
+                  
+                }
+                if("files" in i && i.files !== undefined){
+                  i.files = ['']
                 }
                 return i;
               });
@@ -634,7 +660,7 @@ export const Third: React.FC = () => {
         })
       );
       alert('Приложите от 4 до 6 файлов');
-      event.preventDefault();
+      // event.preventDefault();
       return false;
     } else {
       for (let j = 0; j < files.length; j++) {
@@ -656,7 +682,7 @@ export const Third: React.FC = () => {
               return items;
             })
           );
-          event.preventDefault();
+          // event.preventDefault();
           return false;
         } else {
           return true;
@@ -3060,7 +3086,8 @@ export const Third: React.FC = () => {
           onClickDelete,
           onClickAdd,
           onClickAddDopBlock,
-          uploadImage
+          uploadImage,
+          deleteFile
         }}
       >
         <Box display='flex' marginTop={5} height='100%' justifyContent='center' alignItems='center'>

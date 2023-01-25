@@ -840,7 +840,9 @@ export const blocks2 = [
             require: true,
             checkbox: false,
             disabled: true,
-            value: ['Технически допустимая максимальная масса самоходной машины (другого вида техники)'],
+            value: [
+              'Технически допустимая максимальная масса самоходной машины (другого вида техники)'
+            ],
             options: [
               'Полезная нагрузка самоходной машины (другого вида техники)',
               'Технически допустимая общая масса самоходной машины (другого вида техники) и прицепа',
@@ -2333,7 +2335,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            files: [],
+            files: [''],
             pattern: 'false'
           }
         ]
@@ -2428,9 +2430,8 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^.{0,50}$",
+            pattern: '^.{0,50}$'
             // error: false
-            
           },
           {
             name: 'Дата документа',
@@ -2449,7 +2450,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^.{0,300}$",
+            pattern: '^.{0,300}$',
             error: false
           },
           {
@@ -2460,7 +2461,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^[0-9]{0,4}$",
+            pattern: '^[0-9]{0,4}$',
             error: false,
             numeric: true
           }

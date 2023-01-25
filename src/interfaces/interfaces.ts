@@ -15,6 +15,7 @@ export interface ContextProps {
   onClickAdd?: (id: number, group: number[] | undefined) => void;
   onClickAddDopBlock?: (id: number, groupBlock: number[] | undefined) => void;
   uploadImage?: (event: any, id: number) => void;
+  deleteFile?: (file: string) => void
 }
 
 export interface IDict {
