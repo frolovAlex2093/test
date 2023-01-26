@@ -301,6 +301,7 @@ export const Fourth: React.FC = () => {
               item.blockItem.map((i) => {
                 if ('hidden' in i && i.hidden !== undefined) {
                   i.hidden = true;
+		  i.disabled = true;
                 }
                 return i;
               });
@@ -313,6 +314,7 @@ export const Fourth: React.FC = () => {
                   i.name !== 'Полное наименование организации'
                 ) {
                   i.hidden = false;
+		  i.disabled = false;
                 }
                 if (
                   'hidden' in i &&
@@ -322,6 +324,7 @@ export const Fourth: React.FC = () => {
                     i.name === 'Адрес электронной почты')
                 ) {
                   i.hidden = true;
+		  i.disabled = true;
                 }
                 return i;
               });
@@ -330,6 +333,7 @@ export const Fourth: React.FC = () => {
               item.blockItem.map((i) => {
                 if ('hidden' in i && i.hidden !== undefined) {
                   i.hidden = false;
+		  i.disabled = false;
                 }
                 return i;
               });
