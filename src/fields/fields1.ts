@@ -2425,7 +2425,7 @@ export const blocks1 = [
             name: 'Наименование документа',
             type: 'TextField',
             id: 150,
-            require: false,
+            require: true,
             checkbox: false,
             disabled: true,
             value: ['Свидетельство о регистрации СМ'],
