@@ -178,6 +178,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                   data-testid='date'
                   label='Дата документа'
                   type='date'
+                  required={item.require}
                   onBlur={(value) => {
                     handleChangeValue?.(item.id, value.target.value);
                   }}
