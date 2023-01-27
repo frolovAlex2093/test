@@ -2191,7 +2191,7 @@ export const blocks1 = [
         blockName: 'Подвеска',
         id: 35,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Вид подвески',
