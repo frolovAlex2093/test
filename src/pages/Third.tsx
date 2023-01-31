@@ -2966,7 +2966,7 @@ export const Third: React.FC = () => {
     return str;
   };
 
-  const onclickSubmit = () => {
+  const onclickSubmit = async () => {
     let date = new Date();
     date.setHours(date.getHours() + 3);
     let check = true;
@@ -3104,7 +3104,7 @@ export const Third: React.FC = () => {
         }
       });
     });
-    post(json);
+    await post(json);
   };
   const post = async (object: Object) => {
     let req = new XMLHttpRequest();
