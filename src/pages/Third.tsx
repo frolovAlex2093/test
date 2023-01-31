@@ -61,9 +61,9 @@ export const Third: React.FC = () => {
                 if ('files' in i && i.files !== undefined) {
                   i.value.splice(i.files.indexOf(file), 1);
                   i.files.splice(i.files.indexOf(file), 1);
-                  alerts(i.files)
+                  alerts(i.files);
                 }
-                return i
+                return i;
               });
               return item;
             });
@@ -646,10 +646,9 @@ export const Third: React.FC = () => {
               item.blockItem.map((i) => {
                 if ('pattern' in i && i.pattern !== undefined) {
                   i.pattern = 'Приложите от 4 до 6 файлов';
-                  
                 }
-                if("files" in i && i.files !== undefined){
-                  i.files = ['']
+                if ('files' in i && i.files !== undefined) {
+                  i.files = [''];
                 }
                 return i;
               });
@@ -3064,6 +3063,7 @@ export const Third: React.FC = () => {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 2000);
+
     const json: IDict = {};
     blocks.map((items) => {
       items.blocksItem.map((item) => {
@@ -3105,7 +3105,11 @@ export const Third: React.FC = () => {
       });
     });
     await post(json);
+    console.log(JSON.stringify(json));
+
+    alert(JSON.stringify(json));
   };
+
   const post = async (object: Object) => {
     let req = new XMLHttpRequest();
 
@@ -3117,11 +3121,13 @@ export const Third: React.FC = () => {
 
     req.open('POST', 'https://api.jsonbin.io/v3/b', true);
     req.setRequestHeader('Content-Type', 'application/json');
-    req.setRequestHeader('X-Master-Key', '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu');
+    req.setRequestHeader(
+      'X-Master-Key',
+      '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
+    );
     req.send(object.toString());
-    console.log("ok")
+    console.log('ok');
   };
-
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
     if (typeof pos == 'undefined') {
