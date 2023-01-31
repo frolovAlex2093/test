@@ -17,7 +17,7 @@ import {
   suspension,
   typePropulsion
 } from '../guides';
-import { ContextProps } from '../interfaces/interfaces';
+import { ContextProps, IDict } from '../interfaces/interfaces';
 
 export const Context = React.createContext<Partial<ContextProps>>({});
 
