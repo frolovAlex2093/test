@@ -3064,7 +3064,64 @@ export const Third: React.FC = () => {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 2000);
+    const json: IDict = {};
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 47) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Мнемоника') {
+              json.mnemonic = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН') {
+              json.OGRN = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Полное название организации оформителя') {
+              json.name = item.blockItem[z].value[0];
+            }
+          }
+        }
+        if (item.id === 0) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Марка') {
+              json.makeName = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Тип') {
+              json.type = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Модификация') {
+              json.variant = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Код ТН ВЭД') {
+              json.TNVED = item.blockItem[z].value[0];
+            }
+            if (
+              item.blockItem[z].name ===
+              'Категория в соответствии с ТР ТС 031/2012 или ТР ТС 010/2011 или ТР ТС 018/2011 '
+            ) {
+              json.category = item.blockItem[z].value[0];
+            }
+          }
+        }
+      });
+    });
+    post(json);
   };
+  const post = async (object: Object) => {
+    let req = new XMLHttpRequest();
+
+    req.onreadystatechange = () => {
+      if (req.readyState == XMLHttpRequest.DONE) {
+        console.log(req.responseText);
+      }
+    };
+
+    req.open('POST', 'https://api.jsonbin.io/v3/b', true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.setRequestHeader('X-Master-Key', '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu');
+    req.send(object.toString());
+    console.log("ok")
+  };
+
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
     if (typeof pos == 'undefined') {
