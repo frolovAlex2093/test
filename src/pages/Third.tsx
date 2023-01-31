@@ -18,7 +18,6 @@ import {
   typePropulsion
 } from '../guides';
 import { ContextProps, IDict } from '../interfaces/interfaces';
-
 export const Context = React.createContext<Partial<ContextProps>>({});
 
 // "'";B5:B11;"'";":";"'";A5:A11;"'";",";
