@@ -607,7 +607,7 @@ Object {
             class="MuiBox-root css-16a3qdz"
           />
           <div
-            class="MuiFormControl-root MuiTextField-root css-1izvvo0-MuiFormControl-root-MuiTextField-root"
+            class="MuiFormControl-root MuiTextField-root file css-sazflc-MuiFormControl-root-MuiTextField-root"
             data-testid="files"
           >
             <div
@@ -620,6 +620,8 @@ Object {
                 id=":r1v:"
                 multiple=""
                 required=""
+                style="color: transparent;"
+                title=""
                 type="file"
                 value=""
               />
@@ -1325,7 +1327,7 @@ Object {
           class="MuiBox-root css-16a3qdz"
         />
         <div
-          class="MuiFormControl-root MuiTextField-root css-1izvvo0-MuiFormControl-root-MuiTextField-root"
+          class="MuiFormControl-root MuiTextField-root file css-sazflc-MuiFormControl-root-MuiTextField-root"
           data-testid="files"
         >
           <div
@@ -1338,6 +1340,8 @@ Object {
               id=":r1v:"
               multiple=""
               required=""
+              style="color: transparent;"
+              title=""
               type="file"
               value=""
             />

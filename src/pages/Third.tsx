@@ -2965,7 +2965,7 @@ export const Third: React.FC = () => {
     return str;
   };
 
-  const onclickSubmit = () => {
+  const onclickSubmit = async () => {
     let date = new Date();
     date.setHours(date.getHours() + 3);
     let check = true;
@@ -3102,11 +3102,35 @@ export const Third: React.FC = () => {
             }
           }
         }
+        return item
       });
+      return items
     });
+    await post(json);
+    console.log(JSON.stringify(json));
+
+    alert(JSON.stringify(json));
   };
 
-  
+  const post = async (object: Object) => {
+    let req = new XMLHttpRequest();
+
+    req.onreadystatechange = () => {
+      if (req.readyState === XMLHttpRequest.DONE) {
+        console.log(req.responseText);
+      }
+    };
+
+    req.open('POST', 'https://api.jsonbin.io/v3/b', true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.setRequestHeader(
+      'X-Master-Key',
+      '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
+    );
+    req.send(JSON.stringify(object));
+    console.log('ok');
+  };
+
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
     if (typeof pos == 'undefined') {
       pos = 0;

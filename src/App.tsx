@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 
-import { First, Second, Third, Fourth } from './pages';
+import { First, Second, Third, Fourth, Authorization } from './pages';
 import { Fifth } from './pages/Fifth';
 
 export const App: React.FC = () => {
@@ -13,7 +13,7 @@ export const App: React.FC = () => {
       <Route element={<Third />} path='/third' />
       <Route element={<Fourth />} path='/fourth' />
       <Route element={<Fifth />} path='/fifth' />
-
+      <Route element={<Authorization />} path='/authorization' />
     </Routes>
   );
 };
