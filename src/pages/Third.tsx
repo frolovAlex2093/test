@@ -3116,7 +3116,10 @@ export const Third: React.FC = () => {
 
     fetch(url, {
       method: 'POST',
-      body: JSON.stringify(object)
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then((response) => response.json())
       .then((data) => console.log(data));
