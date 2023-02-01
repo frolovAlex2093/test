@@ -3105,10 +3105,10 @@ export const Third: React.FC = () => {
       });
       return items
     });
+    json.date = date.toISOString()
     await post(json);
     console.log(JSON.stringify(json));
 
-    alert(JSON.stringify(json));
   };
   
   const post = async (object: Object) => {
