@@ -17,6 +17,7 @@ import {
   suspension,
   typePropulsion
 } from '../guides';
+import { IDict } from '../interfaces/interfaces';
 import { Context } from './Third';
 
 export const Fourth: React.FC = () => {
@@ -3134,7 +3135,7 @@ export const Fourth: React.FC = () => {
     return str;
   };
 
-  const onclickSubmit = () => {
+  const onclickSubmit = async () => {
     let date = new Date();
     date.setHours(date.getHours() + 3);
     let check = true;
@@ -3234,6 +3235,65 @@ export const Fourth: React.FC = () => {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 2000);
+    const json: IDict = {};
+    blocks.map((items) => {
+      items.blocksItem.map((item) => {
+        if (item.id === 47) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Мнемоника') {
+              json.mnemonic = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН') {
+              json.OGRN = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Полное название организации оформителя') {
+              json.name = item.blockItem[z].value[0];
+            }
+          }
+        }
+        if (item.id === 0) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Марка') {
+              json.makeName = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Тип') {
+              json.type = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Модификация') {
+              json.variant = item.blockItem[z].value[0];
+            }
+            if (item.blockItem[z].name === 'Код ТН ВЭД') {
+              json.TNVED = item.blockItem[z].value[0];
+            }
+            if (
+              item.blockItem[z].name ===
+              'Категория в соответствии с ТР ТС 031/2012 или ТР ТС 010/2011 или ТР ТС 018/2011 '
+            ) {
+              json.category = item.blockItem[z].value[0];
+            }
+          }
+        }
+        return item;
+      });
+      return items;
+    });
+    json.date = date.toISOString();
+    await post(json);
+    console.log(JSON.stringify(json));
+  };
+
+  const post = async (object: Object) => {
+    var url = 'upload.php';
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
