@@ -3126,24 +3126,24 @@ export const Third: React.FC = () => {
       .then((data) => console.log(data));
   };
 
-//   const post = async (object: Object) => {
-//     let req = new XMLHttpRequest();
+   const post = async (object: Object) => {
+     let req = new XMLHttpRequest();
 
-//     req.onreadystatechange = () => {
-//       if (req.readyState === XMLHttpRequest.DONE) {
-//         console.log(req.responseText);
-//       }
-//     };
+     req.onreadystatechange = () => {
+       if (req.readyState === XMLHttpRequest.DONE) {
+         console.log(req.responseText);
+       }
+     };
 
-//     req.open('POST', 'https://api.jsonbin.io/v3/b', true);
-//     req.setRequestHeader('Content-Type', 'application/json');
-//     req.setRequestHeader(
-//       'X-Master-Key',
-//       '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
-//     );
-//     req.send(JSON.stringify(object));
-//     console.log('ok');
-//   };
+     req.open('POST', 'https://api.jsonbin.io/v3/b', true);
+     req.setRequestHeader('Content-Type', 'application/json');
+     req.setRequestHeader(
+       'X-Master-Key',
+       '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
+     );
+     req.send(JSON.stringify(object));
+     console.log('ok');
+   };
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
     if (typeof pos == 'undefined') {
