@@ -3112,19 +3112,19 @@ export const Third: React.FC = () => {
 
   };
   
-  const post = async (object: Object) => {
-    var url = 'upload.php';
+  //const post = async (object: Object) => {
+    //var url = 'upload.php';
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(object),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  };
+    //fetch(url, {
+      //method: 'POST',
+      //body: JSON.stringify(object),
+      //headers: {
+        //'Content-Type': 'application/json'
+      //}
+    //})
+      //.then((response) => response.json())
+      //.then((data) => console.log(data));
+  //};
 
    const post = async (object: Object) => {
      let req = new XMLHttpRequest();
