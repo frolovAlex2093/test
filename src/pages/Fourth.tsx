@@ -3280,6 +3280,7 @@ export const Fourth: React.FC = () => {
     json.date = date.toISOString();
     await post2(json);
     //console.log(JSON.stringify(json));
+    alert("ok");
   };
 
   // const post = async (object: Object) => {
