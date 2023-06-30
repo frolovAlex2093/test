@@ -3278,23 +3278,43 @@ export const Fourth: React.FC = () => {
       return items;
     });
     json.date = date.toISOString();
-    await post(json);
-    console.log(JSON.stringify(json));
+    await post2(json);
+    //console.log(JSON.stringify(json));
   };
 
-  const post = async (object: Object) => {
-    var url = 'upload.php';
+  // const post = async (object: Object) => {
+  //   var url = 'upload.php';
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(object),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  };
+  //   fetch(url, {
+  //     method: 'POST',
+  //     body: JSON.stringify(object),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data));
+  // };
+
+const post2 = async (object: Object) => {
+     let req = new XMLHttpRequest();
+
+     req.onreadystatechange = () => {
+       if (req.readyState === XMLHttpRequest.DONE) {
+         console.log(req.responseText);
+       }
+     };
+
+     req.open('POST', 'https://api.jsonbin.io/v3/b', true);
+     req.setRequestHeader('Content-Type', 'application/json');
+     req.setRequestHeader(
+       'X-Master-Key',
+       '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
+     );
+     req.send(JSON.stringify(object));
+     console.log('ok');
+   };
+
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
     if (typeof pos == 'undefined') {
