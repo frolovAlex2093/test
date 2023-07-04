@@ -3106,7 +3106,7 @@ export const Third: React.FC = () => {
       return items
     });
     json.date = date.toISOString()
-    await post2(json);
+     post2(json);
     console.log(JSON.stringify(json));
     alert("ok");
 
@@ -3126,7 +3126,7 @@ export const Third: React.FC = () => {
       //.then((data) => console.log(data));
   //};
 
-   const post2 = async (object: Object) => {
+   const post2 = (object: Object) => {
      let req = new XMLHttpRequest();
 
      req.onreadystatechange = () => {
