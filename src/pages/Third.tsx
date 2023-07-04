@@ -3108,7 +3108,7 @@ export const Third: React.FC = () => {
     json.date = date.toISOString()
      post2(json);
     console.log(JSON.stringify(json));
-    alert("ok");
+    // alert("ok");
 
   };
   
