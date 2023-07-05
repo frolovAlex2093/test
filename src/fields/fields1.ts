@@ -176,6 +176,17 @@ export const blocks1 = [
         blockName: 'Идентификационные признаки самоходной машины (другого вида техники)',
         id: 1,
         blockItem: [
+           {
+            name: 'Уникальный номер оформляемого электронного паспорта в системах электронных паспортов',
+            type: 'TextField',
+            id: 205,
+            disabled: false,
+            require: false,
+            checkbox: false,
+            value: [''],
+            pattern: '^[0-9]{15}$',
+            error: false
+          },
           {
             name: 'Идентификационный номер',
             type: 'TextField',
