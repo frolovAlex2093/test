@@ -25,6 +25,7 @@ export const Fourth: React.FC = () => {
 
   const alertValidation = (pattern: string, value: string): boolean => {
     if (pattern === '^[0-9]{4}$' && /^[0-9]{4}$/.test(value) === false) return true;
+    if (pattern === '^[0-9]{15}$' && /^[0-9]{15}$/.test(value) === false) return true;
     if (pattern === '^[0-9]+$' && /^[0-9]+$/.test(value) === false) return true;
     if (pattern === '^.{0,50}$' && /^.{0,50}$/.test(value) === false) return true;
     if (pattern === '^.{0,120}$' && /^.{0,120}$/.test(value) === false) return true;
@@ -3143,6 +3144,7 @@ export const Fourth: React.FC = () => {
     let mnemonic = '';
     let maker = '';
     let ogrn = '';
+    let passport = '';
     blocks.map((items) => {
       items.blocksItem.map((item) => {
         item.blockItem.map((i) => {
@@ -3154,6 +3156,9 @@ export const Fourth: React.FC = () => {
           }
           if (i.name === 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН') {
             ogrn = i.value[0];
+          }
+	  if (i.name === 'Уникальный номер оформляемого электронного паспорта в системах электронных паспортов') {
+            passport = i.value[0];
           }
           if (i.name === 'Разные шины') {
             check = i.value[0] === 'true';
@@ -3199,6 +3204,7 @@ export const Fourth: React.FC = () => {
                         <urn1:MessagePrimaryContent id="contentWithPersonalSignature">
                             <doc:VehicleEPassportDetails> 
                             <trsdo:VehicleEPassportKindCode>3</trsdo:VehicleEPassportKindCode>
+			     ${passport !== "" ? `<trsdo:VehicleEPassportId>${passport}</trsdo:VehicleEPassportId>` : ""}
 							<trsdo:VehicleEPassportBaseCode>03</trsdo:VehicleEPassportBaseCode>`;
 
     data += getVehicleDetails();
