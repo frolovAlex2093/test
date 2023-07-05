@@ -237,6 +237,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
               //алерты
               <Alert variant='filled' severity='error' sx={{ marginBottom: '10px' }}>
                 {item.pattern === '^[0-9]{4}$' ? 'Некорректный год' : ''}
+                {item.pattern === '^[0-9]{15}$' ? 'Необходимо указать 15 цифр' : ''}
                 {item.pattern === '^.{0,50}$' ? 'Не больше 50 символов' : ''}
                 {item.pattern === '^.{0,20}$' ? 'Не больше 20 символов' : ''}
                 {item.pattern === '^.{0,300}$' ? 'Не больше 3000 символов' : ''}
