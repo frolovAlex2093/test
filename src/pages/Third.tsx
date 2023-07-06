@@ -3132,24 +3132,46 @@ export const Third: React.FC = () => {
       //.then((data) => console.log(data));
   //};
 
-   const post2 = (object: Object) => {
-     let req = new XMLHttpRequest();
+   // const post2 = (object: Object) => {
+   //   let req = new XMLHttpRequest();
 
-     req.onreadystatechange = () => {
-       if (req.readyState === XMLHttpRequest.DONE) {
-         console.log(req.responseText);
-       }
-     };
+   //   req.onreadystatechange = () => {
+   //     if (req.readyState === XMLHttpRequest.DONE) {
+   //       console.log(req.responseText);
+   //     }
+   //   };
 
-     req.open('POST', 'https://api.jsonbin.io/v3/b', true);
-     req.setRequestHeader('Content-Type', 'application/json');
-     req.setRequestHeader(
-       'X-Master-Key',
-       '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
-     );
-     req.send(JSON.stringify(object));
-     console.log('ok');
-   };
+   //   req.open('POST', 'https://api.jsonbin.io/v3/b', true);
+   //   req.setRequestHeader('Content-Type', 'application/json');
+   //   req.setRequestHeader(
+   //     'X-Master-Key',
+   //     '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
+   //   );
+   //   req.send(JSON.stringify(object));
+   //   console.log('ok');
+   // };
+const post2 = async (object) => {
+  try {
+    const response = await fetch('https://api.jsonbin.io/v3/b', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
+      },
+      body: JSON.stringify(object)
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+    } else {
+      console.error('Error:', response.status);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+  console.log('ok');
+};
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
     if (typeof pos == 'undefined') {
