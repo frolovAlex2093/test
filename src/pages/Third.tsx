@@ -3150,7 +3150,7 @@ export const Third: React.FC = () => {
    //   req.send(JSON.stringify(object));
    //   console.log('ok');
    // };
-const post2 = async (object) => {
+const post2 = async (object: Object) => {
   try {
     const response = await fetch('https://api.jsonbin.io/v3/b', {
       method: 'POST',
