@@ -3112,7 +3112,7 @@ export const Third: React.FC = () => {
       return items
     });
     json.date = date.toISOString()
-     post2(json);
+    await post2(json);
     console.log(JSON.stringify(json));
     // alert("ok");
 
