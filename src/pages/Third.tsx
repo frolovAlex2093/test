@@ -3113,23 +3113,7 @@ export const Third: React.FC = () => {
     });
     json.date = date.toISOString()
 
-let req = new XMLHttpRequest();
-
-req.onreadystatechange = () => {
-  if (req.readyState == XMLHttpRequest.DONE) {
-    console.log(req.responseText);
-  }
-};
-  
-req.open("POST", "https://api.jsonbin.io/v3/b", true);
-req.setRequestHeader("Content-Type", "application/json");
-req.setRequestHeader("X-Master-Key", "$2b$10$BNw4iZJW1.G.RaxeLdqU/.W/zjWWBG2R.rMLD0TOEEowAKs9QL16m");
-req.send(JSON.stringify(json));
-
-
-
-	  
-      //post2(json);
+      post2(json);
    //   console.log(JSON.stringify(json));
    //    alert("ok");
 	  // let req = new XMLHttpRequest();
@@ -3183,27 +3167,20 @@ req.send(JSON.stringify(json));
    //   req.send(JSON.stringify(object));
    //   console.log('ok');
    // };
-const post2 = async (object: Object) => {
-  try {
-    const response = await fetch('https://api.jsonbin.io/v3/b', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Master-Key': '$2b$10$BNw4iZJW1.G.RaxeLdqU/.W/zjWWBG2R.rMLD0TOEEowAKs9QL16m'
-      },
-      body: JSON.stringify(object)
-    });
+const post2 = (object: Object) => {
+ let req = new XMLHttpRequest();
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-    } else {
-      console.error('Error:', response.status);
-    }
-  } catch (error) {
-    console.error('Error:', error);
+req.onreadystatechange = () => {
+  if (req.readyState == XMLHttpRequest.DONE) {
+    console.log(req.responseText);
   }
-  console.log('ok');
+};
+  
+req.open("POST", "https://api.jsonbin.io/v3/b", true);
+req.setRequestHeader("Content-Type", "application/json");
+req.setRequestHeader("X-Master-Key", "$2b$10$BNw4iZJW1.G.RaxeLdqU/.W/zjWWBG2R.rMLD0TOEEowAKs9QL16m");
+req.send(JSON.stringify(json));
+
 };
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
