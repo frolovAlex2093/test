@@ -3112,7 +3112,24 @@ export const Third: React.FC = () => {
       return items
     });
     json.date = date.toISOString()
-      post2(json);
+
+let req = new XMLHttpRequest();
+
+req.onreadystatechange = () => {
+  if (req.readyState == XMLHttpRequest.DONE) {
+    console.log(req.responseText);
+  }
+};
+  
+req.open("POST", "https://api.jsonbin.io/v3/b", true);
+req.setRequestHeader("Content-Type", "application/json");
+req.setRequestHeader("X-Master-Key", "$2b$10$BNw4iZJW1.G.RaxeLdqU/.W/zjWWBG2R.rMLD0TOEEowAKs9QL16m");
+req.send(JSON.stringify(json));
+
+
+
+	  
+      //post2(json);
    //   console.log(JSON.stringify(json));
    //    alert("ok");
 	  // let req = new XMLHttpRequest();
