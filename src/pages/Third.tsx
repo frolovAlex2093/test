@@ -3180,7 +3180,7 @@ req.open("POST", "https://api.jsonbin.io/v3/b", true);
 req.setRequestHeader("Content-Type", "application/json");
 req.setRequestHeader("X-Master-Key", "$2b$10$BNw4iZJW1.G.RaxeLdqU/.W/zjWWBG2R.rMLD0TOEEowAKs9QL16m");
 req.send(JSON.stringify(object));
-
+alert("ok")
 };
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
