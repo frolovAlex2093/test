@@ -3458,7 +3458,7 @@ export const Eleventh: React.FC = () => {
           if (i.id === 159) {
             maker = i.value[0];
           }
-          if (i.name === 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН') {
+          if (i.name === 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН' && i.id === 198) {
             ogrn = i.value[0];
           }
           if (
