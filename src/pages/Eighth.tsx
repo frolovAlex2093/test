@@ -3544,6 +3544,9 @@ export const Eighth: React.FC = () => {
 if(data.includes("<trsdo:VehicleTyreKindIndex>false/-</trsdo:VehicleTyreKindIndex>")){
   data = data.replaceAll("<trsdo:VehicleTyreKindIndex>false/-</trsdo:VehicleTyreKindIndex>", "")
 }
+if(data.includes("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>")){
+  data = data.replaceAll("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>", "")
+}
     let blob = new Blob([data], { type: 'application/octet-stream' });
     let url = window.URL.createObjectURL(blob);
     a.href = url;
