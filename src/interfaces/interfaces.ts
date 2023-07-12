@@ -15,7 +15,8 @@ export interface ContextProps {
   onClickAdd?: (id: number, group: number[] | undefined) => void;
   onClickAddDopBlock?: (id: number, groupBlock: number[] | undefined) => void;
   uploadImage?: (event: any, id: number) => void;
-  deleteFile?: (file: string) => void
+  deleteFile?: (file: string) => void;
+  onClickHiddenButton?: (groupHidden: number[]| undefined, id:number) => void;
 }
 
 export interface IDict {
@@ -53,6 +54,7 @@ export interface IBlocks {
       buttonAdd?: boolean;
       buttonDelete?: boolean;
       blockItem: {
+        hiddenButton?: number[];
         name: string;
         type: string;
         id: number;
@@ -82,6 +84,7 @@ export interface IBlocks {
         error?: boolean;
         defaultValue?: string;
         hidden?: boolean;
+        mainHidden?: boolean[];
       }[];
     }[];
   }[];
@@ -100,6 +103,7 @@ export interface IBlock {
     buttonAdd?: boolean;
     buttonDelete?: boolean;
     blockItem: {
+      hiddenButton?: number[];
       name: string;
       type: string;
       id: number;
@@ -130,6 +134,7 @@ export interface IBlock {
       error?: boolean;
       defaultValue?: string;
       hidden?: boolean;
+      mainHidden?: boolean[];
     }[];
   }[];
   onChangeBlock: (id: number) => void;
@@ -137,6 +142,7 @@ export interface IBlock {
 
 export interface IBlockItem {
   blockItem: {
+    hiddenButton?: number[];
     name: string;
     id: number;
     type: string;
@@ -169,5 +175,6 @@ export interface IBlockItem {
     error?: boolean;
     defaultValue?: string;
     hidden?: boolean;
+    mainHidden?: boolean[];
   }[];
 }

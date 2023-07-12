@@ -1656,7 +1656,7 @@ export const blocks2 = [
             error: false
           },
           {
-            name: 'Скоростная категория',
+            name: 'Скоростная категория (множественный выбор)',
             type: 'Autocomplete',
             id: 101,
             multiple: true,
@@ -2193,7 +2193,7 @@ export const blocks2 = [
         blockName: 'Подвеска',
         id: 35,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Вид подвески',

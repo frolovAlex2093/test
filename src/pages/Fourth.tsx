@@ -541,6 +541,7 @@ export const Fourth: React.FC = () => {
           return { ...items };
         })
       );
+      console.log(max);
     } else {
       let max = 0;
       blocks.map((items) =>
@@ -581,8 +582,8 @@ export const Fourth: React.FC = () => {
           return { ...items };
         })
       );
+      console.log(max);
     }
-    console.log(blocks);
   };
 
   const onClickDelete = (id: number, group: number[] | undefined) => {
@@ -1451,7 +1452,7 @@ export const Fourth: React.FC = () => {
                 str += `${str2.shift()}`;
               }
               if (
-                item.blockItem[z].name === 'Скоростная категория' &&
+                item.blockItem[z].name === 'Скоростная категория (множественный выбор)' &&
                 item.blockItem[z].value[0] !== ''
               ) {
                 str += `<trsdo:VehicleTyreKindSpeed>${item.blockItem[z].value}</trsdo:VehicleTyreKindSpeed>`;
@@ -3121,18 +3122,26 @@ export const Fourth: React.FC = () => {
   };
 
   const getNoteText = (): string => {
-    let str = '';
-
+    let str: string = '';
+    str += '<csdo:NoteText>';
     blocks.map((items) => {
       items.blocksItem.map((item) => {
+        if (item.id === 0) {
+          for (let z = 0; z < item.blockItem.length; z++) {
+            if (item.blockItem[z].name === 'Код ТН ВЭД' && item.blockItem[z].value[0] !== '') {
+              str += `ТНВЭД ${item.blockItem[z].value[0]}`;
+            }
+          }
+        }
         if (item.id === 40) {
-          if (item.blockItem[0].value[0] !== '')
-            str += `<csdo:NoteText>${item.blockItem[0].value[0]}</csdo:NoteText>`;
+          if (item.blockItem[0].value[0] !== '') str += `. ${item.blockItem[0].value[0]}`;
         }
         return item;
       });
       return items;
     });
+
+    str += '</csdo:NoteText>';
     return str;
   };
 
@@ -3157,7 +3166,10 @@ export const Fourth: React.FC = () => {
           if (i.name === 'ОГРН/ОКЮЛП(УНП)/ОКПО/Номер ГРЮЛ/БИН') {
             ogrn = i.value[0];
           }
-	  if (i.name === 'Уникальный номер оформляемого электронного паспорта в системах электронных паспортов') {
+          if (
+            i.name ===
+            'Уникальный номер оформляемого электронного паспорта в системах электронных паспортов'
+          ) {
             passport = i.value[0];
           }
           if (i.name === 'Разные шины') {
@@ -3204,11 +3216,15 @@ export const Fourth: React.FC = () => {
                         <urn1:MessagePrimaryContent id="contentWithPersonalSignature">
                             <doc:VehicleEPassportDetails> 
                             <trsdo:VehicleEPassportKindCode>3</trsdo:VehicleEPassportKindCode>
-			     ${passport !== "" ? `<trsdo:VehicleEPassportId>${passport}</trsdo:VehicleEPassportId>` : ""}
+                            ${
+                              passport !== ''
+                                ? `<trsdo:VehicleEPassportId>${passport}</trsdo:VehicleEPassportId>`
+                                : ''
+                            }
 							<trsdo:VehicleEPassportBaseCode>03</trsdo:VehicleEPassportBaseCode>`;
 
     data += getVehicleDetails();
-    data += getTNVEDNumber();
+    //data += getTNVEDNumber();
     data += getDocumentDetails();
     data += getVehicleTypeDetails();
     data += getVariantDetails(check);
@@ -3231,6 +3247,9 @@ export const Fourth: React.FC = () => {
 </pas:ELPTSAddData>
 </soapenv:Body>
 </soapenv:Envelope>`;
+if(data.includes("<trsdo:VehicleTyreKindIndex>false/-</trsdo:VehicleTyreKindIndex>")){
+  data = data.replaceAll("<trsdo:VehicleTyreKindIndex>false/-</trsdo:VehicleTyreKindIndex>", "")
+}
     let blob = new Blob([data], { type: 'application/octet-stream' });
     let url = window.URL.createObjectURL(blob);
     a.href = url;
@@ -3284,76 +3303,28 @@ export const Fourth: React.FC = () => {
       return items;
     });
     json.date = date.toISOString();
-post2(json);
-   //   console.log(JSON.stringify(json));
-   //    alert("ok");
-	  // let req = new XMLHttpRequest();
 
-   //    req.onreadystatechange = () => {
-   //      if (req.readyState === XMLHttpRequest.DONE) {
-   //        console.log(req.responseText);
-   //      }
-   //    };
-
-   //    req.open('POST', 'https://api.jsonbin.io/v3/b', true);
-   //    req.setRequestHeader('Content-Type', 'application/json');
-   //    req.setRequestHeader(
-   //      'X-Master-Key',
-   //      '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
-   //    );
-   //    req.send(JSON.stringify(json));
-   //    console.log('ok');
+    post2(json);
   };
 
-  // const post = async (object: Object) => {
-  //   var url = 'upload.php';
+  const post2 = (object: Object) => {
+    let req = new XMLHttpRequest();
 
-  //   fetch(url, {
-  //     method: 'POST',
-  //     body: JSON.stringify(object),
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => console.log(data));
-  // };
+    req.onreadystatechange = () => {
+      if (req.readyState == XMLHttpRequest.DONE) {
+        console.log(req.responseText);
+      }
+    };
 
-// const post2 = (object: Object) => {
-//      let req = new XMLHttpRequest();
-
-//      req.onreadystatechange = () => {
-//        if (req.readyState === XMLHttpRequest.DONE) {
-//          console.log(req.responseText);
-//        }
-//      };
-
-//      req.open('POST', 'https://api.jsonbin.io/v3/b', true);
-//      req.setRequestHeader('Content-Type', 'application/json');
-//      req.setRequestHeader(
-//        'X-Master-Key',
-//        '$2b$10$cM7Z7Zy5ix9vNxMAxf8BLu7sgZggJXmdyyiQHeFICOtUC82IEKseu'
-//      );
-//      req.send(JSON.stringify(object));
-//      console.log('ok');
-//    };
-
-	const post2 = (object: Object) => {
- let req = new XMLHttpRequest();
-
-req.onreadystatechange = () => {
-  if (req.readyState == XMLHttpRequest.DONE) {
-    console.log(req.responseText);
-  }
-};
-  
-req.open("POST", "https://api.jsonbin.io/v3/b", true);
-req.setRequestHeader("Content-Type", "application/json");
-req.setRequestHeader("X-Master-Key", "$2b$10$BNw4iZJW1.G.RaxeLdqU/.W/zjWWBG2R.rMLD0TOEEowAKs9QL16m");
-req.send(JSON.stringify(object));
-alert("ok")
-};
-
+    req.open('POST', 'https://api.jsonbin.io/v3/b', true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.setRequestHeader(
+      'X-Master-Key',
+      '$2b$10$BNw4iZJW1.G.RaxeLdqU/.W/zjWWBG2R.rMLD0TOEEowAKs9QL16m'
+    );
+    req.send(JSON.stringify(object));
+    alert('ok');
+  };
 
   const insert = function insert(main_string: string, ins_string: string, pos: number): string {
     if (typeof pos == 'undefined') {

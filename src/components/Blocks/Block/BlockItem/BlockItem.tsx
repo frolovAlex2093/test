@@ -26,7 +26,8 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
     onClickAdd,
     onClickAddDopBlock,
     uploadImage,
-    deleteFile
+    deleteFile,
+    onClickHiddenButton
   } = React.useContext(Context);
 
   document.querySelector('.file');
@@ -34,7 +35,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
   return (
     <Box display='flex' flexDirection='column'>
       {blockItem.map((item, index) => {
-        //item.require = false;
+         //item.require = false;
         const options = item.options !== undefined ? item.options : [''];
 
         return (
@@ -91,6 +92,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
               margin='10px 0'
               alignItems='center'
             >
+              
               {item.type === 'Autocomplete' ? (
                 item.multiple ? (
                   <Autocomplete
@@ -187,7 +189,7 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
                     shrink: true
                   }}
                 />
-              ) : (
+              ) : ( item.type === "qwerty" ? "" :
                 <TextField
                   onBlur={(value) => {
                     handleChangeValue?.(item.id, value.target.value);
@@ -268,6 +270,32 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
               ''
             )}
             {/* //buttons */}
+            {item.hiddenButton && item.hiddenButton!== undefined  ? (
+              <Box 
+              display={item.buttonText === "Добавить" || item.buttonText === "Удалить"? "block" : item.mainHidden !== undefined && !item.mainHidden[0]? "block" : "none"}>
+              <Button
+                onClick={() => onClickHiddenButton?.( item.hiddenButton, item.id)}
+                size='small'
+
+                color = {item.hidden === true ? 'primary' : 'error'}
+                sx={{
+                  display: (item.mainHidden !== undefined && !item.mainHidden[0]? "block" : "hidden"),
+                  width: 'min-content',
+                  marginTop: '5px',
+                  marginBottom: "5px",
+                  height: '25px',
+                  alignItems: 'center',
+                  whiteSpace: 'nowrap'
+                }}
+                variant='outlined'
+                aria-label='add'
+              >
+                {item.buttonText ? (item.hidden === true ? item.buttonText.replaceAll("Удалить", "Добавить") : item.buttonText.replaceAll("Добавить", "Удалить")) : item.hidden === true ? 'Добавить' : 'Удалить'}
+              </Button>
+              </Box>
+            ) : (
+              ''
+            )}
             {item.button ? (
               item.buttonDelete && item.buttonAdd ? (
                 <Box display='flex' alignItems='center'>
@@ -404,15 +432,19 @@ export const BlockItem: React.FC<IBlockItem> = ({ blockItem }) => {
             {item.type === 'files' ? (
               <>
                 <TextField
-                  
                   className='file'
                   data-testid='files'
-                  sx={{ marginTop: '-25px', color:"transparent"}}
+                  sx={{ marginTop: '-25px', color: 'transparent' }}
                   error={item.pattern !== 'false'}
                   required={item.require}
                   variant='outlined'
                   type='file'
-                  inputProps={{style: {color:'transparent'}, title:'', multiple: true, accept: 'image/png, image/jpeg' }}
+                  inputProps={{
+                    style: { color: 'transparent' },
+                    title: '',
+                    multiple: true,
+                    accept: 'image/png, image/jpeg'
+                  }}
                   onChange={(event) => {
                     // clear();
                     // event.target.value = ""

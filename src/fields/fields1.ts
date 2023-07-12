@@ -176,7 +176,7 @@ export const blocks1 = [
         blockName: 'Идентификационные признаки самоходной машины (другого вида техники)',
         id: 1,
         blockItem: [
-           {
+          {
             name: 'Уникальный номер оформляемого электронного паспорта в системах электронных паспортов',
             type: 'TextField',
             id: 205,
@@ -851,7 +851,9 @@ export const blocks1 = [
             require: true,
             checkbox: false,
             disabled: true,
-            value: ['Технически допустимая максимальная масса самоходной машины (другого вида техники)'],
+            value: [
+              'Технически допустимая максимальная масса самоходной машины (другого вида техники)'
+            ],
             options: [
               'Полезная нагрузка самоходной машины (другого вида техники)',
               'Технически допустимая общая масса самоходной машины (другого вида техники) и прицепа',
@@ -1654,7 +1656,7 @@ export const blocks1 = [
             error: false
           },
           {
-            name: 'Скоростная категория',
+            name: 'Скоростная категория (множественный выбор)',
             type: 'Autocomplete',
             id: 101,
             multiple: true,
@@ -2202,7 +2204,7 @@ export const blocks1 = [
         blockName: 'Подвеска',
         id: 35,
         checkbox: true,
-        check: false,
+        check: true,
         blockItem: [
           {
             name: 'Вид подвески',
@@ -2355,7 +2357,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            files: [""],
+            files: [''],
             pattern: 'false'
           }
         ]
@@ -2481,7 +2483,7 @@ export const blocks1 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: '^[0-9]{0,4}$',
+            pattern: '^[0-9]{0,4}$'
             // error: false,
             // numeric: true
           }

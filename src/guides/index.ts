@@ -26,3 +26,4 @@ export * from './speedCategories';
 export * from './cylindersLocation';
 export * from './ignitionSystems';
 export * from './TNVED';
+export * from './docsType'
