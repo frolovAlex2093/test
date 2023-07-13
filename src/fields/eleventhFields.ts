@@ -43,7 +43,9 @@ export const eleventhFields = [
             require: true,
             checkbox: false,
             disabled: false,
-            value: ['']
+            value: [''],
+            pattern: "^[A-Z]{2}.+$",
+            error: false
           },
           {
             name: 'Полное название организации оформителя',
