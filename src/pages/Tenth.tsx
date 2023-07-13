@@ -2254,7 +2254,7 @@ export const Tenth: React.FC = () => {
               (item.blockItem[z].name === 'Идентификационный номер' ||
                 item.blockItem[z].name === 'Заводской номер') &&
               item.blockItem[z].value[0] !== '' &&
-              z === 0
+              z === 1
             ) {
               str += `<trcdo:VehicleIdDetails>
                             <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
@@ -2264,7 +2264,7 @@ export const Tenth: React.FC = () => {
               (item.blockItem[z].name === 'Идентификационный номер' ||
                 item.blockItem[z].name === 'Заводской номер') &&
               item.blockItem[z].value[0] === '' &&
-              z === 0
+              z === 1
             ) {
               str += `<trcdo:VehicleIdDetails>
                             <trsdo:NotVehicleIdentityNumberIndicator>true</trsdo:NotVehicleIdentityNumberIndicator>
