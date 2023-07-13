@@ -3098,31 +3098,6 @@ if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
       window.URL.revokeObjectURL(url);
     }, 2000);
 
-
-fetch('https://cloud-api.yandex.net/v1/disk/resources/upload', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/octet-stream',
-    'Authorization': 'OAuth y0_AgAAAAAmQtNCAADLWwAAAADnsytm9Yi4oPDVTtOBwLHC2qC4LFzUius' // Replace with your Yandex Disk access token
-  },
-  body: blob
-})
-.then(response => {
-  if (response.ok) {
-    console.log('File uploaded successfully!');
-    // Optionally remove the temporary download link
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  } else {
-    console.error('Failed to upload file:', response.status, response.statusText);
-  }
-})
-.catch(error => {
-  console.error('Error uploading file:', error);
-});
-
-	  
-
     const json: IDict = {};
     blocks.map((items) => {
       items.blocksItem.map((item) => {
