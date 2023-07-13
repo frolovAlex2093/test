@@ -3083,6 +3083,9 @@ if(data.includes("<trsdo:VehicleTyreKindIndex>false/-</trsdo:VehicleTyreKindInde
 if(data.includes("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>")){
   data = data.replaceAll("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>", "")
 }
+if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
+  data = data.replaceAll("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>", "")
+}
     let blob = new Blob([data], { type: 'application/octet-stream' });
     let url = window.URL.createObjectURL(blob);
     a.href = url;
