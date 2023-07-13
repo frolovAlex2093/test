@@ -40,6 +40,7 @@ export const Tenth: React.FC = () => {
     if (pattern === '^[0-9]{0,4}$' && /^[0-9]{0,4}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{0,20}$' && /^[0-9]{0,20}$/.test(value) === false) return true;
     if (pattern === '^.{0,20}$' && /^.{0,20}$/.test(value) === false) return true;
+	  if (pattern === '^[A-Z]{2}.+$' && /^[A-Z]{2}.+$/.test(value) === false) return true;
     if (
       pattern === '^[0-9]{0,24}((.|,)[0-9]{1,6})?$' &&
       /^[0-9]{0,24}((.|,)[0-9]{1,6})?$/.test(value) === false
