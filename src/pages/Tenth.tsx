@@ -3063,9 +3063,9 @@ export const Tenth: React.FC = () => {
           }
           if (item.blockItem[2].value[0] !== '') {
             str += `<csdo:BusinessEntityId kindId="${
-              /^BY.{0,}$/.test(item.blockItem[0].value[0])
+              (item.blockItem[0].value[0].includes("Республика Беларусь"))
                 ? '4'
-                : /^RU.{0,}$/.test(item.blockItem[0].value[0])
+                :(item.blockItem[0].value[0].includes("Российская Федерация"))
                 ? '1'
                 : ''
             }">${item.blockItem[2].value[0]}</csdo:BusinessEntityId>`;
@@ -3368,6 +3368,9 @@ if(data.includes("<trsdo:VehicleTyreKindIndex>false/-</trsdo:VehicleTyreKindInde
 }
 if(data.includes("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>")){
   data = data.replaceAll("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>", "")
+}
+	  if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
+  data = data.replaceAll("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>", "")
 }
     let blob = new Blob([data], { type: 'application/octet-stream' });
     let url = window.URL.createObjectURL(blob);
