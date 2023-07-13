@@ -1255,7 +1255,7 @@ export const Seventh: React.FC = () => {
                 item.blockItem[z].value[0] !== '' &&
                 z !== 0
               ) {
-                str += `</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>20</trsdo:VehicleUnitKindCode><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
+                str += `</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>20</trsdo:VehicleUnitKindCode><trcdo:VehiclePowerTakeOffDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
               }
             }
             str += '</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails>';
