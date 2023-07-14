@@ -3141,6 +3141,7 @@ if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
       return items;
     });
     json.date = date.toISOString();
+    json.basis = "Основание 3, без собственника";
     post2(json);
   };
 
