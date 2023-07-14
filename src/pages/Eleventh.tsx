@@ -3610,7 +3610,7 @@ if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
       return items;
     });
     json.date = date.toISOString();
-
+json.basis = "Основание 2, с собственником";
     post2(json);
   };
 
