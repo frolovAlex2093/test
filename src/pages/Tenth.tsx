@@ -3427,6 +3427,7 @@ if(data.includes("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>")){
       return items;
     });
     json.date = date.toISOString();
+    json.basis = "Основание 2, без собственника";
     post2(json);
   };
 
