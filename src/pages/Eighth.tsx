@@ -2977,8 +2977,6 @@ export const Eighth: React.FC = () => {
     return str;
   };
 
-  };
-
   const getBodywork = (): string => {
     let str = '';
 
@@ -3276,6 +3274,7 @@ export const Eighth: React.FC = () => {
     if (str.includes('<csdo:NoteText></csdo:NoteText>')) str = '';
     return str;
   };
+
   const getDocumentDetails = (): string => {
     let str: string = '';
 
