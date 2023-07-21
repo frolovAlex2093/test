@@ -43,7 +43,7 @@ export const blocks2 = [
             checkbox: false,
             disabled: false,
             value: [''],
-            pattern: "^[A-Z]{2}.+$",
+            pattern: "^(RU|BY).+$",
             error: false
           },
           {
