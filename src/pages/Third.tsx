@@ -2288,7 +2288,7 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleEmergencyCallDeviceIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${item.blockItem[1].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:VehicleEmergencyCallDeviceIdDetails>`;
             } else if (
@@ -2306,7 +2306,7 @@ export const Third: React.FC = () => {
               item.blockItem[z].value[0] !== ''
             ) {
               str += `<trcdo:VehicleSatelliteNavigationIdDetails>
-                            <trsdo:VehicleIdentityNumberId>${item.blockItem[0].value[0]}</trsdo:VehicleIdentityNumberId>
+                            <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
                             <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
                         </trcdo:VehicleSatelliteNavigationIdDetails>`;
             } else if (
