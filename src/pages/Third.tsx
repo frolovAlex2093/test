@@ -2789,6 +2789,7 @@ const getTNVEDNumber = (): string => {
     return str;
   };
 
+
   const getBodywork = (): string => {
     let str = '';
 
@@ -2965,7 +2966,7 @@ const getTNVEDNumber = (): string => {
     return str;
   };
 
-  const getNoteText = (): string => {
+    const getNoteText = (): string => {
     let str: string = '';
     let check: boolean = true;
     str += '<csdo:NoteText>';
@@ -3001,6 +3002,7 @@ const getTNVEDNumber = (): string => {
     if (str.includes('<csdo:NoteText></csdo:NoteText>')) str = '';
     return str;
   };
+	
   const onclickSubmit = async () => {
     let date = new Date();
     date.setHours(date.getHours() + 3);
