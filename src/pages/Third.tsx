@@ -2758,14 +2758,26 @@ export const Third: React.FC = () => {
     return str;
   };
 
-  const getTNVEDNumber = (): string => {
+const getTNVEDNumber = (): string => {
     let str = '';
-
+    let check = false;
     blocks.map((items) => {
       items.blocksItem.map((item) => {
-        if (item.id === 0) {
+        if (item.id === 0 || item.id === 47) {
           for (let z = 0; z < item.blockItem.length; z++) {
-            if (item.blockItem[z].name === 'Код ТН ВЭД' && item.blockItem[z].value[0] !== '') {
+            if (
+              item.blockItem[z].name === 'Мнемоника' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].value[0].includes('RU')
+            ) {
+              check = true;
+            }
+
+            if (
+              item.blockItem[z].name === 'Код ТН ВЭД' &&
+              item.blockItem[z].value[0] !== '' &&
+              check
+            ) {
               str += `<trcdo:TNVEDNumber>${item.blockItem[z].value[0]}</trcdo:TNVEDNumber>`;
             }
           }
@@ -2955,12 +2967,24 @@ export const Third: React.FC = () => {
 
   const getNoteText = (): string => {
     let str: string = '';
+    let check: boolean = true;
     str += '<csdo:NoteText>';
     blocks.map((items) => {
       items.blocksItem.map((item) => {
-        if (item.id === 0) {
+        if (item.id === 0 || item.id === 47) {
           for (let z = 0; z < item.blockItem.length; z++) {
-            if (item.blockItem[z].name === 'Код ТН ВЭД' && item.blockItem[z].value[0] !== '') {
+            if (
+              item.blockItem[z].name === 'Мнемоника' &&
+              item.blockItem[z].value[0] !== '' &&
+              item.blockItem[z].value[0].includes('RU')
+            ) {
+              check = false;
+            }
+            if (
+              item.blockItem[z].name === 'Код ТН ВЭД' &&
+              item.blockItem[z].value[0] !== '' &&
+              check
+            ) {
               str += `ТНВЭД ${item.blockItem[z].value[0]}`;
             }
           }
@@ -2974,9 +2998,9 @@ export const Third: React.FC = () => {
     });
 
     str += '</csdo:NoteText>';
+    if (str.includes('<csdo:NoteText></csdo:NoteText>')) str = '';
     return str;
   };
-
   const onclickSubmit = async () => {
     let date = new Date();
     date.setHours(date.getHours() + 3);
@@ -3056,7 +3080,7 @@ export const Third: React.FC = () => {
 							<trsdo:VehicleEPassportBaseCode>03</trsdo:VehicleEPassportBaseCode>`;
 
     data += getVehicleDetails();
-    //data += getTNVEDNumber();
+    data += getTNVEDNumber();
     data += getDocumentDetails();
     data += getVehicleTypeDetails();
     data += getVariantDetails(check);
