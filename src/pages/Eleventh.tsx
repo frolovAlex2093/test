@@ -38,7 +38,7 @@ export const Eleventh: React.FC = () => {
     if (pattern === '^[0-9]{0,4}$' && /^[0-9]{0,4}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{0,20}$' && /^[0-9]{0,20}$/.test(value) === false) return true;
     if (pattern === '^.{0,20}$' && /^.{0,20}$/.test(value) === false) return true;
-	  if (pattern === '^[A-Z]{2}.+$' && /^[A-Z]{2}.+$/.test(value) === false) return true;
+	  if (pattern === '^(RU|BY).+$' && /^(RU|BY).+$/.test(value) === false) return true;
     if (pattern === '^[0-9]+(,|.)[0-9]{2}$' && /^[0-9]+(,|.)[0-9]{2}$/.test(value) === false)
       return true;
 
