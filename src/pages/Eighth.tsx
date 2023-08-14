@@ -1304,7 +1304,7 @@ export const Eighth: React.FC = () => {
               item.blockItem[z].value[0] !== '' &&
               z !== 0
             ) {
-              str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>15</trsdo:VehicleUnitKindCode><trcdo:AxisDistribution>${item.blockItem[z].value[0]}</trcdo:AxisDistribution>`;
+              str += `</trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>15</trsdo:VehicleUnitKindCode><trsdo:AxisDistribution>${item.blockItem[z].value[0]}</trsdo:AxisDistribution>`;
             } else if (
               item.blockItem[z].name === 'Распределение по осям' &&
               item.blockItem[z].value[0] === '' &&
