@@ -1258,6 +1258,16 @@ export const Seventh: React.FC = () => {
               ) {
                 str += `</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>20</trsdo:VehicleUnitKindCode><trcdo:VehiclePowerTakeOffDetails><trsdo:VehicleComponentText>${item.blockItem[z].value[0]}</trsdo:VehicleComponentText>`;
               }
+		    if (
+                item.blockItem[z].name === 'Тип' &&
+                item.blockItem[z].value[0] === '' &&
+                z !== 0 &&
+                (item.blockItem[z + 1].value[0] !== '' ||
+                  item.blockItem[z + 2].value[0] !== '' ||
+                  item.blockItem[z + 3].value[0] !== '')
+              ) {
+                str += `</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails><trcdo:TransmissionUnitDetails><trsdo:VehicleUnitKindCode>20</trsdo:VehicleUnitKindCode><trcdo:VehiclePowerTakeOffDetails>`;
+              }
             }
             str += '</trcdo:VehiclePowerTakeOffDetails></trcdo:TransmissionUnitDetails>';
           }
