@@ -20,8 +20,7 @@ export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit
     <Box
       component='form'
       width={870}
-      onSubmit={(event: any) => {
-        onSubmit={async (event: any) => {
+      onSubmit={async (event: any) => {
         if (!(await onclickSubmit())) {
           event.preventDefault();
           setReload(false);
@@ -30,7 +29,6 @@ export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit
         }
         handleClick();
       }}
-       
     >
       {blocks.map((item, index) => {
         return (
@@ -45,6 +43,7 @@ export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit
       <Button sx={{ margin: '0 auto' }} variant='contained' size='large' type='submit'>
         Сгенерировать XML
       </Button>
+
       <Snackbar
         open={open && reload}
         //  autoHideDuration={6000}
@@ -53,7 +52,7 @@ export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit
         }}
       >
         <Alert onClose={handleClose} variant='filled' severity='success' sx={{ width: '100%' }}>
-          This is a success message!
+          Успешно!
         </Alert>
       </Snackbar>
     </Box>
