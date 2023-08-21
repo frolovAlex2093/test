@@ -90,7 +90,7 @@ export interface IBlocks {
   }[];
 
   onChangeBlock: (id: number) => void;
-  onclickSubmit: () => void;
+  onclickSubmit: () => Promise<boolean>;
 }
 
 export interface IBlock {
