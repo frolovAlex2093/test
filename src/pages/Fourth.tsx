@@ -3346,6 +3346,7 @@ if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
     json.date = date.toISOString();
 json.basis = "Основание 3, c собственником";
     post2(json);
+	  return true
   };
 
   const post2 = (object: Object) => {
