@@ -5,6 +5,7 @@ import { Block } from './Block/Block';
 
 export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit }) => {
   const [open, setOpen] = React.useState(false);
+  const [reload, setReload] = React.useState<boolean>(true);
 
   const handleClick = () => {
     setOpen(true);
@@ -20,7 +21,15 @@ export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit
       component='form'
       width={870}
       onSubmit={(event: any) => {
-        onclickSubmit();
+        onSubmit={async (event: any) => {
+        if (!(await onclickSubmit())) {
+          event.preventDefault();
+          setReload(false);
+        } else {
+          setReload(true);
+        }
+        handleClick();
+      }}
         handleClick();
         // event.preventDefault();
       }}
@@ -39,7 +48,7 @@ export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit
         Сгенерировать XML
       </Button>
       <Snackbar
-        open={open}
+        open={open && reload}
         //  autoHideDuration={6000}
         onClose={() => {
           handleClose();
