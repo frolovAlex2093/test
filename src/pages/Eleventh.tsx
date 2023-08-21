@@ -3313,7 +3313,7 @@ export const Eleventh: React.FC = () => {
     return str;
   };
 
-  const getAddress = (id: number): string => {
+  const getAddress = (id: number): { str1: string; b: boolean } => {
     let str: string = '';
 
     blocks.map((items) => {
@@ -3472,7 +3472,15 @@ export const Eleventh: React.FC = () => {
       });
     });
 
-    return str;
+     if (
+      /^(.+|)<trcdo:VehicleManufacturerDetails>(\n|)(.+|)<ccdo:SubjectAddressDetails>(\n|)(.+|)<\/ccdo:SubjectAddressDetails>(\n|)(.+|)<\/trcdo:VehicleManufacturerDetails>(\n|)(.+|)$/.test(
+        str
+      ) ||
+      str.length === 0
+    ) {
+      return { str1: str, b: true };
+    }
+    return { str1: str, b: false };
   };
 
   const onclickSubmit = async () => {
@@ -3484,6 +3492,9 @@ export const Eleventh: React.FC = () => {
     let maker = '';
     let ogrn = '';
     let passport = '';
+	  let b1 = false;
+    let b2 = false;
+    let b3 = false;
     blocks.map((items) => {
       items.blocksItem.map((item) => {
         item.blockItem.map((i) => {
@@ -3559,9 +3570,20 @@ export const Eleventh: React.FC = () => {
     data += getVehicleTypeDetails();
     data += getVariantDetails(check);
 
-    data += getAddress(61);
-    data += getAddress(62);
-    data += getAddress(63);
+let res1 = getAddress(61);
+    data += res1.str1;
+    b1 = res1.b;
+    let res2 = getAddress(62);
+    data += res2.str1;
+    b2 = res2.b;
+    let res3 = getAddress(63);
+    data += res3.str1;
+    b3 = res3.b;
+
+	  
+    // data += getAddress(61);
+    // data += getAddress(62);
+    // data += getAddress(63);
 
     data += getOwner();
     data += getNoteText();
@@ -3591,6 +3613,7 @@ if(data.includes("<trsdo:VehicleTyreKindSpeed></trsdo:VehicleTyreKindSpeed>")){
 if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
   data = data.replaceAll("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>", "")
 }
+	  if (b1 && b2 && b3) {
     let blob = new Blob([data], { type: 'application/octet-stream' });
     let url = window.URL.createObjectURL(blob);
     a.href = url;
@@ -3601,6 +3624,18 @@ if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
     }, 2000);
+	  }
+	  else {
+      if (!b1) {
+        alert('Заполните адрес изготовителя');
+      }
+      if (!b2) {
+        alert('Заполните адрес сборочного завода');
+      }
+      if (!b3) {
+        alert('Заполните адрес представителя изготовителя');
+      }
+    }
     const json: IDict = {};
     blocks.map((items) => {
       items.blocksItem.map((item) => {
@@ -3645,7 +3680,8 @@ if(data.includes("<trsdo:VehicleTyreKindIndex></trsdo:VehicleTyreKindIndex>")){
     });
     json.date = date.toISOString();
 json.basis = "Основание 2, с собственником";
-    post2(json);
+    if (b1 && b2 && b3) post2(json);
+	  return b1 && b2 && b3;
   };
 
   const post2 = (object: Object) => {
