@@ -30,9 +30,7 @@ export const Blocks: React.FC<IBlocks> = ({ blocks, onChangeBlock, onclickSubmit
         }
         handleClick();
       }}
-        handleClick();
-        // event.preventDefault();
-      }}
+       
     >
       {blocks.map((item, index) => {
         return (
