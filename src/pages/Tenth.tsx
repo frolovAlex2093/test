@@ -3229,9 +3229,10 @@ export const Tenth: React.FC = () => {
     });
 
     if (
-      /^(.+|)<trcdo:VehicleManufacturerDetails>(\n|)(.+|)<ccdo:SubjectAddressDetails>(\n|)(.+|)<\/ccdo:SubjectAddressDetails>(\n|)(.+|)<\/trcdo:VehicleManufacturerDetails>(\n|)(.+|)$/.test(
-        str
-      ) ||
+       (str.includes('<trcdo:VehicleManufacturerDetails>') &&
+        str.includes('</trcdo:VehicleManufacturerDetails>') &&
+        str.includes('<ccdo:SubjectAddressDetails>') &&
+        str.includes('</ccdo:SubjectAddressDetails>')) ||
       str.length === 0
     ) {
       return { str1: str, b: true };
