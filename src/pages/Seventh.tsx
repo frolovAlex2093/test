@@ -2494,7 +2494,7 @@ export const Seventh: React.FC = () => {
               }</csdo:ManufactureMonth>`;
             }
             if (item.blockItem[z].name === 'Страна вывоза' && item.blockItem[z].value[0] !== '') {
-              str += `<trsdo:VehicleImportCountryCode>${
+              str += `<trsdo:VehicleImportCountryCode codeListId="NSI_034">${
                 country[item.blockItem[z].value[0]]
               }</trsdo:VehicleImportCountryCode>`;
             }
