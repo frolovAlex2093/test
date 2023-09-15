@@ -2398,12 +2398,12 @@ export const Eighth: React.FC = () => {
             ) {
               str = insert(
                 str,
-                `<trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>`,
-                str.lastIndexOf(
-                  `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator></trcdo:VehicleEngineIdDetails>`
-                ) -
-                  `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
-                                </trcdo:VehicleEngineIdDetails`.length
+                `<trcdo:VehicleEngineIdDetails>
+                        <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
+                        <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
+                        </trcdo:VehicleEngineIdDetails>`,
+                str.lastIndexOf(`</trcdo:VehicleEngineIdDetails>`) +
+                  `</trcdo:VehicleEngineIdDetails>`.length
               );
             }
             if (
@@ -2460,14 +2460,14 @@ export const Eighth: React.FC = () => {
               item.blockItem[z].value[0] !== '' &&
               item.blockItem[z].id !== 12
             ) {
-              str = insert(
+             str = insert(
                 str,
-                `<trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>`,
-                str.indexOf(
-                  `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator></trcdo:MainPoweredAxleIdDetails>`
-                ) -
-                  `<trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
-                                </trcdo:MainPoweredAxleIdDetails`.length
+                `<trcdo:MainPoweredAxleIdDetails>
+                <trsdo:VehicleIdentityNumberId>${item.blockItem[z].value[0]}</trsdo:VehicleIdentityNumberId>
+                <trsdo:NotVehicleIdentityNumberIndicator>false</trsdo:NotVehicleIdentityNumberIndicator>
+            </trcdo:MainPoweredAxleIdDetails>`,
+                str.lastIndexOf(`</trcdo:MainPoweredAxleIdDetails>`) +
+                  `</trcdo:MainPoweredAxleIdDetails>`.length
               );
             }
           }
