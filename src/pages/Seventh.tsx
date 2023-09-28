@@ -1485,7 +1485,7 @@ export const Seventh: React.FC = () => {
                 item.blockItem[z].value[0] !== '' &&
                 z !== 2
               ) {
-                str += `</trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindSize>${item.blockItem[z].value[0]}</trcdo:VehicleTyreKindSize>`;
+                str += `</trcdo:VehicleTyreKindInfo><trcdo:VehicleTyreKindInfo><trsdo:VehicleTyreKindSize>${item.blockItem[z].value[0]}</trsdo:VehicleTyreKindSize>`;
                 str += `${str2.shift()}`;
               } else if (
                 item.blockItem[z].name === 'Размерность' &&
