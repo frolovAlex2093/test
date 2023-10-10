@@ -327,6 +327,8 @@ export const Eighth: React.FC = () => {
     let axes: number = 0;
     let ownerStr: string = '';
     let countTires: number = 0;
+    let checkTNVED: boolean = false;
+    let tnvedValue: string = "";
     setBlocks(
       blocks.map((items) => {
         items.blocksItem.map((item) => {
@@ -459,6 +461,32 @@ export const Eighth: React.FC = () => {
                 item.check = true;
               }
             }
+          }
+		if (item.id === 47 || item.id === 40 || item.id === 0){
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (
+                item.blockItem[z].name === 'Мнемоника' &&
+                item.blockItem[z].value[0] !== '' &&
+                item.blockItem[z].value[0].includes('BY')
+              ) {
+                checkTNVED = true;
+              }
+              if(item.blockItem[z].name === 'Код ТН ВЭД' &&
+              item.blockItem[z].value[0] !== ''){
+                tnvedValue = item.blockItem[z].value[0];
+              }
+              item.blockItem.map(i => {
+                if(i.name === 'Дополнительная информация' && checkTNVED && 'endAdornment' in i ){
+                  i.endAdornment ="ТНВЭД " + tnvedValue;
+                  if(tnvedValue === "" || tnvedValue === null){
+                    i.endAdornment = ""
+                  }
+                }
+                return i;
+              })
+              
+            }
+
           }
           return item;
         });
