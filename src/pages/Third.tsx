@@ -235,6 +235,8 @@ export const Third: React.FC = () => {
     let options: string[] = [];
     let axes: number = 0;
     let countTires: number = 0;
+    let checkTNVED: boolean = false;
+    let tnvedValue: string = "";
     setBlocks(
       blocks.map((items) => {
         items.blocksItem.map((item) => {
