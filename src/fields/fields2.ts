@@ -144,6 +144,7 @@ export const blocks2 = [
             value: [''],
             checkbox: false,
             options: Object.keys(TNVED),
+            label: 'Для заявителей из РБ, значение из данного поля автоматически дублируется в иной информации',
             freeSolo: true
           },
           {
