@@ -307,6 +307,32 @@ export const Third: React.FC = () => {
               }
             }
           }
+		if (item.id === 47 || item.id === 40 || item.id === 0){
+            for (let z = 0; z < item.blockItem.length; z++) {
+              if (
+                item.blockItem[z].name === 'Мнемоника' &&
+                item.blockItem[z].value[0] !== '' &&
+                item.blockItem[z].value[0].includes('BY')
+              ) {
+                checkTNVED = true;
+              }
+              if(item.blockItem[z].name === 'Код ТН ВЭД' &&
+              item.blockItem[z].value[0] !== ''){
+                tnvedValue = item.blockItem[z].value[0];
+              }
+              item.blockItem.map(i => {
+                if(i.name === 'Дополнительная информация' && checkTNVED && 'endAdornment' in i ){
+                  i.endAdornment ="ТНВЭД " + tnvedValue;
+                  if(tnvedValue === "" || tnvedValue === null){
+                    i.endAdornment = ""
+                  }
+                }
+                return i;
+              })
+              
+            }
+
+          }
           return item;
         });
         return items;
