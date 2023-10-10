@@ -2384,6 +2384,7 @@ export const eleventhFields = [
             disabled: false,
             value: [''],
             pattern: '^.{0,4000}$',
+            endAdornment: '',
             error: false
           }
         ]
