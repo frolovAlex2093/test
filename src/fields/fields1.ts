@@ -187,7 +187,7 @@ export const blocks1 = [
             require: false,
             checkbox: false,
             value: [''],
-            pattern: '^[0-9]{15}$',
+            pattern: '^3(643|112)03[0-9]{9}$',
             error: false
           },
           {
