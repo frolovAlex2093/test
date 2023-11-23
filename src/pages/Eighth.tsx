@@ -27,6 +27,8 @@ export const Eighth: React.FC = () => {
   const alertValidation = (pattern: string, value: string): boolean => {
     if (pattern === '^[0-9]{4}$' && /^[0-9]{4}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{15}$' && /^[0-9]{15}$/.test(value) === false) return true;
+	if (pattern === '^3(643|112)01[0-9]{9}$' && /^3(643|112)01[0-9]{9}$/.test(value) === false)
+      return true;
     if (pattern === '^[0-9]+$' && /^[0-9]+$/.test(value) === false) return true;
     if (pattern === '^.{0,50}$' && /^.{0,50}$/.test(value) === false) return true;
     if (pattern === '^.{0,120}$' && /^.{0,120}$/.test(value) === false) return true;
@@ -320,7 +322,9 @@ export const Eighth: React.FC = () => {
       })
     );
   };
-
+ function divme(a: number, b: number) {
+    return (a - (a % b)) / b;
+  }
   const handleChangeValue = async (id: number, value: string | string[] | null) => {
     let checkPropulsion: boolean = true;
     let options: string[] = [];
@@ -343,6 +347,20 @@ export const Eighth: React.FC = () => {
               }
               if ('pattern' in i && i.pattern !== undefined && 'error' in i) {
                 i.error = alertValidation(i.pattern, i.value[0]);
+              }
+		     if (
+                'error' in i &&
+                i.error !== true &&
+                i.name ===
+                  'Уникальный номер оформляемого электронного паспорта в системах электронных паспортов' &&
+                i.value !== null
+              ) {
+                let num = parseInt(i.value[0]);
+                if (num % 10 !== (divme(num, 10) - divme(divme(num, 10), 11) * 11) % 10) {
+                  console.log(num % 10);
+                  console.log((divme(num, 10) - divme(divme(num, 10), 11) * 11) % 10);
+                  i.error = true;
+                }
               }
               if ('numeric' in i && i.numeric === true) {
                 i.value[0] = i.value[0].replace(/ +/g, '');
