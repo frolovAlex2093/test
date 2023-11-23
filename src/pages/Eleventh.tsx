@@ -27,7 +27,7 @@ export const Eleventh: React.FC = () => {
   const alertValidation = (pattern: string, value: string): boolean => {
     if (pattern === '^[0-9]{4}$' && /^[0-9]{4}$/.test(value) === false) return true;
     if (pattern === '^[0-9]{15}$' && /^[0-9]{15}$/.test(value) === false) return true;
-	      if (pattern === '^3(643|112)02[0-9]{9}$' && /^3(643|112)02[0-9]{9}$/.test(value) === false)
+	      if (pattern === '^3(643|112)02[0-9]{9}$' && /^3(643|112)02[0-9]{9}$/.test(value) === false)  return true;
     if (pattern === '^[0-9]+$' && /^[0-9]+$/.test(value) === false) return true;
     if (pattern === '^.{0,50}$' && /^.{0,50}$/.test(value) === false) return true;
     if (pattern === '^.{0,120}$' && /^.{0,120}$/.test(value) === false) return true;
