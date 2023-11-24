@@ -1594,7 +1594,7 @@ export const blocks1 = [
             name: 'Размерность',
             type: 'TextField',
             id: 95,
-            require: false,
+            require: true,
             checkbox: false,
             disabled: false,
             value: [''],
