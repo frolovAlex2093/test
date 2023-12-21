@@ -6,12 +6,12 @@ import { linkList } from '../interfaces/interfaces';
 
 const ninthLinkList: linkList[] = [
   {
-    page: '/tenth',
+    page: '/NoOwner_02',
     text: 'Оформить ЭП СМ',
     id: 3
   },
   {
-    page: '/eleventh',
+    page: '/Owner_02',
     text: 'Оформить ЭП СМ с собственником',
     id: 4
   }
