@@ -410,6 +410,21 @@ export const Seventh: React.FC = () => {
               }
             }
           }
+		if(item.id === 30 || item.id === 31 || item.id === 32 || item.id === 33){
+            item.blockItem.map(z => {
+              if(z.name === "Передаточное число"){
+                if(z.value[0].length > 5){
+                  if((z.value[0].includes(",") || z.value[0].includes(".")) && z.value[0].length === 6){
+      
+                  }else{
+                    if("error" in z && z.error !== null){
+                      z.error = true;
+                    }
+                  }
+                }
+              }
+            })
+          }
 		if (item.id === 47 || item.id === 40 || item.id === 0){
             for (let z = 0; z < item.blockItem.length; z++) {
               if (
