@@ -3397,7 +3397,7 @@ export const Seventh: React.FC = () => {
       });
       return items;
     });
-    let data: string = `<soapenv:Envelope xsi:schemaLocation="urn://x-artefacts-epts-ru/ELPTSAddData/1.0.9 R019_VehicleEPassportDetails_v1.0.9.xsd" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ccdo="urn://x-artefacts-epts-ru/EEC_M_ComplexDataObjects/0.4.13" xmlns:csdo="urn://x-artefacts-epts-ru/EEC_M_SimpleDataObjects/0.4.7" xmlns:doc="urn://x-artefacts-epts-ru/ELPTSAddData/1.0.9" xmlns:pas="http://passport.integration.pts.fors.ru/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:trcdo="urn://x-artefacts-epts-ru/EEC_M_TR_ComplexDataObjects/1.0.11" xmlns:trsdo="urn://x-artefacts-epts-ru/EEC_M_TR_SimpleDataObjects/1.0.11" xmlns:urn1="urn://x-artefacts-epts-ru/EPTS_Services/1.0.1">
+    let data: string = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ccdo="urn://x-artefacts-epts-ru/EEC_M_ComplexDataObjects/0.4.13" xmlns:csdo="urn://x-artefacts-epts-ru/EEC_M_SimpleDataObjects/0.4.7" xmlns:doc="urn://x-artefacts-epts-ru/ELPTSAddData/1.0.9" xmlns:pas="http://passport.integration.pts.fors.ru/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:trcdo="urn://x-artefacts-epts-ru/EEC_M_TR_ComplexDataObjects/1.0.11" xmlns:trsdo="urn://x-artefacts-epts-ru/EEC_M_TR_SimpleDataObjects/1.0.11" xmlns:urn1="urn://x-artefacts-epts-ru/EPTS_Services/1.0.1">
         <soapenv:Header/>
         <soapenv:Body>
             <pas:ELPTSAddData>
