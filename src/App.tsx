@@ -18,7 +18,7 @@ export const App: React.FC = () => {
       <Route element={<Eighth />} path='/Owner_01' />
       <Route element={<Ninth />} path='/ninth' />
       <Route element={<Tenth />} path='/NoOwner_02' />
-      <Route element={<Eleventh />} path='/Owner_03' />
+      <Route element={<Eleventh />} path='/Owner_02' />
 
       <Route element={<Authorization />} path='/authorization' />
     </Routes>
