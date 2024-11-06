@@ -132,7 +132,8 @@ export const Eleventh: React.FC = () => {
           });
 
           item.blockItem.map((i) => {
-            if (!check && (id === 237 || id === 264 || id === 291)) {
+            if (!check && groupHidden &&
+              groupHidden.includes(i.id)) {
               if (group1.includes(i.id) || group2.includes(i.id)) {
                 if ('hidden' in i && i.hidden !== undefined) {
                   i.hidden = true;
