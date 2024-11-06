@@ -120,7 +120,7 @@ export const Seventh: React.FC = () => {
           });
 
           item.blockItem.map((i) => {
-            if (!check && && groupHidden &&
+            if (!check && groupHidden &&
               groupHidden.includes(i.id)) {
               if (group1.includes(i.id) || group2.includes(i.id)) {
                 if ('hidden' in i && i.hidden !== undefined) {
